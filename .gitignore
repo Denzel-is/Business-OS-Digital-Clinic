@@ -1,0 +1,74 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+secrets/
+
+# Java and Maven
+backend/target/
+target/
+*.class
+*.jar
+*.war
+*.ear
+.mvn/timing.properties
+.flattened-pom.xml
+
+# Node and Next.js
+frontend/node_modules/
+node_modules/
+frontend/.next/
+.next/
+frontend/out/
+frontend/coverage/
+coverage/
+*.tsbuildinfo
+.turbo/
+
+# Tests and browser artifacts
+playwright-report/
+test-results/
+blob-report/
+
+# Logs and runtime files
+*.log
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+# Local databases, dumps, uploads, and backups
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.sql
+uploads/
+backups/
+
+# IDE and OS metadata
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.swp
+*~
+
+# Docker overrides containing local configuration
+docker-compose.override.yml
