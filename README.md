@@ -2,7 +2,7 @@
 
 Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction and turning it into fast, usable, and secure IT systems.
 
-> Current status: preparation baseline only. Application code, Compose services, tests, and production workflows will be added in the staged implementation that follows. The commands below document the intended developer contract and become runnable as their respective foundation stages land.
+> Current status: monorepo initialization complete. Shared repository contracts and module boundaries exist; application code, Compose services, tests, and production workflows will be added in the staged implementation that follows. Commands below become runnable as their respective foundation stages land.
 
 ## Product direction
 
@@ -16,27 +16,29 @@ Core message:
 
 ```text
 Business_OS_Digital_Clinic/
-├── backend/                 Java 21, Spring Boot, PostgreSQL, Redis
-├── frontend/                Next.js, React, TypeScript, Tailwind CSS
-├── infrastructure/          deployment and platform configuration
-├── docs/                    architecture, product, security, and operations
+├── backend/                 Java/Spring Boot module contract
+├── frontend/                Next.js/React module contract
+├── infrastructure/          deployment and platform contract
+├── docs/                    architecture and documentation map
 ├── .github/
-│   └── workflows/           backend, frontend, security, and image CI
+│   └── workflows/           CI contract; workflows arrive with build targets
+├── .editorconfig            editor-independent formatting baseline
+├── .gitattributes           deterministic text and binary handling
+├── .env.example             non-secret local configuration contract
 ├── AGENTS.md                repository contribution rules
 ├── docker-compose.yml       local stack (planned)
 ├── docker-compose.prod.yml  production stack (planned)
-├── .env.example             non-secret configuration template (planned)
 ├── .gitignore
 ├── README.md
-└── SECURITY.md              vulnerability policy (planned)
+└── SECURITY.md              vulnerability reporting policy
 ```
 
 The backend will use package-by-feature boundaries. The frontend will use Server Components by default and isolate interactive browser code. PostgreSQL is the system of record; Redis supports bounded caching and rate-limit counters. Frontend and backend will ship as separate production containers behind a Cloudflare-ready edge configuration.
 
 ## Delivery plan
 
-1. Audit and preparation baseline.
-2. Monorepo initialization.
+1. Audit and preparation baseline — complete.
+2. Monorepo initialization — complete.
 3. Backend foundation.
 4. Frontend foundation.
 5. Design system.
@@ -99,7 +101,7 @@ cd ..
 
 ## Environment variables
 
-`.env.example` will be the authoritative list of names and safe local defaults. Expected groups include:
+`.env.example` is the current contract for names and safe local defaults. It will be refined alongside implementation. Its groups include:
 
 - PostgreSQL connection and database names.
 - Redis host and port.
@@ -203,7 +205,7 @@ Container builds, deployment checks, Cloudflare configuration, backup/restore pr
 
 Security is a layered risk-reduction practice, not a promise of absolute protection. Application controls will be combined with validation, authorization, secure sessions, rate limiting, monitoring, dependency scanning, backups, and edge controls such as CDN and WAF. Public content cannot be made impossible to copy, and DDoS mitigation cannot be provided by Java code alone.
 
-Report vulnerabilities privately through the process that will be published in `SECURITY.md`. Do not include secrets or personal data in issues.
+Report vulnerabilities privately through the process in `SECURITY.md`. Do not include secrets or personal data in issues.
 
 ## Repository workflow
 

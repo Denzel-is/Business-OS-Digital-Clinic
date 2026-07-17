@@ -12,7 +12,7 @@ These instructions apply to the entire `Business_OS_Digital_Clinic` monorepo.
 - `docs/` — architecture, API, design, security, operations, and testing guides.
 - `.github/workflows/` — CI, security, and container workflows.
 
-The repository is currently at the preparation stage. Do not treat placeholder directories as implemented applications.
+The monorepo contract is initialized. Module READMEs and architecture documents describe intended boundaries; they are not proof that application functionality is implemented.
 
 ## Local commands
 
