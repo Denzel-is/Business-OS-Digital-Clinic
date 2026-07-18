@@ -1,10 +1,47 @@
 @import "tailwindcss";
 
+@theme inline {
+  --color-canvas: var(--ds-color-canvas);
+  --color-surface: var(--ds-color-surface);
+  --color-surface-raised: var(--ds-color-surface-raised);
+  --color-surface-inset: var(--ds-color-surface-inset);
+  --color-ink: var(--ds-color-ink);
+  --color-ink-muted: var(--ds-color-ink-muted);
+  --color-ink-faint: var(--ds-color-ink-faint);
+  --color-line: var(--ds-color-line);
+  --color-line-strong: var(--ds-color-line-strong);
+  --color-accent: var(--ds-color-accent);
+  --color-accent-strong: var(--ds-color-accent-strong);
+  --color-accent-ink: var(--ds-color-accent-ink);
+  --color-warning: var(--ds-color-warning);
+  --color-danger: var(--ds-color-danger);
+  --font-sans: "Manrope Variable", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Cascadia Mono", monospace;
+  --radius-control: 0.875rem;
+  --radius-panel: 1.5rem;
+  --shadow-focus: 0 0 0 3px rgb(103 232 194 / 0.28);
+}
+
 :root {
   color-scheme: dark;
-  background: #07100f;
-  color: #eef8f5;
-  font-family: Arial, Helvetica, sans-serif;
+  --ds-color-canvas: #060b0a;
+  --ds-color-surface: #0b1210;
+  --ds-color-surface-raised: #111b18;
+  --ds-color-surface-inset: #080e0d;
+  --ds-color-ink: #f0f0e8;
+  --ds-color-ink-muted: #aebbb5;
+  --ds-color-ink-faint: #73817b;
+  --ds-color-line: #202c28;
+  --ds-color-line-strong: #34443e;
+  --ds-color-accent: #67e8c2;
+  --ds-color-accent-strong: #2dc99c;
+  --ds-color-accent-ink: #03231a;
+  --ds-color-warning: #efb44a;
+  --ds-color-danger: #ff746c;
+  background: var(--ds-color-canvas);
+  color: var(--ds-color-ink);
+  font-family: "Manrope Variable", "Segoe UI", sans-serif;
+  font-synthesis: none;
 }
 
 * {
@@ -13,17 +50,54 @@
 
 html {
   min-width: 320px;
-  background: #07100f;
+  background: var(--ds-color-canvas);
+  scrollbar-color: var(--ds-color-line-strong) var(--ds-color-canvas);
 }
 
 body {
   min-height: 100vh;
   margin: 0;
+  background: var(--ds-color-canvas);
+  color: var(--ds-color-ink);
+  text-rendering: optimizeLegibility;
 }
 
 button,
-a {
-  outline-offset: 0.25rem;
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  outline: none;
+}
+
+:focus-visible {
+  box-shadow: var(--shadow-focus);
+  outline: 2px solid var(--ds-color-accent);
+  outline-offset: 0.2rem;
+}
+
+::selection {
+  background: var(--ds-color-accent);
+  color: var(--ds-color-accent-ink);
+}
+
+.editorial-grid {
+  background-image:
+    linear-gradient(to right, rgb(103 232 194 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(103 232 194 / 0.045) 1px, transparent 1px);
+  background-position: center;
+  background-size: 4rem 4rem;
+}
+
+.text-balance {
+  text-wrap: balance;
 }
 
 @media (prefers-reduced-motion: reduce) {

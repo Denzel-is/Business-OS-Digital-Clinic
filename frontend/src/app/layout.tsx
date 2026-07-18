@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
+import "@fontsource-variable/manrope";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,7 +18,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: "dark",
-  themeColor: "#07100f",
+  themeColor: "#060b0a",
 };
 
 interface RootLayoutProps {

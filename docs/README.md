@@ -5,12 +5,12 @@ Documentation is versioned with the behavior it describes. Files marked as plann
 ## Available
 
 - [Architecture](ARCHITECTURE.md) — module boundaries, dependency direction, and staged runtime topology.
+- [Design system](DESIGN_SYSTEM.md) — implemented tokens, typography, components, states, and accessibility rules.
 - [Security policy](../SECURITY.md) — responsible vulnerability reporting and the current support status.
 
 ## Planned
 
 - `API.md` — public/admin endpoints, authentication, errors, pagination, and examples.
-- `DESIGN_SYSTEM.md` — tokens, typography, layout, components, states, and accessibility.
 - `CONTENT_GUIDE.md` — editorial voice, claims, demo labeling, and Russian copy rules.
 - `MEDIA_GUIDE.md` — image/video formats, licensing, optimization, and fallbacks.
 - `THREAT_MODEL.md` — assets, trust boundaries, threats, mitigations, and residual risk.

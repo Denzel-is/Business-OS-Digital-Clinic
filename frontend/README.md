@@ -1,6 +1,6 @@
 # Frontend module
 
-The frontend foundation is a Next.js App Router application running on Node.js 24 LTS with React, strict TypeScript, Tailwind CSS, Vitest, and Playwright. Stage 4 establishes runtime and quality boundaries only; the visual system and full homepage arrive in stages 5 and 6.
+The frontend is a Next.js App Router application running on Node.js 24 LTS with React, strict TypeScript, Tailwind CSS, Vitest, and Playwright. Stage 5 adds the implemented visual system and accessible UI primitives; the full homepage arrives in stage 6.
 
 ## Architecture
 
@@ -10,7 +10,7 @@ frontend/
 ├── public/                 static public assets
 ├── src/
 │   ├── app/                routes, layouts, metadata, and route states
-│   ├── components/         reusable accessible components
+│   ├── components/         accessible foundation and UI primitives
 │   ├── features/           feature-owned interactive UI (added by feature stages)
 │   ├── lib/api/            typed server-side backend boundary
 │   └── test/               Vitest setup
@@ -25,6 +25,12 @@ frontend/
 Server Components are the default. Files using browser state, effects, event handlers, or browser-only libraries must declare `"use client"` at the narrowest practical boundary. Backend calls go through `src/lib/api`; browser-visible environment variables must never contain secrets.
 
 GSAP, Framer Motion, and React Three Fiber are installed to satisfy the approved stack, but remain unused until the motion and 3D stages. They must be dynamically imported when introduced.
+
+## Design system
+
+The live component catalog is available at `http://localhost:3000/design-system`. Semantic color, typography, radius, and shadow tokens are defined in `src/app/globals.css`; reusable primitives live in `src/components/ui`. See `../docs/DESIGN_SYSTEM.md` for usage and accessibility rules.
+
+Manrope Variable and IBM Plex Mono are packaged with the application and do not require a font CDN. Lucide SVG icons replace emoji-based interface decoration.
 
 ## Requirements
 

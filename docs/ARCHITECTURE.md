@@ -2,7 +2,7 @@
 
 ## Status
 
-This document records the monorepo contract plus the backend and frontend foundations completed through stage 4. Runtime details are promoted from planned to implemented only after their stage passes verification.
+This document records the monorepo contract plus the backend, frontend, and design-system foundations completed through stage 5. Runtime details are promoted from planned to implemented only after their stage passes verification.
 
 ## System context
 
@@ -40,6 +40,8 @@ Features own their API, application, domain, and infrastructure details. Domain 
 Routes compose features and reusable UI components. Features use one typed API layer rather than ad hoc network calls. Server Components are the default; Client Components are isolated at interactive boundaries. Browser-visible environment variables contain public configuration only.
 
 The frontend currently targets Node.js 24 LTS, Next.js App Router, and React 19. Its server-only API boundary validates backend payloads with Zod. GSAP, Framer Motion, and React Three Fiber are available but must stay outside initial bundles until a feature explicitly and dynamically loads them.
+
+Semantic visual tokens live in the global Tailwind theme and reusable accessible primitives live in `frontend/src/components/ui`. Routes and features compose these primitives; they must not fork colors, focus behavior, or form-state semantics without updating the documented design-system contract. Manrope and IBM Plex Mono are packaged locally so rendering does not depend on a runtime font CDN.
 
 ## Data and security principles
 

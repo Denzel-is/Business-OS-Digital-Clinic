@@ -21,9 +21,12 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@fontsource-variable/manrope": "5.2.8",
+    "@fontsource/ibm-plex-mono": "5.2.7",
     "@react-three/fiber": "9.6.1",
     "framer-motion": "12.42.2",
     "gsap": "3.15.0",
+    "lucide-react": "1.25.0",
     "next": "16.2.10",
     "react": "19.2.7",
     "react-dom": "19.2.7",
