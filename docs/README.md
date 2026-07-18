@@ -5,14 +5,14 @@ Documentation is versioned with the behavior it describes. Files marked as plann
 ## Available
 
 - [Architecture](ARCHITECTURE.md) — module boundaries, dependency direction, and staged runtime topology.
+- [Content guide](CONTENT_GUIDE.md) — editorial voice, evidence rules, demo labels, and Russian copy guidance.
 - [Design system](DESIGN_SYSTEM.md) — implemented tokens, typography, components, states, and accessibility rules.
+- [Media guide](MEDIA_GUIDE.md) — licensing, real-video requirements, optimization, fallbacks, and reduced motion.
 - [Security policy](../SECURITY.md) — responsible vulnerability reporting and the current support status.
 
 ## Planned
 
 - `API.md` — public/admin endpoints, authentication, errors, pagination, and examples.
-- `CONTENT_GUIDE.md` — editorial voice, claims, demo labeling, and Russian copy rules.
-- `MEDIA_GUIDE.md` — image/video formats, licensing, optimization, and fallbacks.
 - `THREAT_MODEL.md` — assets, trust boundaries, threats, mitigations, and residual risk.
 - `INCIDENT_RESPONSE.md` — triage, containment, recovery, notification, and learning.
 - `DEPLOYMENT.md` — environments, build artifacts, rollout, rollback, and recovery.

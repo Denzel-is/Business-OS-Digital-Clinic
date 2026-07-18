@@ -11,16 +11,19 @@ function collectBrowserErrors(page: Page) {
   return browserErrors;
 }
 
-test("renders the foundation without horizontal overflow and returns security headers", async ({
-  page,
-}) => {
+test("renders the homepage without broken media or horizontal overflow", async ({ page }) => {
   const browserErrors = collectBrowserErrors(page);
+  const failedRequests: string[] = [];
+  page.on("requestfailed", (request) => failedRequests.push(request.url()));
 
   const response = await page.goto("/");
 
   await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
-    "Business OS: Digital Clinic",
+    "Диагностирую цифровые проблемы бизнеса",
   );
+  await expect(page.getByText("Демонстрационная симуляция")).toBeVisible();
+  await expect(page.getByText("Concept Project")).toBeVisible();
+  await expect(page.locator('img[src*="hero-poster.svg"]')).toBeVisible();
 
   const hasHorizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
@@ -31,6 +34,31 @@ test("renders the foundation without horizontal overflow and returns security he
   expect(response?.headers()["x-frame-options"]).toBe("DENY");
   expect(response?.headers()["content-security-policy"]).toContain("object-src 'none'");
   expect(response?.headers()["strict-transport-security"]).toContain("max-age=63072000");
+  expect(failedRequests).toEqual([]);
+  expect(browserErrors).toEqual([]);
+});
+
+test("keeps homepage navigation keyboard and mobile accessible", async ({ page }) => {
+  const browserErrors = collectBrowserErrors(page);
+  await page.setViewportSize({ height: 844, width: 390 });
+  await page.goto("/");
+
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("link", { name: "Перейти к содержанию" })).toBeFocused();
+
+  await page.locator("summary").click();
+  await expect(page.getByRole("navigation", { name: "Мобильная навигация" })).toBeVisible();
+  await expect(
+    page.getByRole("navigation", { name: "Мобильная навигация" }).getByRole("link", {
+      name: "Решения",
+    }),
+  ).toHaveAttribute("href", "#solutions");
+
+  const hasHorizontalOverflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+  );
+
+  expect(hasHorizontalOverflow).toBe(false);
   expect(browserErrors).toEqual([]);
 });
 

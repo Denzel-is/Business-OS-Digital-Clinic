@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#07100E"/>
+  <g stroke="#67E8C2" stroke-opacity="0.08">
+    <path d="M0 100H1600M0 200H1600M0 300H1600M0 400H1600M0 500H1600M0 600H1600M0 700H1600M0 800H1600M0 900H1600"/>
+    <path d="M100 0V1000M200 0V1000M300 0V1000M400 0V1000M500 0V1000M600 0V1000M700 0V1000M800 0V1000M900 0V1000M1000 0V1000M1100 0V1000M1200 0V1000M1300 0V1000M1400 0V1000M1500 0V1000"/>
+  </g>
+  <g stroke="#67E8C2" stroke-width="2">
+    <path d="M170 665L430 515L665 600L910 335L1190 440L1430 230" stroke-opacity="0.68"/>
+    <path d="M170 665L430 725L665 600L910 760L1190 650L1430 720" stroke-opacity="0.24"/>
+  </g>
+  <g fill="#0F1F1A" stroke="#67E8C2">
+    <circle cx="170" cy="665" r="22"/>
+    <circle cx="430" cy="515" r="22"/>
+    <circle cx="665" cy="600" r="30" fill="#16372D"/>
+    <circle cx="910" cy="335" r="22"/>
+    <circle cx="1190" cy="440" r="22"/>
+    <circle cx="1430" cy="230" r="22"/>
+  </g>
+  <g fill="#F0F0E8" font-family="Arial, sans-serif">
+    <text x="120" y="110" font-size="18" letter-spacing="4" opacity="0.45">BUSINESS PROCESS MAP / MEDIA PLACEHOLDER</text>
+    <text x="120" y="895" font-size="68" font-weight="700" letter-spacing="-3">From symptom to system</text>
+    <text x="120" y="940" font-size="20" opacity="0.55">Licensed real-world footage required for production hero</text>
+  </g>
+</svg>

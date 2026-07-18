@@ -3,17 +3,59 @@ import { describe, expect, it } from "vitest";
 
 import HomePage from "@/app/page";
 
-describe("frontend foundation page", () => {
-  it("renders the product heading and honestly marks the staged state", () => {
+describe("homepage", () => {
+  it("renders the diagnostic message and every planned editorial section", () => {
     render(<HomePage />);
 
     expect(
-      screen.getByRole("heading", { level: 1, name: "Business OS: Digital Clinic" }),
+      screen.getByRole("heading", {
+        level: 1,
+        name: "Диагностирую цифровые проблемы бизнеса",
+      }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Полноценная главная страница будет собрана/)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Открыть дизайн-систему/ })).toHaveAttribute(
+
+    const sectionHeadings = [
+      "Сначала измеряем. Потом назначаем решение",
+      "От проблемного сигнала к управляемому процессу",
+      "Симптомы, которые бизнес видит каждый день",
+      "Не начинаю с кода. Начинаю с процесса",
+      "Назначения под задачу, а не под модный стек",
+      "Показываю ход решения, не вымышленные победы",
+      "Безопасность — система слоёв",
+      "Перевожу между бизнесом, интерфейсом и кодом",
+      "Начните не с решения. Начните с симптома",
+    ];
+
+    for (const heading of sectionHeadings) {
+      expect(screen.getByRole("heading", { level: 2, name: heading })).toBeInTheDocument();
+    }
+  });
+
+  it("labels simulated and preliminary content honestly", () => {
+    render(<HomePage />);
+
+    expect(screen.getByText("Демонстрационная симуляция")).toBeInTheDocument();
+    expect(screen.getByText(/Не измерено\. Демонстрационная оценка/)).toBeInTheDocument();
+    expect(screen.getByText("Concept Project")).toBeInTheDocument();
+    expect(screen.getByText("Educational Project")).toBeInTheDocument();
+    expect(screen.getByText("Demo Case")).toBeInTheDocument();
+    expect(screen.getByText(/ничего не сохраняется/)).toBeInTheDocument();
+  });
+
+  it("links calls to action only to implemented page sections", () => {
+    render(<HomePage />);
+
+    expect(screen.getByRole("link", { name: "Начать первичный осмотр" })).toHaveAttribute(
       "href",
-      "/design-system",
+      "#health",
+    );
+    expect(screen.getByRole("link", { name: "Посмотреть метод" })).toHaveAttribute(
+      "href",
+      "#treatment",
+    );
+    expect(screen.getByRole("link", { name: "Вернуться к индикатору" })).toHaveAttribute(
+      "href",
+      "#health",
     );
   });
 });

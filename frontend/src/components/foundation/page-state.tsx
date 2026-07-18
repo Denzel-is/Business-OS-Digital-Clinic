@@ -17,7 +17,7 @@ export function PageState({ action, description, kind, title }: PageStateProps) 
   const isError = kind === "error";
 
   return (
-    <main className="flex min-h-screen items-center bg-canvas py-16">
+    <main className="flex min-h-screen items-center bg-canvas py-16" id="main-content">
       <Container>
         <Surface
           aria-live={isError ? "assertive" : "polite"}

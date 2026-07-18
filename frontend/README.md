@@ -1,6 +1,6 @@
 # Frontend module
 
-The frontend is a Next.js App Router application running on Node.js 24 LTS with React, strict TypeScript, Tailwind CSS, Vitest, and Playwright. Stage 5 adds the implemented visual system and accessible UI primitives; the full homepage arrives in stage 6.
+The frontend is a Next.js App Router application running on Node.js 24 LTS with React, strict TypeScript, Tailwind CSS, Vitest, and Playwright. Stage 6 adds the complete server-rendered homepage structure on top of the visual system and accessible UI primitives.
 
 ## Architecture
 
@@ -11,6 +11,7 @@ frontend/
 ├── src/
 │   ├── app/                routes, layouts, metadata, and route states
 │   ├── components/         accessible foundation and UI primitives
+│   ├── content/            immutable editorial content and labels
 │   ├── features/           feature-owned interactive UI (added by feature stages)
 │   ├── lib/api/            typed server-side backend boundary
 │   └── test/               Vitest setup
@@ -31,6 +32,12 @@ GSAP, Framer Motion, and React Three Fiber are installed to satisfy the approved
 The live component catalog is available at `http://localhost:3000/design-system`. Semantic color, typography, radius, and shadow tokens are defined in `src/app/globals.css`; reusable primitives live in `src/components/ui`. See `../docs/DESIGN_SYSTEM.md` for usage and accessibility rules.
 
 Manrope Variable and IBM Plex Mono are packaged with the application and do not require a font CDN. Lucide SVG icons replace emoji-based interface decoration.
+
+## Homepage
+
+The `/` route contains System Boot, Hero, Business Health Indicator, sticky Business Vitals, Digital Symptoms, treatment approach, solutions, featured demo cases, Security Pulse, About, and the final diagnostic CTA. It remains a Server Component composition with no scroll-motion runtime.
+
+The Hero uses `public/media/hero-poster.svg` as an explicit placeholder because no approved real video asset exists. Production video requirements and reduced-motion behavior are defined in `../docs/MEDIA_GUIDE.md`. Homepage claims and demo labeling rules are defined in `../docs/CONTENT_GUIDE.md`.
 
 ## Requirements
 

@@ -28,7 +28,15 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ru">
-      <body>{children}</body>
+      <body>
+        <a
+          className="fixed left-4 top-4 z-50 -translate-y-24 rounded-control bg-accent px-4 py-3 font-semibold text-accent-ink transition-transform focus:translate-y-0"
+          href="#main-content"
+        >
+          Перейти к содержанию
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

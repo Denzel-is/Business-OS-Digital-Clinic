@@ -41,7 +41,7 @@ const colorTokens = [
 
 export default function DesignSystemPage() {
   return (
-    <main className="bg-canvas text-ink">
+    <main className="bg-canvas text-ink" id="main-content">
       <header className="sticky top-0 z-20 border-b border-line bg-canvas">
         <Container className="flex min-h-16 items-center justify-between gap-4">
           <Link
