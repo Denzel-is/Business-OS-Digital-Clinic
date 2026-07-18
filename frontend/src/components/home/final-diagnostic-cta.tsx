@@ -1,4 +1,4 @@
-import { ArrowUp, ClipboardList } from "lucide-react";
+import { ArrowRight, ClipboardList } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
@@ -36,10 +36,10 @@ export function FinalDiagnosticCta() {
           <div className="mt-14 flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3 text-sm text-ink-muted">
               <ClipboardList aria-hidden="true" className="size-5 text-accent" />
-              Интерактивная анкета будет подключена в модуле Business Diagnostic.
+              Интерактивная анкета доступна и не сохраняет ответы или контакты.
             </div>
-            <ButtonLink href="#health" icon={<ArrowUp aria-hidden="true" />} variant="secondary">
-              Вернуться к индикатору
+            <ButtonLink href="/diagnostic" icon={<ArrowRight aria-hidden="true" />}>
+              Начать диагностику
             </ButtonLink>
           </div>
         </div>

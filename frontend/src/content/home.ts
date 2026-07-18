@@ -1,9 +1,9 @@
 export const homeNavigation = [
-  { href: "#health", label: "Диагностика" },
-  { href: "#solutions", label: "Решения" },
-  { href: "#cases", label: "Кейсы" },
-  { href: "#security", label: "Безопасность" },
-  { href: "#about", label: "Подход" },
+  { href: "/#health", label: "Диагностика" },
+  { href: "/#solutions", label: "Решения" },
+  { href: "/#cases", label: "Кейсы" },
+  { href: "/#security", label: "Безопасность" },
+  { href: "/#about", label: "Подход" },
 ] as const;
 
 export const businessVitals = [

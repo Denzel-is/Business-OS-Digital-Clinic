@@ -5,6 +5,7 @@ Documentation is versioned with the behavior it describes. Files marked as plann
 ## Available
 
 - [Architecture](ARCHITECTURE.md) — module boundaries, dependency direction, and staged runtime topology.
+- [API](API.md) — implemented public endpoints, diagnostic contracts, proxy boundary, and errors.
 - [Content guide](CONTENT_GUIDE.md) — editorial voice, evidence rules, demo labels, and Russian copy guidance.
 - [Design system](DESIGN_SYSTEM.md) — implemented tokens, typography, components, states, and accessibility rules.
 - [Media guide](MEDIA_GUIDE.md) — licensing, real-video requirements, optimization, fallbacks, and reduced motion.
@@ -13,7 +14,6 @@ Documentation is versioned with the behavior it describes. Files marked as plann
 
 ## Planned
 
-- `API.md` — public/admin endpoints, authentication, errors, pagination, and examples.
 - `THREAT_MODEL.md` — assets, trust boundaries, threats, mitigations, and residual risk.
 - `INCIDENT_RESPONSE.md` — triage, containment, recovery, notification, and learning.
 - `DEPLOYMENT.md` — environments, build artifacts, rollout, rollback, and recovery.

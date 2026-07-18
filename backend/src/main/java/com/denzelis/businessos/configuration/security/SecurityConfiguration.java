@@ -35,7 +35,10 @@ public class SecurityConfiguration {
         csrfTokenRepository.setCookiePath("/");
 
         http.cors(cors -> cors.configurationSource(corsConfigurationSource))
-                .csrf(csrf -> csrf.csrfTokenRepository(csrfTokenRepository))
+                .csrf(
+                        csrf ->
+                                csrf.csrfTokenRepository(csrfTokenRepository)
+                                        .ignoringRequestMatchers("/api/v1/diagnostics/evaluate"))
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .requestCache(AbstractHttpConfigurer::disable)
@@ -52,6 +55,9 @@ public class SecurityConfiguration {
                                                 "/actuator/health",
                                                 "/actuator/health/liveness",
                                                 "/actuator/health/readiness")
+                                        .permitAll()
+                                        .requestMatchers(
+                                                HttpMethod.POST, "/api/v1/diagnostics/evaluate")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())

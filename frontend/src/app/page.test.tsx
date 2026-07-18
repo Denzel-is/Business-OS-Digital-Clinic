@@ -57,15 +57,15 @@ describe("homepage", () => {
 
     expect(screen.getByRole("link", { name: "Начать первичный осмотр" })).toHaveAttribute(
       "href",
-      "#health",
+      "/diagnostic",
     );
     expect(screen.getByRole("link", { name: "Посмотреть метод" })).toHaveAttribute(
       "href",
       "#treatment",
     );
-    expect(screen.getByRole("link", { name: "Вернуться к индикатору" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Начать диагностику" })).toHaveAttribute(
       "href",
-      "#health",
+      "/diagnostic",
     );
   });
 });

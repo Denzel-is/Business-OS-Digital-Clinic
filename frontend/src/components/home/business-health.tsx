@@ -62,11 +62,11 @@ export function BusinessHealth() {
                   ))}
                 </ol>
                 <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <ButtonLink href="#symptoms" icon={<ClipboardCheck aria-hidden="true" />}>
-                    Сверить симптомы
+                  <ButtonLink href="/diagnostic" icon={<ClipboardCheck aria-hidden="true" />}>
+                    Пройти диагностику
                   </ButtonLink>
                   <p className="max-w-xs text-xs leading-5 text-ink-faint">
-                    Интерактивный расчёт и сохранение результата появятся в модуле диагностики.
+                    Расчёт выполняется сервером. Ответы и контакты не сохраняются.
                   </p>
                 </div>
               </div>

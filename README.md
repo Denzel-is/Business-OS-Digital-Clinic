@@ -2,7 +2,7 @@
 
 Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction and turning it into fast, usable, and secure IT systems.
 
-> Current status: the backend, frontend, design system, accessible homepage, and motion system are complete through stage 7. Purposeful Framer Motion, dynamically loaded GSAP storytelling, and one isolated React Three Fiber security model include reduced-motion and mobile fallbacks; interactive diagnostics, production media, domain features, Compose services, and deployment workflows will be added in the stages that follow.
+> Current status: the project is complete through stage 8. The accessible homepage and motion system now lead to a 12-step Business Diagnostic whose stateless Java API returns an explicitly preliminary score, findings, priorities, recommendations, services, cases, and implementation sequence without persisting answers or contacts. Production media, project detail pages, the Security Center, persistence, Compose services, and deployment workflows follow in later stages.
 
 ## Product direction
 
@@ -44,7 +44,7 @@ The backend will use package-by-feature boundaries. The frontend will use Server
 5. Design system — complete.
 6. Homepage and accessible content structure — complete.
 7. Motion design with reduced-motion support — complete.
-8. Business Diagnostic.
+8. Business Diagnostic — complete.
 9. Demo projects and cases.
 10. Security Center.
 11. Database model and migrations.
@@ -134,7 +134,7 @@ cd backend
 .\mvnw.cmd spring-boot:run
 ```
 
-The local API and health endpoint will be documented in `docs/API.md` when the backend foundation is implemented.
+The local API, health endpoint, and Business Diagnostic contract are documented in `docs/API.md`.
 
 ## Start the frontend
 
@@ -146,7 +146,7 @@ npm.cmd ci
 npm.cmd run dev
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:3000`. The interactive diagnostic is available at `http://localhost:3000/diagnostic` and requires the backend on `http://localhost:8080` unless `BACKEND_PUBLIC_URL` is configured differently.
 
 ## Testing
 

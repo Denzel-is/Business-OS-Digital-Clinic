@@ -9,7 +9,7 @@ export function SiteFooter() {
     <footer className="border-t border-line bg-surface-inset py-12">
       <Container className="grid gap-10 md:grid-cols-12">
         <div className="md:col-span-5">
-          <Link className="inline-flex items-center gap-3 font-semibold" href="#top">
+          <Link className="inline-flex items-center gap-3 font-semibold" href="/">
             <Activity aria-hidden="true" className="size-5 text-accent" />
             Business OS: Digital Clinic
           </Link>

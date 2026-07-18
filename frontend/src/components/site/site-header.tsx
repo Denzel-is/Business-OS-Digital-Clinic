@@ -9,10 +9,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-canvas/95">
       <Container className="flex min-h-16 items-center justify-between gap-5">
-        <Link
-          className="inline-flex items-center gap-3 font-semibold tracking-[-0.03em]"
-          href="#top"
-        >
+        <Link className="inline-flex items-center gap-3 font-semibold tracking-[-0.03em]" href="/">
           <span
             aria-hidden="true"
             className="grid size-8 place-items-center rounded-full border border-accent/35 bg-accent/10 text-accent"
@@ -38,7 +35,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <ButtonLink href="#diagnostic-cta" size="compact">
+          <ButtonLink href="/diagnostic" size="compact">
             Начать осмотр
           </ButtonLink>
           <details className="relative lg:hidden">

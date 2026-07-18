@@ -1,11 +1,11 @@
-import { Check, CircleDashed } from "lucide-react";
+import { Check } from "lucide-react";
 
 import { Container } from "@/components/ui/container";
 
 const bootSignals = [
   { label: "Interface", state: "online", stable: true },
   { label: "Security baseline", state: "active", stable: true },
-  { label: "Interactive diagnostic", state: "preparing", stable: false },
+  { label: "Interactive diagnostic", state: "online", stable: true },
 ] as const;
 
 export function SystemBoot() {
@@ -21,14 +21,7 @@ export function SystemBoot() {
               className="flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.12em]"
               key={signal.label}
             >
-              {signal.stable ? (
-                <Check aria-hidden="true" className="size-3.5 text-accent" />
-              ) : (
-                <CircleDashed
-                  aria-hidden="true"
-                  className="size-3.5 animate-[spin_8s_linear_infinite] text-warning"
-                />
-              )}
+              <Check aria-hidden="true" className="size-3.5 text-accent" />
               <span className="text-ink-faint">{signal.label}</span>
               <span className={signal.stable ? "text-accent" : "text-warning"}>{signal.state}</span>
             </li>

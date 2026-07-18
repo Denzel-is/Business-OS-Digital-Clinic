@@ -1,0 +1,84 @@
+# API
+
+The backend exposes JSON APIs under `/api/v1`. Public responses use explicit DTOs, validation failures use RFC 9457-style Problem Details, and endpoints that return user-specific calculations use `Cache-Control: no-store`.
+
+## Public endpoints
+
+### `GET /api/v1/system/status`
+
+Returns the public service availability contract.
+
+```json
+{
+  "service": "business-os-backend",
+  "status": "available"
+}
+```
+
+### `GET /api/v1/security/csrf`
+
+Initializes and returns a CSRF token for future cookie-authenticated state-changing requests. The token value must not be logged.
+
+### `POST /api/v1/diagnostics/evaluate`
+
+Calculates a stateless preliminary Business Health assessment. Authentication and CSRF are not required because the endpoint creates no session and changes no server state. Rate limiting is added in the security-hardening stage.
+
+The request contains exactly these 11 answer fields:
+
+```json
+{
+  "businessType": "SERVICES",
+  "teamSize": "ELEVEN_TO_FIFTY",
+  "primaryProblem": "LOST_LEADS",
+  "manualOperations": "REGULAR",
+  "existingSystems": "FRAGMENTED",
+  "digitalProduct": "OUTDATED",
+  "leadHandling": "MANUAL",
+  "analytics": "MANUAL",
+  "aiUsage": "EXPERIMENTING",
+  "personalData": "REGULAR",
+  "expectedResult": "GROW_REVENUE"
+}
+```
+
+The response contains:
+
+- a deterministic score from 20 to 100 and a status label;
+- findings with `HIGH`, `MEDIUM`, or `LOW` preliminary priority;
+- the first priorities and recommendations;
+- relevant service and demo-case titles;
+- an implementation sequence;
+- a disclaimer that the result does not replace a complete audit.
+
+Contact name, email, consent, raw personal data, free text, and client identifiers are not accepted by this endpoint. The current frontend keeps optional contact fields only in browser memory and excludes them from the request through an explicit allowlist.
+
+## Frontend proxy
+
+The browser posts evaluation answers to the same-origin Next.js route `POST /api/diagnostic/evaluate`. The route:
+
+1. rejects declared bodies above 16 KiB;
+2. parses strict Zod contracts;
+3. forwards only validated evaluation fields to the backend;
+4. validates the backend response;
+5. returns a generic `502` Problem Details response without internal errors when the backend is unavailable.
+
+## Error format
+
+Validation errors use `application/problem+json`:
+
+```json
+{
+  "type": "urn:business-os:problem:validation-error",
+  "title": "Validation failed",
+  "status": 400,
+  "detail": "One or more request fields are invalid.",
+  "errors": [
+    {
+      "field": "expectedResult",
+      "message": "must not be null"
+    }
+  ]
+}
+```
+
+Malformed enum values return a generic malformed-input problem and never expose a stack trace or deserialization internals.

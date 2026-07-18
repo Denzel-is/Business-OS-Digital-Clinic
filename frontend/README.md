@@ -1,6 +1,6 @@
 # Frontend module
 
-The frontend is a Next.js App Router application running on Node.js 24 LTS with React, strict TypeScript, Tailwind CSS, Vitest, and Playwright. Stage 7 adds a progressive motion layer to the complete server-rendered homepage.
+The frontend is a Next.js App Router application running on Node.js 24 LTS with React, strict TypeScript, Tailwind CSS, Vitest, and Playwright. Stage 8 adds the interactive Business Diagnostic on top of the homepage and progressive motion layer.
 
 ## Architecture
 
@@ -36,7 +36,9 @@ Manrope Variable and IBM Plex Mono are packaged with the application and do not 
 
 ## Homepage
 
-The `/` route contains System Boot, Hero, Business Health Indicator, sticky Business Vitals, Digital Symptoms, treatment approach, solutions, featured demo cases, Security Pulse, About, and the final diagnostic CTA. It remains a Server Component composition with no scroll-motion runtime.
+The `/` route contains System Boot, Hero, Business Health Indicator, sticky Business Vitals, Digital Symptoms, treatment approach, solutions, featured demo cases, Security Pulse, About, and the final diagnostic CTA. Server Components own content while isolated client boundaries provide motion.
+
+The `/diagnostic` route contains a 12-step React Hook Form wizard. Eleven enumerated process answers are validated with Zod and sent through the same-origin `/api/diagnostic/evaluate` proxy. The twelfth contact step is optional and stays in browser memory; its fields are never included in the evaluation payload. The Java backend owns scoring and recommendation rules.
 
 The Hero uses `public/media/hero-poster.svg` as an explicit placeholder because no approved real video asset exists. Production video requirements and reduced-motion behavior are defined in `../docs/MEDIA_GUIDE.md`. Homepage claims and demo labeling rules are defined in `../docs/CONTENT_GUIDE.md`.
 

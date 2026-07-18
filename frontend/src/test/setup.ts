@@ -9,7 +9,7 @@ Object.defineProperty(window, "matchMedia", {
     addEventListener: vi.fn(),
     addListener: vi.fn(),
     dispatchEvent: vi.fn(),
-    matches: false,
+    matches: query === "(prefers-reduced-motion: reduce)",
     media: query,
     onchange: null,
     removeEventListener: vi.fn(),

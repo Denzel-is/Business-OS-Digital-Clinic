@@ -24,7 +24,7 @@ export function Hero() {
               технологии.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="#health" icon={<Stethoscope aria-hidden="true" />}>
+              <ButtonLink href="/diagnostic" icon={<Stethoscope aria-hidden="true" />}>
                 Начать первичный осмотр
               </ButtonLink>
               <ButtonLink

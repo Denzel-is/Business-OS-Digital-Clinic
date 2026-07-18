@@ -61,7 +61,7 @@ test("keeps homepage navigation keyboard and mobile accessible", async ({ page }
     page.getByRole("navigation", { name: "Мобильная навигация" }).getByRole("link", {
       name: "Решения",
     }),
-  ).toHaveAttribute("href", "#solutions");
+  ).toHaveAttribute("href", "/#solutions");
   await expect(page.locator("[data-security-visual]")).toHaveAttribute(
     "data-motion-mode",
     "compact",
@@ -120,6 +120,78 @@ test("uses static homepage fallbacks when reduced motion is requested", async ({
     "reduced",
   );
   await expect(page.locator("[data-security-visual] canvas")).toHaveCount(0);
+  expect(browserErrors).toEqual([]);
+});
+
+test("completes the diagnostic without sending contact data", async ({ page }) => {
+  const browserErrors = collectBrowserErrors(page);
+  let evaluationPayload: Record<string, unknown> | undefined;
+
+  await page.route("**/api/diagnostic/evaluate", async (route) => {
+    evaluationPayload = route.request().postDataJSON() as Record<string, unknown>;
+    await route.fulfill({
+      contentType: "application/json",
+      json: {
+        cases: ["Автоматизация обработки заявок", "Аналитический дашборд"],
+        disclaimer:
+          "Предварительная диагностика основана только на выбранных ответах и не заменяет полноценный аудит.",
+        findings: [
+          {
+            code: "lead-loss",
+            description: "Нужно проследить путь заявки от канала до ответственного.",
+            severity: "HIGH",
+            title: "Потери в обработке заявок",
+          },
+        ],
+        implementationSequence: ["Подтвердить симптомы данными."],
+        priorities: ["Потери в обработке заявок"],
+        recommendations: ["Собрать единую воронку."],
+        score: 48,
+        services: ["Автоматизация"],
+        status: "Высокое цифровое трение",
+      },
+      status: 200,
+    });
+  });
+
+  await page.goto("/diagnostic");
+
+  const choices = [
+    "Услуги",
+    "11–50",
+    "Заявки теряются",
+    "Регулярная",
+    "Разрознены",
+    "Устарел",
+    "Вручную",
+    "Ручные отчёты",
+    "Эксперименты",
+    "Регулярно",
+    "Рост выручки",
+  ];
+
+  for (const choice of choices) {
+    await page.getByText(choice, { exact: true }).click();
+    await page.getByRole("button", { name: "Продолжить" }).click();
+  }
+
+  await page.getByRole("textbox", { name: "Имя" }).fill("Тестовый пользователь");
+  await page.getByRole("textbox", { name: "Email" }).fill("private@example.com");
+  await page.getByRole("checkbox").check();
+  await page.getByRole("button", { name: "Получить предварительный результат" }).click();
+
+  await expect(
+    page.getByRole("heading", { name: "Предварительная карта цифрового здоровья" }),
+  ).toBeVisible();
+  await expect(page.getByRole("progressbar", { name: "Business Health Score" })).toHaveAttribute(
+    "aria-valuenow",
+    "48",
+  );
+  expect(evaluationPayload).toBeDefined();
+  expect(evaluationPayload).not.toHaveProperty("contactName");
+  expect(evaluationPayload).not.toHaveProperty("contactEmail");
+  expect(evaluationPayload).not.toHaveProperty("contactConsent");
+  expect(Object.keys(evaluationPayload ?? {})).toHaveLength(11);
   expect(browserErrors).toEqual([]);
 });
 

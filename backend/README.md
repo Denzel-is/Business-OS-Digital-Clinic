@@ -2,6 +2,8 @@
 
 The backend foundation is a Java 21 and Spring Boot 4.1 API with a Maven Wrapper, PostgreSQL, Redis, Flyway, Actuator, validation, and a deny-by-default Spring Security baseline.
 
+Stage 8 adds the stateless `diagnostic` feature. Its public evaluation endpoint validates enumerated answers, runs deterministic application-layer scoring, and returns a preliminary assessment without accepting or persisting contacts.
+
 ## Responsibilities
 
 - Business rules and server-side validation.

@@ -2,7 +2,7 @@
 
 ## Status
 
-This document records the monorepo contract plus the backend, frontend, design-system, homepage, and motion foundations completed through stage 7. Runtime details are promoted from planned to implemented only after their stage passes verification.
+This document records the monorepo contract plus the backend, frontend, design-system, homepage, motion, and Business Diagnostic slices completed through stage 8. Runtime details are promoted from planned to implemented only after their stage passes verification.
 
 ## System context
 
@@ -46,6 +46,8 @@ Semantic visual tokens live in the global Tailwind theme and reusable accessible
 The homepage is composed from server-rendered sections in `frontend/src/components/home` and immutable editorial data in `frontend/src/content/home.ts`. It does not fetch domain data; client motion progressively enhances the same static content. Demonstration states and project teasers are visibly labeled, while interactive scoring and production hero video remain separate feature concerns.
 
 Motion is isolated in client boundaries under `frontend/src/components/motion`. Framer Motion handles lightweight editorial movement. GSAP and ScrollTrigger are imported only inside Business Vitals after reduced-motion checks. React Three Fiber and Three.js are imported only for the Security Pulse defense-layer model and are skipped for reduced motion, narrow viewports, or unavailable WebGL. Static server-rendered content remains the source of meaning in every mode.
+
+Business Diagnostic is a vertical stateless slice. The React Hook Form wizard owns step navigation and ephemeral contact inputs. A strict frontend allowlist sends only 11 process answers through a same-origin Next.js route. The route validates with Zod and calls the Java API. `diagnostic.application` owns scoring and recommendation rules; `diagnostic.domain` owns answer and assessment models; `diagnostic.api` owns validated DTO mapping. No answer or contact persistence exists before the database and explicit-consent stages.
 
 ## Data and security principles
 
