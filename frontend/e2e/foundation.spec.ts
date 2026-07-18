@@ -195,6 +195,32 @@ test("completes the diagnostic without sending contact data", async ({ page }) =
   expect(browserErrors).toEqual([]);
 });
 
+test("filters honest project cases and opens a detailed breakdown", async ({ page }) => {
+  const browserErrors = collectBrowserErrors(page);
+  await page.goto("/projects");
+
+  await expect(page.getByRole("link", { name: "Открыть разбор" })).toHaveCount(6);
+  await page.getByRole("button", { name: "Bots" }).click();
+  await expect(page.getByText("Показано проектов: 1")).toBeVisible();
+  await expect(page.getByText("Telegram-бот клиентского сервиса")).toBeVisible();
+  await expect(page.getByText("Редизайн интернет-магазина")).toHaveCount(0);
+
+  await page.getByRole("link", { name: "Открыть разбор" }).click();
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Telegram-бот клиентского сервиса" }),
+  ).toBeVisible();
+  await expect(page.getByText("Personal Project")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Честное ограничение" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Что проверять, а не обещать" })).toBeVisible();
+
+  const hasHorizontalOverflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+  );
+
+  expect(hasHorizontalOverflow).toBe(false);
+  expect(browserErrors).toEqual([]);
+});
+
 test("keeps the design system accessible and responsive on a narrow viewport", async ({ page }) => {
   const browserErrors = collectBrowserErrors(page);
   await page.setViewportSize({ height: 844, width: 390 });

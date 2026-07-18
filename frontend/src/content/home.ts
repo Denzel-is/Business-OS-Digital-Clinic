@@ -1,7 +1,7 @@
 export const homeNavigation = [
   { href: "/#health", label: "Диагностика" },
   { href: "/#solutions", label: "Решения" },
-  { href: "/#cases", label: "Кейсы" },
+  { href: "/projects", label: "Кейсы" },
   { href: "/#security", label: "Безопасность" },
   { href: "/#about", label: "Подход" },
 ] as const;
@@ -130,28 +130,6 @@ export const solutions = [
     code: "SEC",
     description: "Безопасная архитектура, контроль доступа, аудит и подготовка к edge-защите.",
     title: "Security by design",
-  },
-] as const;
-
-export const featuredCases = [
-  {
-    categories: ["Automation", "Applications"],
-    description:
-      "Концепция единого маршрута заявки: приём, классификация, назначение и контроль статуса.",
-    label: "Concept Project",
-    title: "Автоматизация обработки заявок",
-  },
-  {
-    categories: ["UX/UI", "Web"],
-    description: "Учебный редизайн каталога и оформления заказа с фокусом на понятную навигацию.",
-    label: "Educational Project",
-    title: "Редизайн интернет-магазина",
-  },
-  {
-    categories: ["AI", "Data"],
-    description: "Демо-помощник для поиска по внутренним материалам с контролем источников ответа.",
-    label: "Demo Case",
-    title: "ИИ-помощник сотрудников",
   },
 ] as const;
 

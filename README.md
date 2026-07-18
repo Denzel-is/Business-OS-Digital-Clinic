@@ -2,7 +2,7 @@
 
 Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction and turning it into fast, usable, and secure IT systems.
 
-> Current status: the project is complete through stage 8. The accessible homepage and motion system now lead to a 12-step Business Diagnostic whose stateless Java API returns an explicitly preliminary score, findings, priorities, recommendations, services, cases, and implementation sequence without persisting answers or contacts. Production media, project detail pages, the Security Center, persistence, Compose services, and deployment workflows follow in later stages.
+> Current status: the project is complete through stage 9. The homepage and Business Diagnostic now connect to six static, honestly labeled project breakdowns spanning Web, Applications, AI, Automation, UX/UI, Security, Data, and Bots. Projects describe challenges, approaches, verification signals, and limitations without inventing clients or outcomes; the Security Center, persistence, production media, Compose services, and deployment workflows follow in later stages.
 
 ## Product direction
 
@@ -45,7 +45,7 @@ The backend will use package-by-feature boundaries. The frontend will use Server
 6. Homepage and accessible content structure — complete.
 7. Motion design with reduced-motion support — complete.
 8. Business Diagnostic — complete.
-9. Demo projects and cases.
+9. Demo projects and cases — complete.
 10. Security Center.
 11. Database model and migrations.
 12. Authentication and protected administration.

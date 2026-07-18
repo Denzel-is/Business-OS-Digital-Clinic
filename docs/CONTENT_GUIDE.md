@@ -31,6 +31,7 @@ Supporting copy should explain the business process, user friction, technical in
 - Business Health starts as `Не измерено` until the user supplies diagnostic data.
 - Before/after vitals describe a target process and never imply a completed client result.
 - Featured case teasers must retain their project-type label when reused elsewhere.
+- Project details must include a visible limitation and phrase proposed metrics as future verification signals, never completed results.
 - The security section explains layered risk reduction and the role of CDN, WAF, monitoring, backups, and origin protection.
 - Calls to action must lead to an implemented destination. Planned interactive modules are named as planned and do not collect data early.
 

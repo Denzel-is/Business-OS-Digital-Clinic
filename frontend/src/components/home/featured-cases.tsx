@@ -1,8 +1,11 @@
+import Link from "next/link";
 import { ArrowUpRight, Layers3 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
-import { featuredCases } from "@/content/home";
+import { projects } from "@/content/projects";
+
+const featuredProjects = projects.slice(0, 3);
 
 export function FeaturedCases() {
   return (
@@ -22,7 +25,7 @@ export function FeaturedCases() {
         </div>
 
         <div className="mt-16 grid gap-4 lg:grid-cols-12">
-          {featuredCases.map((caseItem, index) => (
+          {featuredProjects.map((caseItem, index) => (
             <article
               className={`flex min-h-[30rem] flex-col rounded-panel border border-line p-7 transition-[transform,border-color] duration-500 ease-out hover:-translate-y-1 hover:border-accent/35 sm:p-9 ${index === 0 ? "bg-surface-raised lg:col-span-7" : "bg-canvas lg:col-span-5"}`}
               data-motion-interactive
@@ -46,11 +49,14 @@ export function FeaturedCases() {
                 <h3 className="mt-6 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
                   {caseItem.title}
                 </h3>
-                <p className="mt-5 max-w-xl leading-7 text-ink-muted">{caseItem.description}</p>
-                <p className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ink-faint">
-                  Подробный кейс готовится на профильном этапе
+                <p className="mt-5 max-w-xl leading-7 text-ink-muted">{caseItem.summary}</p>
+                <Link
+                  className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ink hover:text-accent"
+                  href={`/projects/${caseItem.slug}`}
+                >
+                  Открыть подробный разбор
                   <ArrowUpRight aria-hidden="true" className="size-4" />
-                </p>
+                </Link>
               </div>
             </article>
           ))}
