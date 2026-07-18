@@ -1,6 +1,6 @@
 # Media guide
 
-The homepage currently uses the repository-owned `frontend/public/media/hero-poster.svg` as a transparent placeholder. It is not presented as client footage. A production hero video must be selected from real, licensed, non-AI-generated material and added during the motion stage.
+The homepage currently uses the repository-owned `frontend/public/media/hero-poster.svg` as a transparent placeholder. It is not presented as client footage. The motion system adds a restrained scan and shallow parallax without pretending the poster is real media. A production hero video still requires real, licensed, non-AI-generated material and must not be added until that approved asset exists.
 
 ## Hero video subject
 

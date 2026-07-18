@@ -2,7 +2,7 @@
 
 Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction and turning it into fast, usable, and secure IT systems.
 
-> Current status: the backend, frontend, design system, and accessible homepage are complete through stage 6. The homepage contains all planned editorial sections with explicitly labeled demo content and a repository-owned media placeholder; interactive diagnostics, production media, domain features, Compose services, and deployment workflows will be added in the stages that follow.
+> Current status: the backend, frontend, design system, accessible homepage, and motion system are complete through stage 7. Purposeful Framer Motion, dynamically loaded GSAP storytelling, and one isolated React Three Fiber security model include reduced-motion and mobile fallbacks; interactive diagnostics, production media, domain features, Compose services, and deployment workflows will be added in the stages that follow.
 
 ## Product direction
 
@@ -43,7 +43,7 @@ The backend will use package-by-feature boundaries. The frontend will use Server
 4. Frontend foundation — complete.
 5. Design system — complete.
 6. Homepage and accessible content structure — complete.
-7. Motion design with reduced-motion support.
+7. Motion design with reduced-motion support — complete.
 8. Business Diagnostic.
 9. Demo projects and cases.
 10. Security Center.

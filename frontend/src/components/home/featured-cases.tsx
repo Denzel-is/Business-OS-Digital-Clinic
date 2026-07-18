@@ -24,7 +24,8 @@ export function FeaturedCases() {
         <div className="mt-16 grid gap-4 lg:grid-cols-12">
           {featuredCases.map((caseItem, index) => (
             <article
-              className={`flex min-h-[30rem] flex-col rounded-panel border border-line p-7 sm:p-9 ${index === 0 ? "bg-surface-raised lg:col-span-7" : "bg-canvas lg:col-span-5"}`}
+              className={`flex min-h-[30rem] flex-col rounded-panel border border-line p-7 transition-[transform,border-color] duration-500 ease-out hover:-translate-y-1 hover:border-accent/35 sm:p-9 ${index === 0 ? "bg-surface-raised lg:col-span-7" : "bg-canvas lg:col-span-5"}`}
+              data-motion-interactive
               key={caseItem.title}
             >
               <div className="flex items-start justify-between gap-5">

@@ -17,7 +17,8 @@ export function Solutions() {
         <div className="mt-16 grid gap-4 md:grid-cols-2 lg:grid-cols-12">
           {solutions.map((solution, index) => (
             <Surface
-              className={`group min-h-72 p-7 sm:p-9 ${index === 0 || index === 3 ? "lg:col-span-7" : "lg:col-span-5"}`}
+              className={`group min-h-72 p-7 transition-[transform,border-color,background-color] duration-500 ease-out hover:-translate-y-1 hover:border-accent/35 sm:p-9 ${index === 0 || index === 3 ? "lg:col-span-7" : "lg:col-span-5"}`}
+              data-motion-interactive
               key={solution.code}
               variant={index % 3 === 1 ? "outline" : "raised"}
             >

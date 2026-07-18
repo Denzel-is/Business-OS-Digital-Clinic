@@ -100,6 +100,25 @@ select {
   text-wrap: balance;
 }
 
+@keyframes media-scan {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  12%,
+  88% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(42rem);
+  }
+}
+
+.media-scan-line {
+  animation: media-scan 7.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -108,5 +127,13 @@ select {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  [data-motion-interactive] {
+    transform: none !important;
+  }
+
+  .media-scan-line {
+    display: none;
   }
 }

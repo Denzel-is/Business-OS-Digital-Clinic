@@ -24,6 +24,15 @@ test("renders the homepage without broken media or horizontal overflow", async (
   await expect(page.getByText("Демонстрационная симуляция")).toBeVisible();
   await expect(page.getByText("Concept Project")).toBeVisible();
   await expect(page.locator('img[src*="hero-poster.svg"]')).toBeVisible();
+  await expect(page.locator("[data-vitals-motion]")).toHaveAttribute(
+    "data-motion-mode",
+    "enhanced",
+  );
+  await expect(page.locator("[data-security-visual]")).toHaveAttribute(
+    "data-motion-mode",
+    "enhanced",
+  );
+  await expect(page.locator("[data-security-visual] canvas")).toHaveCount(1);
 
   const hasHorizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
@@ -53,12 +62,64 @@ test("keeps homepage navigation keyboard and mobile accessible", async ({ page }
       name: "Решения",
     }),
   ).toHaveAttribute("href", "#solutions");
+  await expect(page.locator("[data-security-visual]")).toHaveAttribute(
+    "data-motion-mode",
+    "compact",
+  );
+  await expect(page.locator("[data-security-visual] canvas")).toHaveCount(0);
 
   const hasHorizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
   );
 
   expect(hasHorizontalOverflow).toBe(false);
+  expect(browserErrors).toEqual([]);
+});
+
+test("uses static homepage fallbacks when reduced motion is requested", async ({ page }) => {
+  const browserErrors = collectBrowserErrors(page);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  await expect(page.locator('[data-motion-parallax="hero-media"]')).toHaveAttribute(
+    "data-motion-mode",
+    "reduced",
+  );
+  await expect(page.locator("[data-vitals-motion]")).toHaveAttribute("data-motion-mode", "reduced");
+  await expect(page.locator("[data-security-visual]")).toHaveAttribute(
+    "data-motion-mode",
+    "reduced",
+  );
+  await expect(page.locator("[data-security-visual] canvas")).toHaveCount(0);
+  await expect(page.locator("[data-motion-reveal]").first()).toHaveAttribute(
+    "data-motion-mode",
+    "reduced",
+  );
+
+  const scanLineDisplay = await page
+    .locator(".media-scan-line")
+    .evaluate((element) => getComputedStyle(element).display);
+
+  expect(scanLineDisplay).toBe("none");
+
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await expect(page.locator("[data-vitals-motion]")).toHaveAttribute(
+    "data-motion-mode",
+    "enhanced",
+  );
+  await expect(page.locator("[data-security-visual]")).toHaveAttribute(
+    "data-motion-mode",
+    "enhanced",
+  );
+  await expect(page.locator("[data-security-visual] canvas")).toHaveCount(1);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator("[data-vitals-motion]")).toHaveAttribute("data-motion-mode", "reduced");
+  await expect(page.locator("[data-security-visual]")).toHaveAttribute(
+    "data-motion-mode",
+    "reduced",
+  );
+  await expect(page.locator("[data-security-visual] canvas")).toHaveCount(0);
   expect(browserErrors).toEqual([]);
 });
 

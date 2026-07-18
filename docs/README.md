@@ -8,6 +8,7 @@ Documentation is versioned with the behavior it describes. Files marked as plann
 - [Content guide](CONTENT_GUIDE.md) — editorial voice, evidence rules, demo labels, and Russian copy guidance.
 - [Design system](DESIGN_SYSTEM.md) — implemented tokens, typography, components, states, and accessibility rules.
 - [Media guide](MEDIA_GUIDE.md) — licensing, real-video requirements, optimization, fallbacks, and reduced motion.
+- [Motion guide](MOTION_GUIDE.md) — animation ownership, dynamic runtimes, reduced motion, and performance rules.
 - [Security policy](../SECURITY.md) — responsible vulnerability reporting and the current support status.
 
 ## Planned

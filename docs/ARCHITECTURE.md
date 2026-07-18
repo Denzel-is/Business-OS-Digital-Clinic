@@ -2,7 +2,7 @@
 
 ## Status
 
-This document records the monorepo contract plus the backend, frontend, design-system, and accessible homepage foundations completed through stage 6. Runtime details are promoted from planned to implemented only after their stage passes verification.
+This document records the monorepo contract plus the backend, frontend, design-system, homepage, and motion foundations completed through stage 7. Runtime details are promoted from planned to implemented only after their stage passes verification.
 
 ## System context
 
@@ -43,7 +43,9 @@ The frontend currently targets Node.js 24 LTS, Next.js App Router, and React 19.
 
 Semantic visual tokens live in the global Tailwind theme and reusable accessible primitives live in `frontend/src/components/ui`. Routes and features compose these primitives; they must not fork colors, focus behavior, or form-state semantics without updating the documented design-system contract. Manrope and IBM Plex Mono are packaged locally so rendering does not depend on a runtime font CDN.
 
-The homepage is composed from server-rendered sections in `frontend/src/components/home` and immutable editorial data in `frontend/src/content/home.ts`. It does not fetch domain data or run client-side motion. Demonstration states and project teasers are visibly labeled; interactive scoring, scroll-driven transitions, and production hero video remain separate feature concerns.
+The homepage is composed from server-rendered sections in `frontend/src/components/home` and immutable editorial data in `frontend/src/content/home.ts`. It does not fetch domain data; client motion progressively enhances the same static content. Demonstration states and project teasers are visibly labeled, while interactive scoring and production hero video remain separate feature concerns.
+
+Motion is isolated in client boundaries under `frontend/src/components/motion`. Framer Motion handles lightweight editorial movement. GSAP and ScrollTrigger are imported only inside Business Vitals after reduced-motion checks. React Three Fiber and Three.js are imported only for the Security Pulse defense-layer model and are skipped for reduced motion, narrow viewports, or unavailable WebGL. Static server-rendered content remains the source of meaning in every mode.
 
 ## Data and security principles
 

@@ -24,7 +24,7 @@ export function TreatmentPath() {
         <ol className="mt-20 border-t border-line">
           {treatmentSteps.map((step) => (
             <li
-              className="grid gap-6 border-b border-line py-8 md:grid-cols-12 md:items-start"
+              className="group grid gap-6 border-b border-line py-8 md:grid-cols-12 md:items-start"
               key={step.index}
             >
               <div className="flex items-center gap-3 md:col-span-2">
@@ -40,7 +40,7 @@ export function TreatmentPath() {
               <p className="max-w-xl leading-7 text-ink-muted md:col-span-4">{step.description}</p>
               <ArrowDownRight
                 aria-hidden="true"
-                className="hidden size-5 justify-self-end text-accent md:block"
+                className="hidden size-5 justify-self-end text-accent transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1 md:block"
               />
             </li>
           ))}

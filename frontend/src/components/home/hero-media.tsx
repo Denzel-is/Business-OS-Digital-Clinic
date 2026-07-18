@@ -15,6 +15,10 @@ export function HeroMedia() {
         src="/media/hero-poster.svg"
       />
       <div aria-hidden="true" className="absolute inset-0 bg-canvas/35" />
+      <div
+        aria-hidden="true"
+        className="media-scan-line absolute inset-x-0 top-0 h-px bg-accent/60"
+      />
       <div className="absolute inset-x-0 top-0 flex items-center justify-between gap-4 border-b border-white/10 p-5">
         <Badge tone="stable">Media slot / ready</Badge>
         <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-white/55">

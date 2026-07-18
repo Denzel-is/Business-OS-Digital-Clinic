@@ -1,5 +1,6 @@
 import { Check, Radar, ShieldCheck } from "lucide-react";
 
+import { SecurityDefenseVisual } from "@/components/motion/security-defense-visual";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
 import { Surface } from "@/components/ui/surface";
@@ -32,34 +33,39 @@ export function SecurityPulse() {
           </Surface>
         </div>
 
-        <Surface className="p-7 sm:p-10 lg:col-span-7">
-          <div className="flex items-center justify-between gap-4 border-b border-line pb-7">
-            <div>
-              <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">
-                Defense model
-              </p>
-              <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">Layered controls</h3>
+        <Surface className="overflow-hidden lg:col-span-7">
+          <div className="p-7 sm:p-10">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">
+                  Defense model
+                </p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">Layered controls</h3>
+              </div>
+              <Radar aria-hidden="true" className="size-7 text-accent" />
             </div>
-            <Radar aria-hidden="true" className="size-7 text-accent" />
           </div>
-          <ul className="mt-2">
-            {securityLayers.map((layer, index) => (
-              <li
-                className="flex items-center gap-4 border-b border-line py-5 last:border-b-0"
-                key={layer}
-              >
-                <span className="grid size-7 shrink-0 place-items-center rounded-full border border-accent/30 bg-accent/10">
-                  <Check aria-hidden="true" className="size-3.5 text-accent" />
-                </span>
-                <span className="flex-1 text-sm font-medium sm:text-base">{layer}</span>
-                <span className="font-mono text-[0.62rem] text-ink-faint">0{index + 1}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-6 text-xs leading-5 text-ink-faint">
-            Этот список описывает целевую архитектуру. Реализованные контроли подтверждаются кодом и
-            тестами по мере прохождения этапов.
-          </p>
+          <SecurityDefenseVisual />
+          <div className="p-7 sm:p-10">
+            <ul>
+              {securityLayers.map((layer, index) => (
+                <li
+                  className="flex items-center gap-4 border-b border-line py-5 last:border-b-0"
+                  key={layer}
+                >
+                  <span className="grid size-7 shrink-0 place-items-center rounded-full border border-accent/30 bg-accent/10">
+                    <Check aria-hidden="true" className="size-3.5 text-accent" />
+                  </span>
+                  <span className="flex-1 text-sm font-medium sm:text-base">{layer}</span>
+                  <span className="font-mono text-[0.62rem] text-ink-faint">0{index + 1}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 text-xs leading-5 text-ink-faint">
+              Этот список описывает целевую архитектуру. Реализованные контроли подтверждаются кодом
+              и тестами по мере прохождения этапов.
+            </p>
+          </div>
         </Surface>
       </Container>
     </section>

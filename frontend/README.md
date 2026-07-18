@@ -1,6 +1,6 @@
 # Frontend module
 
-The frontend is a Next.js App Router application running on Node.js 24 LTS with React, strict TypeScript, Tailwind CSS, Vitest, and Playwright. Stage 6 adds the complete server-rendered homepage structure on top of the visual system and accessible UI primitives.
+The frontend is a Next.js App Router application running on Node.js 24 LTS with React, strict TypeScript, Tailwind CSS, Vitest, and Playwright. Stage 7 adds a progressive motion layer to the complete server-rendered homepage.
 
 ## Architecture
 
@@ -11,6 +11,7 @@ frontend/
 ├── src/
 │   ├── app/                routes, layouts, metadata, and route states
 │   ├── components/         accessible foundation and UI primitives
+│   │   └── motion/         isolated Framer, GSAP, and R3F client boundaries
 │   ├── content/            immutable editorial content and labels
 │   ├── features/           feature-owned interactive UI (added by feature stages)
 │   ├── lib/api/            typed server-side backend boundary
@@ -38,6 +39,8 @@ Manrope Variable and IBM Plex Mono are packaged with the application and do not 
 The `/` route contains System Boot, Hero, Business Health Indicator, sticky Business Vitals, Digital Symptoms, treatment approach, solutions, featured demo cases, Security Pulse, About, and the final diagnostic CTA. It remains a Server Component composition with no scroll-motion runtime.
 
 The Hero uses `public/media/hero-poster.svg` as an explicit placeholder because no approved real video asset exists. Production video requirements and reduced-motion behavior are defined in `../docs/MEDIA_GUIDE.md`. Homepage claims and demo labeling rules are defined in `../docs/CONTENT_GUIDE.md`.
+
+Framer Motion provides lightweight reveals and Hero parallax. Business Vitals dynamically imports GSAP ScrollTrigger, while Security Pulse dynamically imports the only React Three Fiber scene. Reduced-motion mode keeps all content static and avoids loading GSAP or Three.js; narrow viewports also use the static security model. The complete contract is documented in `../docs/MOTION_GUIDE.md`.
 
 ## Requirements
 

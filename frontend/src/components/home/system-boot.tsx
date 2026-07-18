@@ -24,7 +24,10 @@ export function SystemBoot() {
               {signal.stable ? (
                 <Check aria-hidden="true" className="size-3.5 text-accent" />
               ) : (
-                <CircleDashed aria-hidden="true" className="size-3.5 text-warning" />
+                <CircleDashed
+                  aria-hidden="true"
+                  className="size-3.5 animate-[spin_8s_linear_infinite] text-warning"
+                />
               )}
               <span className="text-ink-faint">{signal.label}</span>
               <span className={signal.stable ? "text-accent" : "text-warning"}>{signal.state}</span>

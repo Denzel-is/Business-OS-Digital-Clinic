@@ -42,6 +42,16 @@ describe("homepage", () => {
     expect(screen.getByText(/ничего не сохраняется/)).toBeInTheDocument();
   });
 
+  it("keeps motion enhancements attached to meaningful static content", () => {
+    render(<HomePage />);
+
+    expect(document.querySelector('[data-motion-parallax="hero-media"]')).toBeInTheDocument();
+    expect(document.querySelector("[data-vitals-motion]")).toBeInTheDocument();
+    expect(
+      screen.getByRole("img", { name: "Трёхмерная схема многоуровневой защиты" }),
+    ).toHaveAttribute("data-security-visual");
+  });
+
   it("links calls to action only to implemented page sections", () => {
     render(<HomePage />);
 

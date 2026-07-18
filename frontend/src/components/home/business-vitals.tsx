@@ -1,8 +1,8 @@
-import { ArrowRight, ScanLine } from "lucide-react";
+import { ScanLine } from "lucide-react";
 
+import { BusinessVitalsStory } from "@/components/motion/business-vitals-story";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
-import { businessVitals } from "@/content/home";
 
 export function BusinessVitals() {
   return (
@@ -29,27 +29,7 @@ export function BusinessVitals() {
             <span aria-hidden="true">/</span>
             <span>Target state</span>
           </div>
-          <ol>
-            {businessVitals.map((vital, index) => (
-              <li
-                className="grid gap-5 border-b border-line py-7 sm:grid-cols-[2.3rem_1fr_auto_1fr] sm:items-center"
-                key={vital.label}
-              >
-                <span className="font-mono text-xs text-ink-faint">0{index + 1}</span>
-                <div>
-                  <p className="text-sm text-ink-faint">{vital.label}</p>
-                  <p className="mt-2 font-medium text-ink-muted">{vital.before}</p>
-                </div>
-                <ArrowRight aria-hidden="true" className="hidden size-4 text-accent sm:block" />
-                <div className="border-l border-accent/35 pl-4">
-                  <p className="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-accent sm:hidden">
-                    Target state
-                  </p>
-                  <p className="mt-2 font-semibold text-ink sm:mt-0">{vital.after}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <BusinessVitalsStory />
           <p className="mt-6 text-xs leading-5 text-ink-faint">
             На motion-этапе переход будет показан последовательно при прокрутке. Значения останутся
             явно демонстрационными.
