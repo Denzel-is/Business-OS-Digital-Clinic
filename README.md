@@ -2,7 +2,7 @@
 
 Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction and turning it into fast, usable, and secure IT systems.
 
-> Current status: backend foundation complete. The Java 21/Spring Boot API baseline and its tests exist; frontend code, domain features, Compose services, and production workflows will be added in the staged implementation that follows.
+> Current status: backend and frontend foundations complete. The Java 21/Spring Boot API and Node.js 24/Next.js application baselines exist with automated checks; domain features, Compose services, and production workflows will be added in the staged implementation that follows.
 
 ## Product direction
 
@@ -17,7 +17,7 @@ Core message:
 ```text
 Business_OS_Digital_Clinic/
 ├── backend/                 Java 21 and Spring Boot API foundation
-├── frontend/                Next.js/React module contract
+├── frontend/                Next.js/React application foundation
 ├── infrastructure/          deployment and platform contract
 ├── docs/                    architecture and documentation map
 ├── .github/
@@ -40,7 +40,7 @@ The backend will use package-by-feature boundaries. The frontend will use Server
 1. Audit and preparation baseline — complete.
 2. Monorepo initialization — complete.
 3. Backend foundation — complete.
-4. Frontend foundation.
+4. Frontend foundation — complete.
 5. Design system.
 6. Homepage and accessible content structure.
 7. Motion design with reduced-motion support.

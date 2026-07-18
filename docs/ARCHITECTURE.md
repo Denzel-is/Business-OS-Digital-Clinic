@@ -2,11 +2,11 @@
 
 ## Status
 
-This document records the monorepo contract and the backend foundation completed in stage 3. Runtime details are promoted from planned to implemented only after their stage passes verification.
+This document records the monorepo contract plus the backend and frontend foundations completed through stage 4. Runtime details are promoted from planned to implemented only after their stage passes verification.
 
 ## System context
 
-Business OS: Digital Clinic will expose a Next.js web application and now contains a Spring Boot API foundation. The API owns business rules and persistence. PostgreSQL is the system of record; Redis is limited to ephemeral concerns such as rate-limit counters and bounded caches. Cloudflare is an optional edge layer for CDN, WAF, bot controls, and origin protection.
+Business OS: Digital Clinic now contains a Next.js web application foundation and a Spring Boot API foundation. The API owns business rules and persistence. PostgreSQL is the system of record; Redis is limited to ephemeral concerns such as rate-limit counters and bounded caches. Cloudflare is an optional edge layer for CDN, WAF, bot controls, and origin protection.
 
 ```text
 Browser
@@ -38,6 +38,8 @@ Features own their API, application, domain, and infrastructure details. Domain 
 ## Frontend dependency direction
 
 Routes compose features and reusable UI components. Features use one typed API layer rather than ad hoc network calls. Server Components are the default; Client Components are isolated at interactive boundaries. Browser-visible environment variables contain public configuration only.
+
+The frontend currently targets Node.js 24 LTS, Next.js App Router, and React 19. Its server-only API boundary validates backend payloads with Zod. GSAP, Framer Motion, and React Three Fiber are available but must stay outside initial bundles until a feature explicitly and dynamically loads them.
 
 ## Data and security principles
 
