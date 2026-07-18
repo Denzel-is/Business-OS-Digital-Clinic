@@ -1,6 +1,6 @@
 # Backend module
 
-The backend module will contain the Java 21 and Spring Boot API. Application code is intentionally deferred to stage 3; this file defines the boundary before implementation begins.
+The backend foundation is a Java 21 and Spring Boot 4.1 API with a Maven Wrapper, PostgreSQL, Redis, Flyway, Actuator, validation, and a deny-by-default Spring Security baseline.
 
 ## Responsibilities
 
@@ -33,12 +33,16 @@ com.denzelis.businessos
 
 Within a feature, dependencies flow from `api` to `application` and `domain`; infrastructure implements ports owned by the feature. JPA entities never become public API contracts.
 
-## Planned commands
+## Local configuration
 
-These commands become available when the Maven Wrapper and Spring Boot foundation are added in stage 3:
+Copy the root `.env.example` to `.env` and set local database credentials. Spring imports the root `.env` file when the application is started from this directory. PostgreSQL and Redis must be available before starting the application; Compose services are added in a later infrastructure stage.
+
+## Commands
 
 ```powershell
 .\mvnw.cmd spring-boot:run
 .\mvnw.cmd clean verify
 .\mvnw.cmd spotless:check
 ```
+
+The test profile uses an in-memory database only for context and HTTP security tests. PostgreSQL Testcontainers remain the required path for persistence integration tests once domain migrations exist.

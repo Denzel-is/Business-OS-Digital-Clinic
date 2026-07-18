@@ -2,11 +2,11 @@
 
 ## Status
 
-This document records the monorepo contract established in stage 2. It describes intended boundaries, not completed application functionality. Runtime details will be promoted from planned to implemented only after their stage passes verification.
+This document records the monorepo contract and the backend foundation completed in stage 3. Runtime details are promoted from planned to implemented only after their stage passes verification.
 
 ## System context
 
-Business OS: Digital Clinic will expose a Next.js web application and a Spring Boot API. The API owns business rules and persistence. PostgreSQL is the system of record; Redis is limited to ephemeral concerns such as rate-limit counters and bounded caches. Cloudflare is an optional edge layer for CDN, WAF, bot controls, and origin protection.
+Business OS: Digital Clinic will expose a Next.js web application and now contains a Spring Boot API foundation. The API owns business rules and persistence. PostgreSQL is the system of record; Redis is limited to ephemeral concerns such as rate-limit counters and bounded caches. Cloudflare is an optional edge layer for CDN, WAF, bot controls, and origin protection.
 
 ```text
 Browser

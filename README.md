@@ -2,7 +2,7 @@
 
 Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction and turning it into fast, usable, and secure IT systems.
 
-> Current status: monorepo initialization complete. Shared repository contracts and module boundaries exist; application code, Compose services, tests, and production workflows will be added in the staged implementation that follows. Commands below become runnable as their respective foundation stages land.
+> Current status: backend foundation complete. The Java 21/Spring Boot API baseline and its tests exist; frontend code, domain features, Compose services, and production workflows will be added in the staged implementation that follows.
 
 ## Product direction
 
@@ -16,7 +16,7 @@ Core message:
 
 ```text
 Business_OS_Digital_Clinic/
-├── backend/                 Java/Spring Boot module contract
+├── backend/                 Java 21 and Spring Boot API foundation
 ├── frontend/                Next.js/React module contract
 ├── infrastructure/          deployment and platform contract
 ├── docs/                    architecture and documentation map
@@ -39,7 +39,7 @@ The backend will use package-by-feature boundaries. The frontend will use Server
 
 1. Audit and preparation baseline — complete.
 2. Monorepo initialization — complete.
-3. Backend foundation.
+3. Backend foundation — complete.
 4. Frontend foundation.
 5. Design system.
 6. Homepage and accessible content structure.
