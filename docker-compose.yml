@@ -1,0 +1,158 @@
+name: business-os-digital-clinic
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-business_os}
+      POSTGRES_USER: ${DATABASE_USER:-business_os_app}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-business_os_local}
+    ports:
+      - "${LOCAL_BIND_ADDRESS:-127.0.0.1}:${DATABASE_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    networks:
+      - data
+
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    command:
+      [
+        "sh",
+        "-c",
+        "exec redis-server --appendonly yes --protected-mode yes --requirepass \"$${REDIS_PASSWORD}\"",
+      ]
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-business_os_redis_local}
+    ports:
+      - "${LOCAL_BIND_ADDRESS:-127.0.0.1}:${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "redis-cli --no-auth-warning -a \"$${REDIS_PASSWORD}\" ping | grep PONG",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+    networks:
+      - data
+
+  backend:
+    image: business-os-backend:local
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    init: true
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      APP_ENV: development
+      BACKEND_PORT: 8080
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${DATABASE_NAME:-business_os}
+      DATABASE_USER: ${DATABASE_USER:-business_os_app}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:-business_os_local}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-business_os_redis_local}
+      CORS_ALLOWED_ORIGINS: ${FRONTEND_PUBLIC_URL:-http://localhost:3000}
+      COOKIE_SECURE: "false"
+      COOKIE_SAME_SITE: Lax
+      RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-true}
+      RATE_LIMIT_KEY_SALT: ${RATE_LIMIT_KEY_SALT:-local-compose-development-only}
+      TURNSTILE_ENABLED: ${TURNSTILE_ENABLED:-false}
+      TURNSTILE_SECRET_KEY: ${TURNSTILE_SECRET_KEY:-}
+      TURNSTILE_EXPECTED_HOSTNAME: ${TURNSTILE_EXPECTED_HOSTNAME:-}
+      UPLOAD_DIRECTORY: /app/uploads
+      UPLOAD_MAX_BYTES: ${UPLOAD_MAX_BYTES:-10485760}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    ports:
+      - "${LOCAL_BIND_ADDRESS:-127.0.0.1}:${BACKEND_PORT:-8080}:8080"
+    volumes:
+      - backend_uploads:/app/uploads
+    tmpfs:
+      - /tmp
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://127.0.0.1:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    networks:
+      - app
+      - data
+    stop_grace_period: 30s
+
+  frontend:
+    image: business-os-frontend:local
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY:-}
+    restart: unless-stopped
+    init: true
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      BACKEND_PUBLIC_URL: http://backend:8080
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY:-}
+      NODE_ENV: production
+      PORT: 3000
+    ports:
+      - "${LOCAL_BIND_ADDRESS:-127.0.0.1}:${FRONTEND_PORT:-3000}:3000"
+    tmpfs:
+      - /tmp
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    networks:
+      - app
+    stop_grace_period: 20s
+
+volumes:
+  backend_uploads:
+  postgres_data:
+  redis_data:
+
+networks:
+  app:
+  data:
+    internal: true

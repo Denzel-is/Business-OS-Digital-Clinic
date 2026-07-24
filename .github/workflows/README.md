@@ -1,10 +1,15 @@
 # GitHub Actions
 
-Workflow definitions are intentionally deferred until their build targets exist. The CI/CD stage will add:
+The stage 15 workflows are intentionally separated by concern:
 
-- `backend-ci.yml` — Temurin Java 21, Maven cache, `clean verify`, and test reports.
-- `frontend-ci.yml` — Node LTS, `npm ci`, lint, typecheck, tests, and production build.
-- `security.yml` — dependency, secret, and container scanning without exposing sensitive output.
-- `docker-build.yml` — reproducible backend and frontend image builds.
+- `backend-ci.yml` verifies Java 21, tests, migrations, formatting, and the executable jar.
+- `frontend-ci.yml` verifies formatting, lint, strict types, unit tests, the production build, and
+  Playwright.
+- `security.yml` scans committed history for secrets, backend/frontend dependencies for
+  high/critical findings, and OS packages in both locally built images.
+- `docker-build.yml` proves that the backend and frontend Dockerfiles build with BuildKit.
 
-Workflows must use least-privilege `permissions`, pin third-party actions to reviewed versions, avoid untrusted code with privileged secrets, and fail visibly when a required check fails.
+Every workflow uses read-only repository permissions, bounded timeouts, concurrency cancellation,
+and pinned action SHAs. Scanner container images are pinned by digest and redact detected secret
+values. CI builds images but does not publish or deploy them; a deployment environment and explicit
+release approval must be added before registry credentials are introduced.

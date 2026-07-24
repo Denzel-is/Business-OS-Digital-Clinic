@@ -4,7 +4,7 @@
 
 This document records the monorepo contract plus the backend, frontend, design-system, homepage,
 motion, Business Diagnostic, static project-case, Security Center, and PostgreSQL persistence
-foundation completed through stage 14. Runtime details are promoted from planned to implemented
+foundation completed through stage 15. Runtime details are promoted from planned to implemented
 only after their stage passes verification.
 
 ## System context
@@ -87,6 +87,19 @@ tests; Spring Security and HTTP contracts use MockMvc; persistence and atomic co
 PostgreSQL/Redis Testcontainers; client states use Testing Library; and end-user responsive,
 keyboard, reduced-motion, filtering, diagnostic, login, and contact journeys use Playwright.
 Browser mocks never substitute for backend authorization tests.
+
+The container boundary packages the applications independently. Local Compose exposes all four
+services for developer access; production Compose publishes only Next.js to the loopback origin
+interface. Next.js calls Spring Boot across an internal application network, while Spring Boot
+alone joins the internal data network with PostgreSQL and Redis. Application containers run as
+non-root with read-only root filesystems, dropped capabilities, health checks, and dedicated
+writable upload or temporary paths. Production secrets enter through mounted files and are
+translated to process environment only inside the backend entrypoint.
+
+CI is verification-only: backend, frontend, browser, Docker build, dependency, IaC, Git-secret, and
+container-image checks run with read-only repository permissions. It neither publishes images nor
+deploys, so future release automation must add a protected environment, immutable digests, and an
+explicit approval boundary rather than reusing pull-request credentials.
 
 ## Data and security principles
 

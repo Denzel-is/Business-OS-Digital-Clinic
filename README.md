@@ -2,10 +2,10 @@
 
 Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction and turning it into fast, usable, and secure IT systems.
 
-> Current status: the project is complete through stage 14. Security, persistence, Redis counters,
-> consent/contact, upload, contracts, responsive UI, reduced motion, diagnostic, filtering, and
-> protected-route behavior now have layered JUnit, MockMvc, Testcontainers, Vitest, Testing Library,
-> and Playwright coverage. Production media delivery, Compose services, and CI/CD follow next.
+> Current status: the project is complete through stage 15. The complete four-service local stack,
+> hardened production composition, separate application images, health checks, secret-file
+> injection, CI test gates, dependency/secret/container scanning, and reproducible Docker builds are
+> implemented. Complete operational and project documentation follows in stage 16.
 
 ## Product direction
 
@@ -29,8 +29,8 @@ Business_OS_Digital_Clinic/
 ├── .gitattributes           deterministic text and binary handling
 ├── .env.example             non-secret local configuration contract
 ├── AGENTS.md                repository contribution rules
-├── docker-compose.yml       local stack (planned)
-├── docker-compose.prod.yml  production stack (planned)
+├── docker-compose.yml       complete local stack
+├── docker-compose.prod.yml  hardened production composition
 ├── .gitignore
 ├── README.md
 └── SECURITY.md              vulnerability reporting policy
@@ -54,7 +54,7 @@ The backend will use package-by-feature boundaries. The frontend will use Server
 12. Authentication and protected administration — complete.
 13. Security hardening — complete.
 14. Automated testing — complete.
-15. Docker and CI/CD.
+15. Docker and CI/CD — complete.
 16. Complete project documentation.
 17. Final audit and draft pull request.
 
@@ -117,32 +117,12 @@ Use a secret manager for deployed environments. Do not place real secrets in Com
 
 ## Start PostgreSQL and Redis
 
-Until the Compose definitions are added in stage 15, create the local containers once:
-
-```powershell
-docker run --name business-os-postgres `
-  -e POSTGRES_DB=business_os `
-  -e POSTGRES_USER=business_os_app `
-  -e POSTGRES_PASSWORD=business_os_local `
-  -p 5432:5432 `
-  -d postgres:17-alpine
-
-docker run --name business-os-redis `
-  -p 6379:6379 `
-  -d redis:7-alpine
-```
-
-On later runs, start the existing containers:
-
-```powershell
-docker start business-os-postgres business-os-redis
-docker ps
-```
-
-Copy the matching local environment contract before starting the backend:
+Copy the matching local environment contract and start only the data services:
 
 ```powershell
 Copy-Item .env.example .env
+docker compose up -d postgres redis
+docker compose ps
 ```
 
 The documented password is a public local-development value, not a production secret. Replace it
@@ -151,10 +131,11 @@ outside local development and never commit `.env`.
 Stop the local services without deleting their data:
 
 ```powershell
-docker stop business-os-postgres business-os-redis
+docker compose stop postgres redis
 ```
 
-After stage 15, `docker compose up -d postgres redis` becomes the canonical command.
+`docker compose down` removes containers and the network but preserves named volumes unless
+`--volumes` is explicitly supplied.
 
 ## Start the backend
 
@@ -202,7 +183,7 @@ npm.cmd run test:e2e
 
 ## Docker
 
-Validate and start the complete local stack after Compose configuration is implemented:
+Validate and start the complete local stack:
 
 ```powershell
 docker compose config
@@ -230,7 +211,8 @@ npm.cmd ci
 npm.cmd run build
 ```
 
-Container builds, deployment checks, Cloudflare configuration, backup/restore procedures, and rollback steps will be documented before production readiness is claimed.
+Container builds and the local/production Compose boundaries are implemented. Deployment,
+backup/restore, and rollback procedures are completed in stage 16.
 
 ## Security
 

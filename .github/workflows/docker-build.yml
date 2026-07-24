@@ -1,0 +1,78 @@
+name: Docker Build
+
+on:
+  pull_request:
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - "docker-compose*.yml"
+      - ".github/workflows/docker-build.yml"
+  push:
+    branches: ["master"]
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - "docker-compose*.yml"
+      - ".github/workflows/docker-build.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docker-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-compose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Validate local Compose
+        run: docker compose config --quiet
+
+      - name: Validate production Compose contract
+        env:
+          BACKEND_IMAGE: business-os-backend:verification
+          DATABASE_PASSWORD_FILE: /run/deployment-secrets/database-password
+          FRONTEND_IMAGE: business-os-frontend:verification
+          FRONTEND_PUBLIC_URL: https://clinic.example
+          RATE_LIMIT_KEY_SALT_FILE: /run/deployment-secrets/rate-limit-salt
+          REDIS_PASSWORD_FILE: /run/deployment-secrets/redis-password
+          TURNSTILE_EXPECTED_HOSTNAME: clinic.example
+          TURNSTILE_SECRET_KEY_FILE: /run/deployment-secrets/turnstile-secret
+        run: docker compose -f docker-compose.prod.yml config --quiet
+
+  build:
+    needs: validate-compose
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        application:
+          - name: backend
+            context: ./backend
+          - name: frontend
+            context: ./frontend
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4
+
+      - name: Build ${{ matrix.application.name }} image
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
+        with:
+          context: ${{ matrix.application.context }}
+          file: ${{ matrix.application.context }}/Dockerfile
+          push: false
+          cache-from: type=gha,scope=${{ matrix.application.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.application.name }}
+          tags: business-os-${{ matrix.application.name }}:${{ github.sha }}
