@@ -2,7 +2,7 @@ export const homeNavigation = [
   { href: "/#health", label: "Диагностика" },
   { href: "/#solutions", label: "Решения" },
   { href: "/projects", label: "Кейсы" },
-  { href: "/#security", label: "Безопасность" },
+  { href: "/security", label: "Безопасность" },
   { href: "/#about", label: "Подход" },
 ] as const;
 

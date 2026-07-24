@@ -63,3 +63,27 @@ export const diagnosticEvaluationResponseSchema = z.object({
 
 export type DiagnosticEvaluationRequest = z.infer<typeof diagnosticEvaluationRequestSchema>;
 export type DiagnosticEvaluationResponse = z.infer<typeof diagnosticEvaluationResponseSchema>;
+
+export const inputValidationRequestSchema = z
+  .object({
+    context: z.enum(["DISPLAY_NAME", "SEARCH_QUERY", "SUPPORT_MESSAGE"]),
+    value: z.string().trim().min(1).max(240),
+  })
+  .strict();
+
+export const inputValidationResponseSchema = z.object({
+  explanation: z.string(),
+  normalizedPreview: z.string(),
+  outcome: z.enum(["ACCEPTED", "REVIEW_REQUIRED", "REJECTED"]),
+  rules: z.array(
+    z.object({
+      code: z.string(),
+      detail: z.string(),
+      label: z.string(),
+      passed: z.boolean(),
+    }),
+  ),
+});
+
+export type InputValidationRequest = z.infer<typeof inputValidationRequestSchema>;
+export type InputValidationResponse = z.infer<typeof inputValidationResponseSchema>;

@@ -52,6 +52,12 @@ The response contains:
 
 Contact name, email, consent, raw personal data, free text, and client identifiers are not accepted by this endpoint. The current frontend keeps optional contact fields only in browser memory and excludes them from the request through an explicit allowlist.
 
+### `POST /api/v1/security/input-validation-demo`
+
+Runs a stateless educational field-validation simulation. The request contains only a context (`DISPLAY_NAME`, `SEARCH_QUERY`, or `SUPPORT_MESSAGE`) and a non-blank value of at most 240 characters. The service returns `ACCEPTED`, `REVIEW_REQUIRED`, or `REJECTED`, an escaped-display preview, and individual rule results.
+
+The endpoint rejects unknown JSON fields. It never executes the value, builds a database query, scans a URL, tests an external target, or persists the request. Its result demonstrates selected input rules and does not prove that an application is secure.
+
 ## Frontend proxy
 
 The browser posts evaluation answers to the same-origin Next.js route `POST /api/diagnostic/evaluate`. The route:
@@ -61,6 +67,8 @@ The browser posts evaluation answers to the same-origin Next.js route `POST /api
 3. forwards only validated evaluation fields to the backend;
 4. validates the backend response;
 5. returns a generic `502` Problem Details response without internal errors when the backend is unavailable.
+
+The browser uses `POST /api/security/input-validation` for the Security Center lab. That proxy limits the actual UTF-8 body to 4 KiB, rejects unknown fields through a strict Zod allowlist, validates the backend response, disables caching, and returns generic errors.
 
 ## Error format
 

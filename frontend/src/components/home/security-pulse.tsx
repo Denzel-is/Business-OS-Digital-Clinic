@@ -2,6 +2,7 @@ import { Check, Radar, ShieldCheck } from "lucide-react";
 
 import { SecurityDefenseVisual } from "@/components/motion/security-defense-visual";
 import { Badge } from "@/components/ui/badge";
+import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Surface } from "@/components/ui/surface";
 import { securityLayers } from "@/content/home";
@@ -31,6 +32,9 @@ export function SecurityPulse() {
               </div>
             </div>
           </Surface>
+          <ButtonLink className="mt-6" href="/security" variant="secondary">
+            Открыть Security Center
+          </ButtonLink>
         </div>
 
         <Surface className="overflow-hidden lg:col-span-7">

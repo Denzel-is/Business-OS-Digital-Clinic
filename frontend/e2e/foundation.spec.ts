@@ -252,3 +252,48 @@ test("keeps the design system accessible and responsive on a narrow viewport", a
   expect(viewportState.transitionDuration).toBeLessThanOrEqual(0.01);
   expect(browserErrors).toEqual([]);
 });
+
+test("runs the safe Security Center validation simulation without rendering input as markup", async ({
+  page,
+}) => {
+  const browserErrors = collectBrowserErrors(page);
+  let validationPayload: Record<string, unknown> | undefined;
+
+  await page.route("**/api/security/input-validation", async (route) => {
+    validationPayload = route.request().postDataJSON() as Record<string, unknown>;
+    await route.fulfill({
+      contentType: "application/json",
+      json: {
+        explanation: "Симуляция ничего не выполняет и не определяет наличие уязвимости.",
+        normalizedPreview: "<b>пример</b>",
+        outcome: "REVIEW_REQUIRED",
+        rules: [
+          {
+            code: "output-context",
+            detail: "Разметкоподобный текст показывается только как текст.",
+            label: "Контекст вывода",
+            passed: false,
+          },
+        ],
+      },
+      status: 200,
+    });
+  });
+
+  await page.goto("/security");
+
+  await expect(page.locator("[data-security-control]")).toHaveCount(16);
+  await page.getByRole("textbox", { name: "Учебный текст" }).fill("<b>пример</b>");
+  await page.getByRole("button", { name: "Применить правила" }).click();
+  await expect(page.getByRole("heading", { name: "Нужна проверка контекста" })).toBeVisible();
+  await expect(page.locator("[data-validation-preview]")).toHaveText("<b>пример</b>");
+  await expect(page.locator("[data-validation-preview] b")).toHaveCount(0);
+  await expect(page.getByText(/DDoS нельзя остановить только Java-приложением/)).toBeVisible();
+  expect(validationPayload).toEqual({ context: "SUPPORT_MESSAGE", value: "<b>пример</b>" });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+    ),
+  ).toBe(false);
+  expect(browserErrors).toEqual([]);
+});

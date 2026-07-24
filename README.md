@@ -2,7 +2,7 @@
 
 Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction and turning it into fast, usable, and secure IT systems.
 
-> Current status: the project is complete through stage 9. The homepage and Business Diagnostic now connect to six static, honestly labeled project breakdowns spanning Web, Applications, AI, Automation, UX/UI, Security, Data, and Bots. Projects describe challenges, approaches, verification signals, and limitations without inventing clients or outcomes; the Security Center, persistence, production media, Compose services, and deployment workflows follow in later stages.
+> Current status: the project is complete through stage 10. Security Center exposes an honest 16-control implementation map and a bounded educational input-validation simulation that never executes submitted text. Persistence, authorization, production media, Compose services, and deployment workflows follow in later stages.
 
 ## Product direction
 
@@ -46,7 +46,7 @@ The backend will use package-by-feature boundaries. The frontend will use Server
 7. Motion design with reduced-motion support — complete.
 8. Business Diagnostic — complete.
 9. Demo projects and cases — complete.
-10. Security Center.
+10. Security Center — complete.
 11. Database model and migrations.
 12. Authentication and protected administration.
 13. Security hardening.
@@ -146,7 +146,7 @@ npm.cmd ci
 npm.cmd run dev
 ```
 
-Open `http://localhost:3000`. The interactive diagnostic is available at `http://localhost:3000/diagnostic` and requires the backend on `http://localhost:8080` unless `BACKEND_PUBLIC_URL` is configured differently.
+Open `http://localhost:3000`. The interactive diagnostic is available at `http://localhost:3000/diagnostic`; Security Center is available at `http://localhost:3000/security`. Both interactive simulations require the backend on `http://localhost:8080` unless `BACKEND_PUBLIC_URL` is configured differently.
 
 ## Testing
 

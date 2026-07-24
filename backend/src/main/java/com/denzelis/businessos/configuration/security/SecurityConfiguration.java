@@ -38,7 +38,9 @@ public class SecurityConfiguration {
                 .csrf(
                         csrf ->
                                 csrf.csrfTokenRepository(csrfTokenRepository)
-                                        .ignoringRequestMatchers("/api/v1/diagnostics/evaluate"))
+                                        .ignoringRequestMatchers(
+                                                "/api/v1/diagnostics/evaluate",
+                                                "/api/v1/security/input-validation-demo"))
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .requestCache(AbstractHttpConfigurer::disable)
@@ -57,7 +59,9 @@ public class SecurityConfiguration {
                                                 "/actuator/health/readiness")
                                         .permitAll()
                                         .requestMatchers(
-                                                HttpMethod.POST, "/api/v1/diagnostics/evaluate")
+                                                HttpMethod.POST,
+                                                "/api/v1/diagnostics/evaluate",
+                                                "/api/v1/security/input-validation-demo")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())

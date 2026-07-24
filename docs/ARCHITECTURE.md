@@ -2,7 +2,7 @@
 
 ## Status
 
-This document records the monorepo contract plus the backend, frontend, design-system, homepage, motion, Business Diagnostic, and static project-case slices completed through stage 9. Runtime details are promoted from planned to implemented only after their stage passes verification.
+This document records the monorepo contract plus the backend, frontend, design-system, homepage, motion, Business Diagnostic, static project-case, and Security Center slices completed through stage 10. Runtime details are promoted from planned to implemented only after their stage passes verification.
 
 ## System context
 
@@ -50,6 +50,8 @@ Motion is isolated in client boundaries under `frontend/src/components/motion`. 
 Business Diagnostic is a vertical stateless slice. The React Hook Form wizard owns step navigation and ephemeral contact inputs. A strict frontend allowlist sends only 11 process answers through a same-origin Next.js route. The route validates with Zod and calls the Java API. `diagnostic.application` owns scoring and recommendation rules; `diagnostic.domain` owns answer and assessment models; `diagnostic.api` owns validated DTO mapping. No answer or contact persistence exists before the database and explicit-consent stages.
 
 Project cases are immutable editorial records in `frontend/src/content/projects.ts` until persistence is introduced. `/projects` applies client-side category filtering to the complete static set, while `/projects/[slug]` uses `generateStaticParams` for six detail pages. Project labels, constraints, and verification signals remain part of each record so list and detail views cannot silently drop the honesty boundary.
+
+Security Center is an evidence map rather than a protection claim. Immutable content lists all 16 required controls as implemented, foundational, or planned. Its client lab sends only a context enum and a text value through a strict, size-bounded same-origin route. The Java `security.application` service normalizes and evaluates the value without executing it, scanning another system, or persisting it; React renders the preview as escaped text. Authentication, database protection, rate limiting, WAF, backups, and incident response stay visibly planned until their own stages are verified.
 
 ## Data and security principles
 
