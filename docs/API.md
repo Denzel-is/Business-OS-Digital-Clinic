@@ -21,7 +21,9 @@ Initializes and returns a CSRF token for future cookie-authenticated state-chang
 
 ### `POST /api/v1/diagnostics/evaluate`
 
-Calculates a stateless preliminary Business Health assessment. Authentication and CSRF are not required because the endpoint creates no session and changes no server state. Rate limiting is added in the security-hardening stage.
+Calculates a stateless preliminary Business Health assessment. Authentication and CSRF are not
+required because the endpoint creates no session and changes no server state. Redis-backed
+application rate limiting and an independent edge-rate-limit contract protect the route.
 
 The request contains exactly these 11 answer fields:
 

@@ -3,9 +3,10 @@
 ## Current boundary
 
 Stage 11 establishes the PostgreSQL schema and JPA mappings. Authentication repositories and
-read-only administrator queries are implemented in stage 12. Business Diagnostic contact
-persistence, admin CRUD, audit writes, backup automation, and least-privilege deployment roles
-remain separate stages.
+read-only administrator queries are implemented in stage 12; consent-aware contact/lead
+persistence and security-event writes are implemented in stage 13. Business Diagnostic
+evaluations remain stateless by design. Admin CRUD, automated backup execution, and
+environment-specific least-privilege database roles remain future work.
 
 Hibernate validates the schema with `ddl-auto=validate`; Flyway is the only schema owner.
 

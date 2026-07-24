@@ -53,8 +53,9 @@ Deployed environments must inject the initial secret through their secret manage
 after provisioning. Never put a real password in source control, Compose definitions, command
 history, logs, screenshots, or browser-visible variables.
 
-## Current limitation
+## Current limitations
 
-The administration UI intentionally exposes verified list and overview operations only. CRUD
-mutations, MFA challenge delivery, account recovery, audit writes, session administration, and
-rate limiting belong to subsequent stages and are not claimed here.
+The administration UI intentionally exposes verified list and overview operations only. Security
+event/audit signals and login rate limiting are implemented, but CRUD mutations, MFA challenge
+delivery, account recovery, and operator-facing session administration are not. `mfaReady` is a
+contract placeholder and must not be presented as active MFA.

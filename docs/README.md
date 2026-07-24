@@ -1,24 +1,34 @@
 # Documentation map
 
-Documentation is versioned with the behavior it describes. Files marked as planned are created only when their subject has an implementation or a concrete operational contract to document.
+Documentation is versioned with the behavior and operational contract it describes.
 
-## Available
+## System and application
 
-- [Architecture](ARCHITECTURE.md) — module boundaries, dependency direction, and staged runtime topology.
-- [API](API.md) — implemented public endpoints, diagnostic contracts, proxy boundary, and errors.
-- [Database](DATABASE.md) — implemented entities, constraints, migrations, demo seed, and verification.
-- [Authentication](AUTHENTICATION.md) — BCrypt login, CSRF/session policy, RBAC, bootstrap, and admin boundary.
-- [Security hardening](SECURITY_HARDENING.md) — Redis limits, login defense, audit signals, contact and upload boundaries.
-- [Deployment security](DEPLOYMENT_SECURITY.md) — Cloudflare, origin, caching, secrets, and residual-risk contract.
-- [Testing](TESTING.md) — test layers, commands, fixtures, security coverage, browser checks, and release gate.
-- [Content guide](CONTENT_GUIDE.md) — editorial voice, evidence rules, demo labels, and Russian copy guidance.
-- [Design system](DESIGN_SYSTEM.md) — implemented tokens, typography, components, states, and accessibility rules.
-- [Media guide](MEDIA_GUIDE.md) — licensing, real-video requirements, optimization, fallbacks, and reduced motion.
-- [Motion guide](MOTION_GUIDE.md) — animation ownership, dynamic runtimes, reduced motion, and performance rules.
-- [Security policy](../SECURITY.md) — responsible vulnerability reporting and the current support status.
+- [Architecture](ARCHITECTURE.md) — modules, dependency direction, trust and runtime topology.
+- [API](API.md) — public/authenticated endpoints, validation, proxy boundary, and errors.
+- [Database](DATABASE.md) — entities, constraints, migrations, demo seed, and verification.
+- [Authentication](AUTHENTICATION.md) — login, CSRF/session policy, RBAC, and bootstrap boundary.
+- [Design system](DESIGN_SYSTEM.md) — tokens, typography, components, states, and accessibility.
+- [Motion guide](MOTION_GUIDE.md) — animation ownership, reduced motion, and performance.
 
-## Planned
+## Content and media
 
-- `THREAT_MODEL.md` — assets, trust boundaries, threats, mitigations, and residual risk.
-- `INCIDENT_RESPONSE.md` — triage, containment, recovery, notification, and learning.
-- `DEPLOYMENT.md` — environments, build artifacts, rollout, rollback, and recovery.
+- [Content guide](CONTENT_GUIDE.md) — editorial voice, evidence, demo labels, and Russian copy.
+- [Media guide](MEDIA_GUIDE.md) — licensing, real-video requirements, optimization, and fallbacks.
+
+## Security and operations
+
+- [Security hardening](SECURITY_HARDENING.md) — Redis limits, login defense, contact, and uploads.
+- [Threat model](THREAT_MODEL.md) — assets, boundaries, threats, controls, and residual risk.
+- [Deployment security](DEPLOYMENT_SECURITY.md) — edge, origin, caching, secret, and route policy.
+- [Deployment and recovery](DEPLOYMENT.md) — images, rollout, backups, restore, and rollback.
+- [Incident response](INCIDENT_RESPONSE.md) — severity, containment, recovery, and learning.
+- [Testing](TESTING.md) — test layers, commands, fixtures, CI evidence, and release gate.
+- [Security policy](../SECURITY.md) — responsible vulnerability reporting and research boundaries.
+
+## Repository guidance
+
+- [Root README](../README.md) — Windows install, local/Docker startup, testing, and production entry.
+- [AGENTS.md](../AGENTS.md) — implementation, security, Git, and definition-of-done rules.
+- [Infrastructure README](../infrastructure/README.md) — local and production Compose boundaries.
+- [Workflow README](../.github/workflows/README.md) — GitHub Actions ownership and permissions.

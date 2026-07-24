@@ -114,3 +114,16 @@ Before a stage is committed and pushed:
 4. scan for secret patterns and ensure `.env` is untracked;
 5. review reports and fix failures rather than bypassing checks;
 6. stage only files belonging to the current stage.
+
+## Continuous integration
+
+GitHub Actions runs separate backend, frontend/browser, Docker-build, and security workflows.
+Actions and scanner images are pinned, jobs receive read-only repository permissions, Maven and
+npm use their lock/wrapper contracts, and test reports are retained as bounded artifacts.
+Dependabot proposes Maven, npm, Docker, and Actions updates.
+
+The security workflow scans Git history for secrets, application dependencies for known
+HIGH/CRITICAL vulnerabilities, and operating-system packages in both freshly built runtime images.
+CI verifies artifacts but does not publish images or deploy. A future release workflow must use a
+protected environment, immutable image digests, explicit approval, and credentials unavailable to
+pull-request jobs.

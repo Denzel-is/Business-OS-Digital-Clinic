@@ -1,74 +1,48 @@
 # Business OS: Digital Clinic
 
-Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction and turning it into fast, usable, and secure IT systems.
+Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction
+and turning it into fast, usable, and secure IT systems.
 
-> Current status: the project is complete through stage 15. The complete four-service local stack,
-> hardened production composition, separate application images, health checks, secret-file
-> injection, CI test gates, dependency/secret/container scanning, and reproducible Docker builds are
-> implemented. Complete operational and project documentation follows in stage 16.
+> Current status: stages 1–16 are complete. The monorepo contains the Java/Spring API, Next.js
+> application, PostgreSQL and Redis persistence, protected administration foundation, security
+> controls, layered tests, production containers, CI gates, and the complete project and
+> operational documentation. Stage 17 is the final audit and release-readiness review.
 
-## Product direction
+## Product
 
-The product will position its owner as an IT specialist who analyzes business processes, identifies digital problems, designs practical solutions, improves UX, automates manual work, integrates AI responsibly, and measures business impact without presenting demo data as real client results.
+The public experience explains services, presents honestly labelled demonstration cases, runs a
+stateless Business Diagnostic, and provides a consent-based contact flow. Security Center is an
+educational validation demonstration; it is not a scanner and does not claim to prove security.
 
-Core message:
+The implemented administration boundary uses backend-enforced `EDITOR` and `ADMIN` roles. CRUD
+publishing, MFA challenge delivery, account recovery, public media delivery, and production
+infrastructure provisioning remain explicit limitations.
 
-> Диагностирую цифровые проблемы бизнеса и превращаю их в быстрые, удобные и защищённые IT-системы.
-
-## Planned architecture
+## Architecture
 
 ```text
-Business_OS_Digital_Clinic/
-├── backend/                 Java 21 and Spring Boot API foundation
-├── frontend/                Next.js/React application foundation
-├── infrastructure/          deployment and platform contract
-├── docs/                    architecture and documentation map
-├── .github/
-│   └── workflows/           CI contract; workflows arrive with build targets
-├── .editorconfig            editor-independent formatting baseline
-├── .gitattributes           deterministic text and binary handling
-├── .env.example             non-secret local configuration contract
-├── AGENTS.md                repository contribution rules
-├── docker-compose.yml       complete local stack
-├── docker-compose.prod.yml  hardened production composition
-├── .gitignore
-├── README.md
-└── SECURITY.md              vulnerability reporting policy
+browser
+  -> Next.js frontend / same-origin BFF
+      -> Spring Boot API
+          -> PostgreSQL (system of record)
+          -> Redis (rate-limit and security counters)
+          -> private draft-upload volume
 ```
 
-The backend will use package-by-feature boundaries. The frontend will use Server Components by default and isolate interactive browser code. PostgreSQL is the system of record; Redis supports bounded caching and rate-limit counters. Frontend and backend will ship as separate production containers behind a Cloudflare-ready edge configuration.
-
-## Delivery plan
-
-1. Audit and preparation baseline — complete.
-2. Monorepo initialization — complete.
-3. Backend foundation — complete.
-4. Frontend foundation — complete.
-5. Design system — complete.
-6. Homepage and accessible content structure — complete.
-7. Motion design with reduced-motion support — complete.
-8. Business Diagnostic — complete.
-9. Demo projects and cases — complete.
-10. Security Center — complete.
-11. Database model and migrations — complete.
-12. Authentication and protected administration — complete.
-13. Security hardening — complete.
-14. Automated testing — complete.
-15. Docker and CI/CD — complete.
-16. Complete project documentation.
-17. Final audit and draft pull request.
-
-Each stage is reviewed, verified, committed, and pushed independently before the next stage starts.
+The frontend and backend ship as separate non-root containers. Production Compose publishes only
+the frontend to the loopback interface; backend and data services remain on internal networks.
+See [Architecture](docs/ARCHITECTURE.md) and the [documentation map](docs/README.md).
 
 ## Prerequisites for Windows
 
-- Git 2.40 or newer.
-- Java 21 LTS (Temurin recommended); set `JAVA_HOME` and add `%JAVA_HOME%\bin` to `Path`.
-- Node.js LTS with npm.
+- Git 2.40 or newer;
+- Java 21 LTS (Temurin recommended);
+- Node.js 24 LTS and npm;
 - Docker Desktop with Docker Compose v2.
-- Maven does not need a global installation: use `backend\mvnw.cmd` once the backend foundation is present.
 
-Verify the tools in PowerShell:
+Maven does not need a global installation because the repository includes the Maven Wrapper.
+
+Verify in PowerShell:
 
 ```powershell
 git --version
@@ -79,20 +53,21 @@ docker --version
 docker compose version
 ```
 
-If PowerShell blocks `npm.ps1`, use `npm.cmd` as shown throughout this guide; changing the machine execution policy is not required.
+If PowerShell blocks `npm.ps1`, use `npm.cmd`; changing the machine execution policy is unnecessary.
 
-## Installation on Windows
+## Install
 
 ```powershell
 git clone https://github.com/Denzel-is/Business-OS-Digital-Clinic.git
 cd Business-OS-Digital-Clinic
-git switch codex/initial-development
+git switch master
 Copy-Item .env.example .env
 ```
 
-Edit `.env` locally with development-only values. Never commit `.env`.
+`.env.example` contains public local-development defaults. Edit the ignored `.env` only when
+needed, and never put production credentials or personal data in it.
 
-Install project dependencies after the application foundations exist:
+Install exact dependencies:
 
 ```powershell
 cd backend
@@ -102,55 +77,51 @@ npm.cmd ci
 cd ..
 ```
 
-## Environment variables
+## Run the complete application with Docker
 
-`.env.example` is the current contract for names and safe local defaults. It will be refined alongside implementation. Its groups include:
-
-- PostgreSQL connection and database names.
-- Redis host and port.
-- Backend and frontend public origins.
-- Cookie and CORS settings.
-- Cloudflare Turnstile site/secret keys for deployed public forms.
-- Bootstrap administrator settings handled without committing credentials.
-
-Use a secret manager for deployed environments. Do not place real secrets in Compose files, Docker images, browser-exposed variables, source control, or logs.
-
-## Start PostgreSQL and Redis
-
-Copy the matching local environment contract and start only the data services:
+With Docker Desktop running:
 
 ```powershell
-Copy-Item .env.example .env
-docker compose up -d postgres redis
+docker compose config
+docker compose up -d --build
 docker compose ps
 ```
 
-The documented password is a public local-development value, not a production secret. Replace it
-outside local development and never commit `.env`.
+Wait until all four services are `healthy`, then open:
 
-Stop the local services without deleting their data:
+- application: http://localhost:3000
+- diagnostic: http://localhost:3000/diagnostic
+- project cases: http://localhost:3000/projects
+- Security Center: http://localhost:3000/security
+- contact: http://localhost:3000/contact
+- administrator login: http://localhost:3000/admin/login
+- backend health: http://localhost:8080/actuator/health
+
+View logs and stop without deleting named data volumes:
 
 ```powershell
-docker compose stop postgres redis
+docker compose logs -f backend frontend
+docker compose down
 ```
 
-`docker compose down` removes containers and the network but preserves named volumes unless
-`--volumes` is explicitly supplied.
+Deleting volumes is a separate destructive operation and is not part of normal restart or update.
 
-## Start the backend
+## Run applications from source
+
+Start data services from the repository root:
+
+```powershell
+docker compose up -d postgres redis
+```
+
+Start the backend in one PowerShell window:
 
 ```powershell
 cd backend
 .\mvnw.cmd spring-boot:run
 ```
 
-The local API, health endpoint, and Business Diagnostic contract are documented in `docs/API.md`.
-If startup reports `SCRAM-based authentication, but no password was provided`, create the root
-`.env` from `.env.example` and ensure the PostgreSQL container uses the same local password.
-
-## Start the frontend
-
-In a second PowerShell window:
+Start the frontend in a second window:
 
 ```powershell
 cd frontend
@@ -158,11 +129,29 @@ npm.cmd ci
 npm.cmd run dev
 ```
 
-Open `http://localhost:3000`. The interactive diagnostic is available at `http://localhost:3000/diagnostic`; Security Center is available at `http://localhost:3000/security`; the protected administration login is at `http://localhost:3000/admin/login`. Configure the one-time local administrator as documented in `docs/AUTHENTICATION.md`. These server-backed features require the backend on `http://localhost:8080` unless `BACKEND_PUBLIC_URL` is configured differently.
+The backend is available at `http://localhost:8080` and the frontend at
+`http://localhost:3000`. If Java is not detected, set `JAVA_HOME` to a Java 21 JDK and add
+`%JAVA_HOME%\bin` to `Path`.
 
-## Testing
+## Optional local administrator
 
-Backend:
+No administrator credential is committed. For one local bootstrap only, set the following in the
+ignored `.env`:
+
+```properties
+BOOTSTRAP_ADMIN_ENABLED=true
+BOOTSTRAP_ADMIN_EMAIL=your-local-admin@example.test
+BOOTSTRAP_ADMIN_PASSWORD=use-at-least-16-characters
+BOOTSTRAP_ADMIN_DISPLAY_NAME=Local administrator
+```
+
+Start the backend once, then set `BOOTSTRAP_ADMIN_ENABLED=false`, remove the password, and restart.
+See [Authentication](docs/AUTHENTICATION.md). Production bootstrap requires a separately reviewed
+secret-manager procedure and is intentionally not enabled by production Compose.
+
+## Verify
+
+Backend (Docker Desktop is required by Testcontainers):
 
 ```powershell
 cd backend
@@ -174,52 +163,79 @@ Frontend:
 ```powershell
 cd frontend
 npm.cmd ci
+npm.cmd run format:check
 npm.cmd run lint
 npm.cmd run typecheck
 npm.cmd run test
 npm.cmd run build
 npm.cmd run test:e2e
+npm.cmd audit --audit-level=high
 ```
 
-## Docker
-
-Validate and start the complete local stack:
+Infrastructure:
 
 ```powershell
 docker compose config
-docker compose up -d --build
-docker compose ps
 ```
 
-Use the production definition only with an explicit production environment file managed outside Git:
+The complete release gate and test ownership are in [Testing](docs/TESTING.md). CI repeats backend,
+frontend, browser, Compose, dependency, secret-history, image-build, and container scan checks.
+
+## Production deployment
+
+Production uses `docker-compose.prod.yml`, immutable registry digests, four protected secret files,
+and an external TLS reverse proxy or Cloudflare Tunnel. Validate before rollout:
 
 ```powershell
-docker compose -f docker-compose.prod.yml --env-file .env.production config
-docker compose -f docker-compose.prod.yml --env-file .env.production up -d
+docker compose -f docker-compose.prod.yml `
+  --env-file C:\secure\business-os.production.env config
+docker compose -f docker-compose.prod.yml `
+  --env-file C:\secure\business-os.production.env up -d
+docker compose -f docker-compose.prod.yml `
+  --env-file C:\secure\business-os.production.env ps
 ```
 
-## Production build
+Do not deploy by copying `.env.example`, use mutable image tags, expose the backend/data ports, or
+place secrets in source control, image layers, command arguments, logs, or screenshots.
 
-```powershell
-cd backend
-.\mvnw.cmd clean verify
-```
+Follow [Deployment and recovery](docs/DEPLOYMENT.md), [Deployment security](docs/DEPLOYMENT_SECURITY.md),
+[Threat model](docs/THREAT_MODEL.md), and [Incident response](docs/INCIDENT_RESPONSE.md) before a
+real deployment.
 
-```powershell
-cd frontend
-npm.cmd ci
-npm.cmd run build
-```
+## Documentation
 
-Container builds and the local/production Compose boundaries are implemented. Deployment,
-backup/restore, and rollback procedures are completed in stage 16.
+- [Architecture](docs/ARCHITECTURE.md)
+- [API](docs/API.md)
+- [Design system](docs/DESIGN_SYSTEM.md)
+- [Content guide](docs/CONTENT_GUIDE.md)
+- [Media guide](docs/MEDIA_GUIDE.md)
+- [Testing](docs/TESTING.md)
+- [Security policy](SECURITY.md)
+- [Complete documentation map](docs/README.md)
 
-## Security
+## Security and limitations
 
-Security is a layered risk-reduction practice, not a promise of absolute protection. Application controls will be combined with validation, authorization, secure sessions, rate limiting, monitoring, dependency scanning, backups, and edge controls such as CDN and WAF. Public content cannot be made impossible to copy, and DDoS mitigation cannot be provided by Java code alone.
+Security is layered risk reduction, not a promise of absolute protection. DDoS resilience requires
+upstream capacity and edge controls; public content can be copied; scanners can miss issues; and
+untested backups do not provide recovery.
 
-Report vulnerabilities privately through the process in `SECURITY.md`. Do not include secrets or personal data in issues.
+The repository does not provision or claim an active production domain, Cloudflare configuration,
+WAF, malware scanner, object-storage publication flow, monitoring provider, registry, deployment
+credential, backup target, or supported production release. Demonstration content and results are
+labelled and must not be presented as real client outcomes.
 
-## Repository workflow
+Report vulnerabilities privately through [SECURITY.md](SECURITY.md). Do not include secrets,
+personal data, or exploit details in public issues.
 
-The canonical remote is [Denzel-is/Business-OS-Digital-Clinic](https://github.com/Denzel-is/Business-OS-Digital-Clinic). The baseline is created on `main`; subsequent development uses `codex/initial-development`. Force pushes and committed secrets are prohibited. See `AGENTS.md` for the complete working agreement.
+## Git workflow
+
+The canonical remote is
+[Denzel-is/Business-OS-Digital-Clinic](https://github.com/Denzel-is/Business-OS-Digital-Clinic)
+and the current integration branch is `master`. Use stage-focused Conventional Commits, review the
+exact diff and checks before pushing, never force-push published history, and never commit secrets.
+See [AGENTS.md](AGENTS.md) for repository rules.
+
+## Delivery plan
+
+Stages 1–16 are complete. Stage 17 covers the final repository audit, complete clean verification,
+known-limitations review, and draft pull request/release handoff.

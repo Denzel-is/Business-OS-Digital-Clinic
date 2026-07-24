@@ -105,8 +105,8 @@ These commands become mandatory once their configuration is added in the corresp
 
 ## Git workflow
 
-- Use `main` only for the approved baseline and reviewed integration.
-- Implement subsequent stages on `codex/initial-development` or a specifically approved branch.
+- Use `master` as the current approved integration branch.
+- Implement future feature work on `codex/*` branches unless a specifically approved workflow says otherwise.
 - Keep commits stage-focused and use clear Conventional Commit messages.
 - Inspect `git diff` and `git status` before staging.
 - Stage only files related to the current stage.

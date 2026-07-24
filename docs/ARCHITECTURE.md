@@ -4,7 +4,7 @@
 
 This document records the monorepo contract plus the backend, frontend, design-system, homepage,
 motion, Business Diagnostic, static project-case, Security Center, and PostgreSQL persistence
-foundation completed through stage 15. Runtime details are promoted from planned to implemented
+foundation completed through stage 16. Runtime details are promoted from planned to implemented
 only after their stage passes verification.
 
 ## System context
@@ -50,11 +50,23 @@ The homepage is composed from server-rendered sections in `frontend/src/componen
 
 Motion is isolated in client boundaries under `frontend/src/components/motion`. Framer Motion handles lightweight editorial movement. GSAP and ScrollTrigger are imported only inside Business Vitals after reduced-motion checks. React Three Fiber and Three.js are imported only for the Security Pulse defense-layer model and are skipped for reduced motion, narrow viewports, or unavailable WebGL. Static server-rendered content remains the source of meaning in every mode.
 
-Business Diagnostic is a vertical stateless slice. The React Hook Form wizard owns step navigation and ephemeral contact inputs. A strict frontend allowlist sends only 11 process answers through a same-origin Next.js route. The route validates with Zod and calls the Java API. `diagnostic.application` owns scoring and recommendation rules; `diagnostic.domain` owns answer and assessment models; `diagnostic.api` owns validated DTO mapping. No answer or contact persistence exists before the database and explicit-consent stages.
+Business Diagnostic is a vertical stateless evaluation slice. The React Hook Form wizard owns step
+navigation and ephemeral contact inputs. A strict frontend allowlist sends only 11 process answers
+through a same-origin Next.js route. The route validates with Zod and calls the Java API.
+`diagnostic.application` owns scoring and recommendation rules; `diagnostic.domain` owns answer
+and assessment models; `diagnostic.api` owns validated DTO mapping. Evaluation answers are not
+persisted; contact data uses a separate explicit-consent transaction.
 
 Project cases are immutable editorial records in `frontend/src/content/projects.ts` until persistence is introduced. `/projects` applies client-side category filtering to the complete static set, while `/projects/[slug]` uses `generateStaticParams` for six detail pages. Project labels, constraints, and verification signals remain part of each record so list and detail views cannot silently drop the honesty boundary.
 
-Security Center is an evidence map rather than a protection claim. Immutable content lists all 16 required controls as implemented, foundational, or planned. Its client lab sends only a context enum and a text value through a strict, size-bounded same-origin route. The Java `security.application` service normalizes and evaluates the value without executing it, scanning another system, or persisting it; React renders the preview as escaped text. Authentication, server-side RBAC, CSRF-protected sessions, and the database foundation now point to verified evidence; rate limiting, WAF, backups, and incident response remain planned.
+Security Center is an evidence map rather than a protection claim. Immutable content lists required
+controls as implemented, foundational, or operationally outstanding. Its client lab sends only a
+context enum and a text value through a strict, size-bounded same-origin route. The Java
+`security.application` service normalizes and evaluates the value without executing it, scanning
+another system, or persisting it; React renders the preview as escaped text. Authentication,
+backend RBAC, CSRF sessions, persistence, Redis rate limits, testing, containers, and response
+documentation point to evidence. WAF activation, monitored backups, malware scanning, and origin
+firewalling remain deployment responsibilities.
 
 The persistence foundation contains 14 internal JPA entities organized by feature. A shared mapped
 superclass owns UUID identifiers, audit timestamps, and optimistic-lock versions. Flyway V1 owns

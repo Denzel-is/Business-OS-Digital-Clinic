@@ -2,9 +2,9 @@
 
 ## Status
 
-This is the stage 13 deployment-security contract. It prepares a Cloudflare-ready boundary but
-does not claim that Cloudflare, a WAF, backups, or production infrastructure are already deployed.
-Container and CI implementation follows in stage 15.
+The application, production Compose, and CI controls described here are implemented through stage
+16. This remains a Cloudflare-ready operational contract: it does not claim that Cloudflare, a
+WAF, backups, monitoring, or production infrastructure are already deployed.
 
 ## Required production edge
 
