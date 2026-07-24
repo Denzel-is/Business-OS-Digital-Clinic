@@ -25,6 +25,7 @@ frontend/node_modules/
 node_modules/
 frontend/.next/
 .next/
+frontend/next-env.d.ts
 frontend/out/
 frontend/coverage/
 coverage/
