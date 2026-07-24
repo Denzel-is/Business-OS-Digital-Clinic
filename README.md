@@ -114,18 +114,44 @@ Use a secret manager for deployed environments. Do not place real secrets in Com
 
 ## Start PostgreSQL and Redis
 
-After `docker-compose.yml` is added:
+Until the Compose definitions are added in stage 15, create the local containers once:
 
 ```powershell
-docker compose up -d postgres redis
-docker compose ps
+docker run --name business-os-postgres `
+  -e POSTGRES_DB=business_os `
+  -e POSTGRES_USER=business_os_app `
+  -e POSTGRES_PASSWORD=business_os_local `
+  -p 5432:5432 `
+  -d postgres:17-alpine
+
+docker run --name business-os-redis `
+  -p 6379:6379 `
+  -d redis:7-alpine
 ```
+
+On later runs, start the existing containers:
+
+```powershell
+docker start business-os-postgres business-os-redis
+docker ps
+```
+
+Copy the matching local environment contract before starting the backend:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+The documented password is a public local-development value, not a production secret. Replace it
+outside local development and never commit `.env`.
 
 Stop the local services without deleting their data:
 
 ```powershell
-docker compose stop
+docker stop business-os-postgres business-os-redis
 ```
+
+After stage 15, `docker compose up -d postgres redis` becomes the canonical command.
 
 ## Start the backend
 
@@ -135,6 +161,8 @@ cd backend
 ```
 
 The local API, health endpoint, and Business Diagnostic contract are documented in `docs/API.md`.
+If startup reports `SCRAM-based authentication, but no password was provided`, create the root
+`.env` from `.env.example` and ensure the PostgreSQL container uses the same local password.
 
 ## Start the frontend
 

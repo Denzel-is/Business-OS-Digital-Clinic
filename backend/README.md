@@ -37,7 +37,12 @@ Within a feature, dependencies flow from `api` to `application` and `domain`; in
 
 ## Local configuration
 
-Copy the root `.env.example` to `.env` and set local database credentials. Spring imports the root `.env` file when the application is started from this directory. PostgreSQL and Redis must be available before starting the application; Compose services are added in a later infrastructure stage.
+Copy the root `.env.example` to `.env` before starting the backend. Spring imports that file when
+the application is started from this directory and intentionally refuses to start without
+`DATABASE_PASSWORD`. The documented PostgreSQL container uses the public local-only value from the
+example; every shared or deployed environment must supply a different secret. PostgreSQL and Redis
+must be available before starting the application; Compose services are added in a later
+infrastructure stage.
 
 ## Commands
 
