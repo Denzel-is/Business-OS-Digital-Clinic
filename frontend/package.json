@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@fontsource-variable/manrope": "5.2.8",
-    "@fontsource/ibm-plex-mono": "5.2.7",
+    "@fontsource/ibm-plex-mono": "5.3.0",
     "@react-three/fiber": "9.6.1",
     "framer-motion": "12.42.2",
     "gsap": "3.15.0",
