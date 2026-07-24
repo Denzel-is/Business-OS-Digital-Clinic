@@ -159,9 +159,14 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">Next step</p>
               <p className="mt-3 text-2xl font-semibold">Сначала проверьте собственный симптом</p>
             </div>
-            <ButtonLink href="/diagnostic" icon={<ArrowRight aria-hidden="true" />}>
-              Пройти диагностику
-            </ButtonLink>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <ButtonLink href="/contact" variant="secondary">
+                Обсудить похожую задачу
+              </ButtonLink>
+              <ButtonLink href="/diagnostic" icon={<ArrowRight aria-hidden="true" />}>
+                Пройти диагностику
+              </ButtonLink>
+            </div>
           </Container>
         </section>
       </main>

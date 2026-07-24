@@ -3,6 +3,7 @@ import { ArrowDown, ArrowUpRight, Stethoscope } from "lucide-react";
 import { HeroMedia } from "@/components/home/hero-media";
 import { HeroParallax } from "@/components/motion/hero-parallax";
 import { MotionReveal } from "@/components/motion/motion-reveal";
+import { SpotlightText } from "@/components/motion/spotlight-text";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -13,9 +14,9 @@ export function Hero() {
       <Container className="grid gap-12 lg:grid-cols-12 lg:items-center">
         <div className="lg:col-span-6 xl:col-span-7">
           <MotionReveal variant="wipe">
-            <Badge tone="stable">Digital clinic for business</Badge>
+            <Badge tone="stable">Danila Borodin · digital partner for business</Badge>
             <h1 className="text-balance mt-8 max-w-5xl text-[clamp(3.4rem,7.2vw,7.8rem)] font-semibold leading-[0.87] tracking-[-0.075em]">
-              Диагностирую цифровые проблемы бизнеса
+              <SpotlightText radius={220} text="Диагностирую цифровые проблемы бизнеса" />
             </h1>
           </MotionReveal>
           <MotionReveal delay={0.12} variant="fade">

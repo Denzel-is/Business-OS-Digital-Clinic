@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Activity } from "lucide-react";
+import { Activity, Send } from "lucide-react";
 
 import { Container } from "@/components/ui/container";
 import { homeNavigation } from "@/content/home";
@@ -27,15 +27,24 @@ export function SiteFooter() {
               {item.label}
             </Link>
           ))}
-          <Link className="text-sm text-ink-muted hover:text-ink" href="/contact">
-            Связаться
-          </Link>
         </nav>
         <div className="md:col-span-3 md:text-right">
           <p className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-faint">
-            Independent digital practice
+            Создатель проекта
           </p>
-          <p className="mt-4 text-sm text-ink-muted">Demo content is explicitly labeled.</p>
+          <p className="mt-3 font-semibold text-ink">Danila Borodin</p>
+          <a
+            className="mt-3 inline-flex items-center gap-2 text-sm text-accent hover:text-accent-strong"
+            href="https://t.me/dborrov"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <Send aria-hidden="true" className="size-4" />
+            Telegram @dborrov
+          </a>
+          <p className="mt-4 text-xs leading-5 text-ink-faint">
+            Демонстрационные кейсы отмечены явно.
+          </p>
         </div>
       </Container>
     </footer>

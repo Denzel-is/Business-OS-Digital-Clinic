@@ -184,8 +184,8 @@ export function DiagnosticWizard() {
               Контактные данные
             </legend>
             <p className="mt-4 max-w-2xl leading-7 text-ink-muted">
-              Поля необязательны и не участвуют в оценке. На этом этапе они остаются только в памяти
-              браузера и не входят в API-запрос.
+              Поля необязательны и не участвуют в оценке. В этой диагностике они остаются только в
+              памяти браузера и не входят в API-запрос.
             </p>
             <div className="mt-8 grid gap-5 md:grid-cols-2">
               <label className="block text-sm font-medium text-ink">

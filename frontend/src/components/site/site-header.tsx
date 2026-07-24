@@ -4,6 +4,7 @@ import { Activity, Menu } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { homeNavigation } from "@/content/home";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 export function SiteHeader() {
   return (
@@ -35,9 +36,12 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <ButtonLink href="/diagnostic" size="compact">
-            Начать осмотр
-          </ButtonLink>
+          <span className="hidden sm:block">
+            <ButtonLink href="/diagnostic" size="compact">
+              Начать осмотр
+            </ButtonLink>
+          </span>
+          <ThemeToggle />
           <details className="relative lg:hidden">
             <summary className="grid size-10 cursor-pointer list-none place-items-center rounded-control border border-line bg-surface-raised text-ink marker:hidden">
               <Menu aria-hidden="true" className="size-4" />
@@ -47,6 +51,12 @@ export function SiteHeader() {
               aria-label="Мобильная навигация"
               className="absolute right-0 top-12 w-64 rounded-panel border border-line bg-surface-raised p-3 shadow-2xl"
             >
+              <Link
+                className="mb-2 block rounded-control bg-accent px-4 py-3 text-sm font-semibold text-accent-ink"
+                href="/diagnostic"
+              >
+                Открыть диагностику
+              </Link>
               {homeNavigation.map((item) => (
                 <Link
                   className="block rounded-control px-4 py-3 text-sm font-medium text-ink-muted hover:bg-white/5 hover:text-ink"

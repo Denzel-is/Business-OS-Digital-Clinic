@@ -19,7 +19,9 @@ export default async function AdminDashboardPage() {
 
   return (
     <AdminShell session={session}>
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Stage 12 · RBAC</p>
+      <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+        Protected workspace · RBAC
+      </p>
       <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
         Операционный обзор
       </h1>

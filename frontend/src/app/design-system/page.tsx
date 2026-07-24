@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Metric } from "@/components/ui/metric";
@@ -51,9 +52,12 @@ export default function DesignSystemPage() {
             <ArrowLeft aria-hidden="true" className="size-4" />
             Business OS
           </Link>
-          <span className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-ink-faint">
-            DS / v0.1
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-ink-faint">
+              DS / v0.1
+            </span>
+            <ThemeToggle />
+          </div>
         </Container>
       </header>
 
@@ -269,7 +273,7 @@ export default function DesignSystemPage() {
           <div className="mt-16 flex flex-col gap-6 border-t border-line pt-10 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3 text-sm text-ink-muted">
               <Activity aria-hidden="true" className="size-4 text-accent" />
-              <span>Токены и компоненты готовы для этапа главной страницы.</span>
+              <span>Токены и компоненты используются во всех публичных маршрутах.</span>
             </div>
             <ButtonLink href="/" icon={<ArrowUpRight aria-hidden="true" />} variant="secondary">
               Вернуться к системе

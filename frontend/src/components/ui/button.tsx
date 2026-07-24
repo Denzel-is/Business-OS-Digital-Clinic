@@ -7,7 +7,7 @@ type ButtonSize = "compact" | "default";
 type ButtonVariant = "danger" | "ghost" | "primary" | "secondary";
 
 const baseStyles =
-  "inline-flex items-center justify-center gap-2 rounded-control border font-semibold transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-45 [&_svg]:size-4 [&_svg]:shrink-0";
+  "inline-flex items-center justify-center gap-2 rounded-control border font-semibold transition-[color,background-color,border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 active:translate-y-0 disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-45 [&_svg]:size-4 [&_svg]:shrink-0";
 
 const sizeStyles: Record<ButtonSize, string> = {
   compact: "min-h-10 px-4 text-sm",

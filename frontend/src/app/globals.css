@@ -44,6 +44,25 @@
   font-synthesis: none;
 }
 
+:root[data-theme="light"] {
+  color-scheme: light;
+  --ds-color-canvas: #f5f7f2;
+  --ds-color-surface: #ffffff;
+  --ds-color-surface-raised: #edf2ec;
+  --ds-color-surface-inset: #e6ede7;
+  --ds-color-ink: #10211b;
+  --ds-color-ink-muted: #4d6159;
+  --ds-color-ink-faint: #708279;
+  --ds-color-line: #ced9d2;
+  --ds-color-line-strong: #a7b9af;
+  --ds-color-accent: #087d60;
+  --ds-color-accent-strong: #05694f;
+  --ds-color-accent-ink: #ffffff;
+  --ds-color-warning: #996000;
+  --ds-color-danger: #b93832;
+  --shadow-focus: 0 0 0 3px rgb(8 125 96 / 0.2);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -60,6 +79,9 @@ body {
   background: var(--ds-color-canvas);
   color: var(--ds-color-ink);
   text-rendering: optimizeLegibility;
+  transition:
+    background-color 240ms ease,
+    color 240ms ease;
 }
 
 button,
@@ -96,6 +118,12 @@ select {
   background-size: 4rem 4rem;
 }
 
+:root[data-theme="light"] .editorial-grid {
+  background-image:
+    linear-gradient(to right, rgb(8 125 96 / 0.075) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(8 125 96 / 0.075) 1px, transparent 1px);
+}
+
 .text-balance {
   text-wrap: balance;
 }
@@ -119,6 +147,50 @@ select {
   animation: media-scan 7.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
+@keyframes process-flow {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scaleX(0.35);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes ambient-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(1.5rem, -1rem, 0) scale(1.08);
+  }
+}
+
+.process-flow-line {
+  animation: process-flow 2.8s ease-in-out infinite;
+  transform-origin: left;
+}
+
+.ambient-drift {
+  animation: ambient-drift 8s ease-in-out infinite;
+}
+
+.interactive-card {
+  transition:
+    border-color 300ms ease,
+    box-shadow 300ms ease,
+    transform 300ms ease;
+}
+
+.interactive-card:hover {
+  border-color: color-mix(in srgb, var(--ds-color-accent) 42%, var(--ds-color-line));
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.12);
+  transform: translateY(-0.3rem);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -135,5 +207,10 @@ select {
 
   .media-scan-line {
     display: none;
+  }
+
+  .process-flow-line,
+  .ambient-drift {
+    animation: none;
   }
 }

@@ -1,6 +1,9 @@
 # Frontend module
 
-The frontend is a Next.js App Router application running on Node.js 24 LTS with React, strict TypeScript, Tailwind CSS, Vitest, and Playwright. Stage 12 adds a same-origin authentication BFF and protected administration shell on top of the homepage, motion layer, Business Diagnostic, project breakdowns, and Security Center.
+The frontend is a Next.js App Router application running on Node.js 24 LTS with React, strict
+TypeScript, Tailwind CSS, Vitest, and Playwright. It includes the public marketing experience,
+Business Diagnostic, project breakdowns, Security Center, contact flow, authentication BFF, and
+protected administration shell.
 
 ## Architecture
 
@@ -13,7 +16,7 @@ frontend/
 │   ├── components/         accessible foundation and UI primitives
 │   │   └── motion/         isolated Framer, GSAP, and R3F client boundaries
 │   ├── content/            immutable editorial content and labels
-│   ├── features/           feature-owned interactive UI (added by feature stages)
+│   ├── features/           feature-owned interactive UI
 │   ├── lib/api/            typed server-side backend boundary
 │   └── test/               Vitest setup
 ├── eslint.config.mjs
@@ -26,7 +29,9 @@ frontend/
 
 Server Components are the default. Files using browser state, effects, event handlers, or browser-only libraries must declare `"use client"` at the narrowest practical boundary. Backend calls go through `src/lib/api`; browser-visible environment variables must never contain secrets.
 
-GSAP, Framer Motion, and React Three Fiber are installed to satisfy the approved stack, but remain unused until the motion and 3D stages. They must be dynamically imported when introduced.
+Framer Motion owns lightweight reveals, the Spotlight heading, and Hero parallax. Business Vitals
+dynamically imports GSAP ScrollTrigger, while Security Pulse dynamically imports the only React
+Three Fiber scene.
 
 ## Design system
 
@@ -36,7 +41,11 @@ Manrope Variable and IBM Plex Mono are packaged with the application and do not 
 
 ## Homepage
 
-The `/` route contains System Boot, Hero, Business Health Indicator, sticky Business Vitals, Digital Symptoms, treatment approach, solutions, featured demo cases, Security Pulse, About, and the final diagnostic CTA. Server Components own content while isolated client boundaries provide motion.
+The `/` route contains a compact competence strip, Hero process map, Business Health Indicator,
+sticky Business Vitals, Digital Symptoms, treatment approach, solutions, featured demo cases,
+Security Pulse, named creator/contact section, and the final diagnostic CTA. Server Components own
+content while isolated client boundaries provide motion. A persisted dark/light theme uses the
+same semantic token system.
 
 The `/diagnostic` route contains a 12-step React Hook Form wizard. Eleven enumerated process answers are validated with Zod and sent through the same-origin `/api/diagnostic/evaluate` proxy. The twelfth contact step is optional and stays in browser memory; its fields are never included in the evaluation payload. The Java backend owns scoring and recommendation rules.
 
@@ -49,15 +58,18 @@ The `/admin/login` route authenticates through same-origin BFF routes. `/admin` 
 system links from editors and redirects anonymous users for usability, while the backend remains
 the authority for every permission decision.
 
-Stage 13 adds `/contact`, a strict same-origin contact BFF, consent UI, a non-visible honeypot,
-optional Turnstile rendering, route-specific CSP allowances only when a site key exists, and
-`robots.txt` exclusions for admin and API paths.
+The `/contact` route uses a strict same-origin contact BFF, consent UI, a non-visible honeypot,
+optional Turnstile rendering, direct creator Telegram contact, route-specific CSP allowances only
+when a site key exists, and `robots.txt` exclusions for admin and API paths.
 
-Stage 14 adds focused tests for the contact form, consent boundary, strict contact contract,
-ADMIN/EDITOR resource policy, and backend cookie allowlist, plus a browser contact journey. See
+Focused tests cover the contact form, consent boundary, strict contact contract, theme persistence,
+reduced motion, ADMIN/EDITOR resource policy, backend cookie allowlist, and browser journeys. See
 `../docs/TESTING.md`.
 
-The Hero uses `public/media/hero-poster.svg` as an explicit placeholder because no approved real video asset exists. Production video requirements and reduced-motion behavior are defined in `../docs/MEDIA_GUIDE.md`. Homepage claims and demo labeling rules are defined in `../docs/CONTENT_GUIDE.md`.
+The Hero uses a code-native animated process map instead of an unapproved stock or generated video.
+Production video requirements and reduced-motion behavior are defined in
+`../docs/MEDIA_GUIDE.md`. Homepage claims and demo labeling rules are defined in
+`../docs/CONTENT_GUIDE.md`.
 
 Framer Motion provides lightweight reveals and Hero parallax. Business Vitals dynamically imports GSAP ScrollTrigger, while Security Pulse dynamically imports the only React Three Fiber scene. Reduced-motion mode keeps all content static and avoids loading GSAP or Three.js; narrow viewports also use the static security model. The complete contract is documented in `../docs/MOTION_GUIDE.md`.
 
@@ -87,4 +99,9 @@ The application is available at `http://localhost:3000`. The server-side API cli
 
 ## Security baseline
 
-Next.js responses include a baseline Content Security Policy, clickjacking protection, MIME sniffing protection, a restrictive permissions policy, and a referrer policy. HSTS and upgrade-insecure-requests are enabled only for production builds. The current static CSP uses the framework-compatible `unsafe-inline` allowance; nonce-based CSP is intentionally deferred to the security-hardening stage because it would force every route into dynamic rendering and disable CDN-friendly static output.
+Next.js responses include a baseline Content Security Policy, clickjacking protection, MIME
+sniffing protection, a restrictive permissions policy, and a referrer policy. HSTS and
+upgrade-insecure-requests are enabled only for production builds. The current static CSP uses the
+framework-compatible `unsafe-inline` allowance; a nonce-based policy would force every route into
+dynamic rendering and is an explicit deployment/performance tradeoff rather than a claimed
+control.

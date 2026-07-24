@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import { ArrowRight } from "lucide-react";
 
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
+import { MotionReveal } from "@/components/motion/motion-reveal";
 import { Badge } from "@/components/ui/badge";
+import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { ProjectCatalog } from "@/features/projects/project-catalog";
 
@@ -19,10 +22,12 @@ export default function ProjectsPage() {
       <main id="main-content">
         <section className="editorial-grid border-b border-line py-16 sm:py-24">
           <Container>
-            <Badge tone="stable">Projects / Stage 09</Badge>
-            <h1 className="text-balance mt-7 max-w-5xl text-5xl font-semibold leading-[0.92] tracking-[-0.065em] sm:text-7xl lg:text-8xl">
-              Разборы решений без вымышленных побед
-            </h1>
+            <MotionReveal variant="wipe">
+              <Badge tone="stable">Projects / логика и проверяемые сигналы</Badge>
+              <h1 className="text-balance mt-7 max-w-5xl text-5xl font-semibold leading-[0.92] tracking-[-0.065em] sm:text-7xl lg:text-8xl">
+                Разборы решений без вымышленных побед
+              </h1>
+            </MotionReveal>
             <div className="mt-8 grid gap-6 lg:grid-cols-12">
               <p className="max-w-3xl text-lg leading-8 text-ink-muted lg:col-span-8">
                 Каждый материал показывает постановку задачи, архитектурный ход, проверяемые сигналы
@@ -39,6 +44,21 @@ export default function ProjectsPage() {
         <section className="bg-surface-inset py-16 sm:py-24">
           <Container>
             <ProjectCatalog />
+          </Container>
+        </section>
+        <section className="border-t border-line py-16 sm:py-20">
+          <Container className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">
+                Ваша задача не обязана совпадать с кейсом
+              </p>
+              <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-[-0.05em] sm:text-6xl">
+                Разберём ваш процесс и найдём первый проверяемый шаг
+              </h2>
+            </div>
+            <ButtonLink href="/contact" icon={<ArrowRight aria-hidden="true" />}>
+              Обсудить задачу
+            </ButtonLink>
           </Container>
         </section>
       </main>

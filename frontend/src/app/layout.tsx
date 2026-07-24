@@ -17,9 +17,25 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  colorScheme: "dark",
-  themeColor: "#060b0a",
+  colorScheme: "dark light",
+  themeColor: [
+    { color: "#060b0a", media: "(prefers-color-scheme: dark)" },
+    { color: "#f5f7f2", media: "(prefers-color-scheme: light)" },
+  ],
 };
+
+const themeScript = `
+  try {
+    const stored = localStorage.getItem("business-os-theme");
+    const theme = stored === "light" || stored === "dark"
+      ? stored
+      : (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+  } catch {
+    document.documentElement.dataset.theme = "dark";
+  }
+`;
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -27,7 +43,10 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <a
           className="fixed left-4 top-4 z-50 -translate-y-24 rounded-control bg-accent px-4 py-3 font-semibold text-accent-ink transition-transform focus:translate-y-0"

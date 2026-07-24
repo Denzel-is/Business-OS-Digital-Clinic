@@ -1,6 +1,9 @@
 # Media guide
 
-The homepage currently uses the repository-owned `frontend/public/media/hero-poster.svg` as a transparent placeholder. It is not presented as client footage. The motion system adds a restrained scan and shallow parallax without pretending the poster is real media. A production hero video still requires real, licensed, non-AI-generated material and must not be added until that approved asset exists.
+The homepage currently uses a code-native animated process map rather than stock, generated, or
+unapproved client footage. Its movement explains the transition from symptom to diagnosis and
+solution, and it has a static reduced-motion state. A future production hero video still requires
+real, licensed, non-AI-generated material and must not be added until that approved asset exists.
 
 ## Hero video subject
 

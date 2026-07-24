@@ -82,7 +82,7 @@ export default async function AdminSectionPage({ params, searchParams }: AdminSe
           <div className="p-10 text-center">
             <p className="font-semibold text-ink">Записей пока нет</p>
             <p className="mt-2 text-sm text-ink-muted">
-              Раздел подключён к базе и готов к следующим CRUD-этапам.
+              Раздел подключён к базе. Изменяющие операции пока намеренно недоступны.
             </p>
           </div>
         )}

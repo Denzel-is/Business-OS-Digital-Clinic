@@ -61,7 +61,7 @@ interface ProjectCardProps {
 function ProjectCard({ index, project }: ProjectCardProps) {
   return (
     <article
-      className={`group flex min-h-[34rem] flex-col overflow-hidden rounded-panel border border-line bg-surface-raised transition-[transform,border-color] duration-500 hover:-translate-y-1 hover:border-accent/35 ${index % 3 === 0 ? "lg:col-span-7" : "lg:col-span-5"}`}
+      className={`interactive-card group flex min-h-[34rem] flex-col overflow-hidden rounded-panel border border-line bg-surface-raised ${index % 3 === 0 ? "lg:col-span-7" : "lg:col-span-5"}`}
       data-project-card={project.slug}
     >
       <ProjectCardVisual project={project} />

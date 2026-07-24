@@ -40,6 +40,8 @@ describe("homepage", () => {
     expect(screen.getByText("Educational Project")).toBeInTheDocument();
     expect(screen.getByText("Demo Case")).toBeInTheDocument();
     expect(screen.getByText(/ничего не сохраняется/)).toBeInTheDocument();
+    expect(screen.getAllByText("Danila Borodin").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /@dborrov/ }).length).toBeGreaterThan(0);
   });
 
   it("keeps motion enhancements attached to meaningful static content", () => {

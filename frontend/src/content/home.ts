@@ -4,6 +4,7 @@ export const homeNavigation = [
   { href: "/projects", label: "Кейсы" },
   { href: "/security", label: "Безопасность" },
   { href: "/#about", label: "Подход" },
+  { href: "/contact", label: "Связаться" },
 ] as const;
 
 export const businessVitals = [

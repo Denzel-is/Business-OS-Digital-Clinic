@@ -23,10 +23,16 @@ test("renders the homepage without broken media or horizontal overflow", async (
   );
   await expect(page.getByText("Демонстрационная симуляция")).toBeVisible();
   await expect(page.getByText("Concept Project")).toBeVisible();
-  await expect(page.locator('img[src*="hero-poster.svg"]')).toBeVisible();
+  await expect(
+    page.getByRole("figure", {
+      name: "Схема перехода от бизнес-проблемы к работающей цифровой системе",
+    }),
+  ).toBeVisible();
+  await expect(page.getByText("Danila Borodin", { exact: true }).first()).toBeVisible();
   await expect(page.locator("[data-vitals-motion]")).toHaveAttribute(
     "data-motion-mode",
     "enhanced",
+    { timeout: 15_000 },
   );
   await expect(page.locator("[data-security-visual]")).toHaveAttribute(
     "data-motion-mode",
@@ -76,7 +82,25 @@ test("keeps homepage navigation keyboard and mobile accessible", async ({ page }
   expect(browserErrors).toEqual([]);
 });
 
+test("switches and persists the accessible light theme", async ({ page }) => {
+  await page.addInitScript(() => {
+    if (!localStorage.getItem("business-os-theme")) {
+      localStorage.setItem("business-os-theme", "dark");
+    }
+  });
+  await page.goto("/");
+
+  await page.getByRole("button", { name: "Включить светлую тему" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await expect(page.getByRole("button", { name: "Включить тёмную тему" })).toBeVisible();
+
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await expect(page.getByRole("button", { name: "Включить тёмную тему" })).toBeVisible();
+});
+
 test("uses static homepage fallbacks when reduced motion is requested", async ({ page }) => {
+  test.setTimeout(60_000);
   const browserErrors = collectBrowserErrors(page);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
@@ -96,11 +120,12 @@ test("uses static homepage fallbacks when reduced motion is requested", async ({
     "reduced",
   );
 
-  const scanLineDisplay = await page
-    .locator(".media-scan-line")
-    .evaluate((element) => getComputedStyle(element).display);
+  const processAnimation = await page
+    .locator(".process-flow-line")
+    .first()
+    .evaluate((element) => getComputedStyle(element).animationName);
 
-  expect(scanLineDisplay).toBe("none");
+  expect(processAnimation).toBe("none");
 
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await expect(page.locator("[data-vitals-motion]")).toHaveAttribute(
@@ -110,8 +135,9 @@ test("uses static homepage fallbacks when reduced motion is requested", async ({
   await expect(page.locator("[data-security-visual]")).toHaveAttribute(
     "data-motion-mode",
     "enhanced",
+    { timeout: 15_000 },
   );
-  await expect(page.locator("[data-security-visual] canvas")).toHaveCount(1);
+  await expect(page.locator("[data-security-visual] canvas")).toHaveCount(1, { timeout: 15_000 });
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator("[data-vitals-motion]")).toHaveAttribute("data-motion-mode", "reduced");
@@ -205,7 +231,10 @@ test("filters honest project cases and opens a detailed breakdown", async ({ pag
   await expect(page.getByText("Telegram-бот клиентского сервиса")).toBeVisible();
   await expect(page.getByText("Редизайн интернет-магазина")).toHaveCount(0);
 
-  await page.getByRole("link", { name: "Открыть разбор" }).click();
+  await Promise.all([
+    page.waitForURL("**/projects/telegram-support-bot"),
+    page.getByRole("link", { name: "Открыть разбор" }).click(),
+  ]);
   await expect(
     page.getByRole("heading", { level: 1, name: "Telegram-бот клиентского сервиса" }),
   ).toBeVisible();

@@ -3,6 +3,7 @@ import { ArrowRight, Layers3, ShieldCheck } from "lucide-react";
 
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
+import { MotionReveal } from "@/components/motion/motion-reveal";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -38,15 +39,17 @@ export default function SecurityPage() {
       <main id="main-content">
         <section className="editorial-grid border-b border-line py-16 sm:py-24">
           <Container>
-            <Badge tone="stable">Security Center / Stage 10</Badge>
-            <h1 className="text-balance mt-7 max-w-6xl text-5xl font-semibold leading-[0.92] tracking-[-0.065em] sm:text-7xl lg:text-8xl">
-              Безопасность без магии и абсолютных обещаний
-            </h1>
+            <MotionReveal variant="wipe">
+              <Badge tone="stable">Security Center / проверяемые контроли</Badge>
+              <h1 className="text-balance mt-7 max-w-6xl text-5xl font-semibold leading-[0.92] tracking-[-0.065em] sm:text-7xl lg:text-8xl">
+                Безопасность без магии и абсолютных обещаний
+              </h1>
+            </MotionReveal>
             <div className="mt-9 grid gap-8 lg:grid-cols-12">
               <p className="max-w-3xl text-lg leading-8 text-ink-muted lg:col-span-8">
                 Здесь видно, что уже подтверждено кодом и тестами, где существует только основа и
-                что ещё предстоит внедрить. Статусы описывают текущий репозиторий, а не идеальную
-                картину будущего.
+                что ещё предстоит внедрить. Статусы описывают текущую систему, а не идеальную
+                картину без рисков.
               </p>
               <div className="flex items-start gap-4 border-l border-accent/35 pl-5 lg:col-span-4">
                 <ShieldCheck aria-hidden="true" className="mt-1 size-6 shrink-0 text-accent" />
@@ -164,8 +167,8 @@ export default function SecurityPage() {
                 <ButtonLink href="/diagnostic" icon={<ArrowRight aria-hidden="true" />}>
                   Начать диагностику
                 </ButtonLink>
-                <ButtonLink href="/projects" variant="secondary">
-                  Посмотреть разборы
+                <ButtonLink href="/contact" variant="secondary">
+                  Обсудить защищённое решение
                 </ButtonLink>
               </div>
             </Surface>

@@ -9,7 +9,7 @@ import { FinalDiagnosticCta } from "@/components/home/final-diagnostic-cta";
 import { Hero } from "@/components/home/hero";
 import { SecurityPulse } from "@/components/home/security-pulse";
 import { Solutions } from "@/components/home/solutions";
-import { SystemBoot } from "@/components/home/system-boot";
+import { TrustStrip } from "@/components/home/trust-strip";
 import { TreatmentPath } from "@/components/home/treatment-path";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
@@ -25,7 +25,7 @@ export default function HomePage() {
     <>
       <SiteHeader />
       <main id="main-content">
-        <SystemBoot />
+        <TrustStrip />
         <Hero />
         <BusinessHealth />
         <BusinessVitals />

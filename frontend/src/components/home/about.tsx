@@ -1,4 +1,4 @@
-import { Braces, ChartNoAxesCombined, Route, UsersRound } from "lucide-react";
+import { Braces, ChartNoAxesCombined, Route, Send, UsersRound } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
@@ -27,6 +27,26 @@ export function About() {
             Работаю как технический партнёр: задаю вопросы о процессе, проектирую решение, реализую
             систему и оставляю понятный контур дальнейшего развития.
           </p>
+          <div className="mt-10 flex flex-col gap-5 rounded-panel border border-accent/25 bg-accent/8 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">
+                Создатель и технический партнёр
+              </p>
+              <p className="mt-2 text-2xl font-semibold text-ink">Danila Borodin</p>
+              <p className="mt-1 text-sm text-ink-muted">
+                От диагностики процесса до работающего full-stack продукта.
+              </p>
+            </div>
+            <a
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-control border border-accent bg-accent px-5 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-0.5"
+              href="https://t.me/dborrov"
+              rel="noreferrer"
+              target="_blank"
+            >
+              Написать @dborrov
+              <Send aria-hidden="true" className="size-4" />
+            </a>
+          </div>
         </div>
         <div className="grid gap-px overflow-hidden rounded-panel border border-line bg-line sm:grid-cols-2 lg:col-span-5 lg:grid-cols-1">
           {capabilities.map((capability) => {
