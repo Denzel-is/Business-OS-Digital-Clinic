@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-FROM eclipse-temurin:21-jdk-alpine AS build
+FROM eclipse-temurin:25-jdk-alpine AS build
 
 WORKDIR /workspace
 
@@ -12,7 +12,7 @@ RUN chmod +x mvnw \
 COPY src/ src/
 RUN ./mvnw -B -DskipTests clean package
 
-FROM eclipse-temurin:21-jre-alpine AS runtime
+FROM eclipse-temurin:25-jre-alpine AS runtime
 
 RUN apk upgrade --no-cache \
     && apk add --no-cache curl \
