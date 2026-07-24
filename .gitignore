@@ -50,6 +50,7 @@ logs/
 *.sqlite3
 *.dump
 *.sql
+!backend/src/main/resources/db/migration/*.sql
 uploads/
 backups/
 

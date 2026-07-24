@@ -1,0 +1,18 @@
+spring:
+  flyway:
+    enabled: true
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  main:
+    banner-mode: off
+
+management:
+  health:
+    redis:
+      enabled: false
+
+logging:
+  level:
+    root: WARN

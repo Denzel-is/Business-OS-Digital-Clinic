@@ -2,7 +2,10 @@
 
 ## Status
 
-This document records the monorepo contract plus the backend, frontend, design-system, homepage, motion, Business Diagnostic, static project-case, and Security Center slices completed through stage 10. Runtime details are promoted from planned to implemented only after their stage passes verification.
+This document records the monorepo contract plus the backend, frontend, design-system, homepage,
+motion, Business Diagnostic, static project-case, Security Center, and PostgreSQL persistence
+foundation completed through stage 11. Runtime details are promoted from planned to implemented
+only after their stage passes verification.
 
 ## System context
 
@@ -52,6 +55,14 @@ Business Diagnostic is a vertical stateless slice. The React Hook Form wizard ow
 Project cases are immutable editorial records in `frontend/src/content/projects.ts` until persistence is introduced. `/projects` applies client-side category filtering to the complete static set, while `/projects/[slug]` uses `generateStaticParams` for six detail pages. Project labels, constraints, and verification signals remain part of each record so list and detail views cannot silently drop the honesty boundary.
 
 Security Center is an evidence map rather than a protection claim. Immutable content lists all 16 required controls as implemented, foundational, or planned. Its client lab sends only a context enum and a text value through a strict, size-bounded same-origin route. The Java `security.application` service normalizes and evaluates the value without executing it, scanning another system, or persisting it; React renders the preview as escaped text. Authentication, database protection, rate limiting, WAF, backups, and incident response stay visibly planned until their own stages are verified.
+
+The persistence foundation contains 14 internal JPA entities organized by feature. A shared mapped
+superclass owns UUID identifiers, audit timestamps, and optimistic-lock versions. Flyway V1 owns
+tables, relation tables, checks, indexes, unique constraints, and foreign keys; Hibernate only
+validates this schema. Flyway V2 seeds the public demo catalog without users or personal records.
+Testcontainers proves the complete migration path from a new PostgreSQL 17 database. Public project
+pages and Business Diagnostic remain stateless until repositories and consent-aware application
+use cases are introduced; the presence of a table does not authorize collection.
 
 ## Data and security principles
 

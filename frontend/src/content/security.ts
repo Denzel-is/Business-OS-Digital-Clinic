@@ -49,10 +49,10 @@ export const securityControls: readonly SecurityControl[] = [
   },
   {
     code: "DB",
-    evidence: "PostgreSQL и Flyway выбраны, доменная схема ещё не введена.",
+    evidence: "14 JPA-сущностей, Flyway-схема, ограничения и проверка на чистом PostgreSQL.",
     group: "Data",
-    nextStep: "Создать минимальные права, миграции и интеграционные тесты на этапе 11.",
-    status: "Planned",
+    nextStep: "Добавить least-privilege роли, repositories, backup и restore-проверки.",
+    status: "Foundation",
     summary: "Данные требуют ограниченных ролей, миграций, шифрования и контроля запросов.",
     title: "Database Security",
   },

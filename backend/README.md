@@ -4,6 +4,11 @@ The backend foundation is a Java 21 and Spring Boot 4.1 API with a Maven Wrapper
 
 Stage 8 adds the stateless `diagnostic` feature. Its public evaluation endpoint validates enumerated answers, runs deterministic application-layer scoring, and returns a preliminary assessment without accepting or persisting contacts. Stage 10 adds a bounded, stateless `security` input-validation demonstration that applies field rules without executing or persisting submitted text.
 
+Stage 11 adds the PostgreSQL persistence foundation: 14 internal JPA entities, Flyway-owned schema
+and seed migrations, UUID/audit/version fields, explicit relationships and constraints, and a
+PostgreSQL 17 Testcontainers integration test. The seed contains public demo catalog data only.
+Repositories and persistence APIs intentionally remain outside this stage.
+
 ## Responsibilities
 
 - Business rules and server-side validation.
@@ -52,4 +57,6 @@ infrastructure stage.
 .\mvnw.cmd spotless:check
 ```
 
-The test profile uses an in-memory database only for context and HTTP security tests. PostgreSQL Testcontainers remain the required path for persistence integration tests once domain migrations exist.
+Fast context and HTTP security tests use an in-memory database with Flyway disabled. Persistence
+integration uses a fresh PostgreSQL 17 Testcontainer with Flyway enabled and Hibernate
+`ddl-auto=validate`; see `../docs/DATABASE.md`.
