@@ -58,6 +58,13 @@ Runs a stateless educational field-validation simulation. The request contains o
 
 The endpoint rejects unknown JSON fields. It never executes the value, builds a database query, scans a URL, tests an external target, or persists the request. Its result demonstrates selected input rules and does not prove that an application is secure.
 
+### `POST /api/v1/contact-requests`
+
+Accepts a bounded name, email, message, explicit consent flag, empty honeypot field, and optional
+Turnstile token. When Turnstile is enabled, server-side Siteverify approval is mandatory. A
+populated honeypot returns the same accepted shape without saving personal fields. A valid request
+creates one contact request and a lead with a fixed non-personal summary.
+
 ## Authentication endpoints
 
 ### `POST /api/v1/auth/login`
@@ -82,6 +89,8 @@ Requires authentication and CSRF, invalidates the server session, and clears the
   `categories`, `media`, `services`, `leads`, `diagnostics`, or `seo`;
 - `GET /api/v1/admin/system/{resource}` — `ADMIN` only, where resource is `users`, `audit-logs`,
   or `settings`.
+- `POST /api/v1/admin/content/media` — `ADMIN` or `EDITOR`, CSRF-protected multipart upload with
+  signature allowlisting and draft-only storage.
 
 List endpoints accept zero-based `page` and a `size` from 1 to 50. Responses expose minimal summary
 DTOs and do not expose password hashes, setting values, audit details, or JPA entities.
@@ -101,6 +110,16 @@ The browser uses `POST /api/security/input-validation` for the Security Center l
 Authentication uses the same-origin routes `/api/auth/login`, `/api/auth/session`, and
 `/api/auth/logout`. They forward only `BUSINESS_OS_SESSION` and `XSRF-TOKEN`, keep backend
 coordinates server-only, and never expose the session cookie to client JavaScript.
+
+The browser submits contact data through `POST /api/contact`. The BFF applies a strict Zod contract,
+enforces a 12 KiB body limit, forwards only allowlisted fields, and maps backend failures to generic
+user-facing responses.
+
+## Rate-limit responses
+
+Sensitive public POST routes use Redis-backed fixed-window counters. A denied request returns
+`429`, `application/problem+json`, `Cache-Control: no-store`, and `Retry-After`. When Redis cannot
+make an atomic decision, the protected operation fails closed with a generic `503`.
 
 ## Error format
 

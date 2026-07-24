@@ -13,6 +13,10 @@ Stage 12 adds BCrypt cost-12 administrator login, an explicit session security c
 CSRF-protected login/logout, `ADMIN` and `EDITOR` authorization, safe conditional administrator
 bootstrap, and minimal paginated admin query DTOs. No credential is present in migrations or source.
 
+Stage 13 adds atomic Redis rate limits, per-account login throttling, audit/security events,
+Micrometer signals, consent-aware contact and lead persistence, server-side Turnstile verification,
+and signature-allowlisted draft media storage outside public roots.
+
 ## Responsibilities
 
 - Business rules and server-side validation.

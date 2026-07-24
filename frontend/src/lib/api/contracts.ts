@@ -146,3 +146,20 @@ export const adminResourcePageSchema = z.object({
 });
 
 export type AdminResourcePage = z.infer<typeof adminResourcePageSchema>;
+
+export const contactRequestSchema = z
+  .object({
+    name: z.string().trim().min(2).max(120),
+    email: z.email().max(320),
+    message: z.string().trim().min(20).max(2000),
+    consent: z.literal(true),
+    website: z.string().max(200),
+    turnstileToken: z.string().max(2048),
+  })
+  .strict();
+
+export const contactRequestResponseSchema = z.object({
+  accepted: z.literal(true),
+});
+
+export type ContactRequest = z.infer<typeof contactRequestSchema>;

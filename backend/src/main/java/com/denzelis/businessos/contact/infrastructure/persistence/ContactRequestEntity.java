@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import java.time.Instant;
+import java.util.Locale;
 
 @Entity
 @Table(
@@ -41,4 +42,15 @@ public class ContactRequestEntity extends AuditedEntity {
     private Status status;
 
     protected ContactRequestEntity() {}
+
+    public static ContactRequestEntity create(
+            String contactName, String email, String message, Instant consentGrantedAt) {
+        ContactRequestEntity request = new ContactRequestEntity();
+        request.contactName = contactName.strip();
+        request.emailNormalized = email.strip().toLowerCase(Locale.ROOT);
+        request.message = message.strip().replace("\r\n", "\n");
+        request.consentGrantedAt = consentGrantedAt;
+        request.status = Status.NEW;
+        return request;
+    }
 }

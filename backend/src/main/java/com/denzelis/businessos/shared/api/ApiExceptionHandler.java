@@ -1,5 +1,8 @@
 package com.denzelis.businessos.shared.api;
 
+import com.denzelis.businessos.contact.application.TurnstileVerificationException;
+import com.denzelis.businessos.project.application.ProjectNotFoundException;
+import com.denzelis.businessos.project.application.UnsafeMediaUploadException;
 import jakarta.validation.ConstraintViolationException;
 import java.net.URI;
 import java.util.List;
@@ -31,6 +34,10 @@ public class ApiExceptionHandler {
             URI.create("urn:business-os:problem:payload-too-large");
     private static final URI INTERNAL_ERROR_TYPE =
             URI.create("urn:business-os:problem:internal-error");
+    private static final URI BOT_CHALLENGE_TYPE =
+            URI.create("urn:business-os:problem:bot-challenge");
+    private static final URI UNSAFE_UPLOAD_TYPE =
+            URI.create("urn:business-os:problem:unsafe-upload");
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<ProblemDetail> handleInvalidArguments(
@@ -98,6 +105,36 @@ public class ApiExceptionHandler {
                         PAYLOAD_TOO_LARGE_TYPE,
                         "Payload too large",
                         "The request exceeds the configured upload limit."));
+    }
+
+    @ExceptionHandler(TurnstileVerificationException.class)
+    ResponseEntity<ProblemDetail> handleTurnstileFailure(TurnstileVerificationException exception) {
+        return response(
+                problem(
+                        HttpStatus.BAD_REQUEST,
+                        BOT_CHALLENGE_TYPE,
+                        "Verification required",
+                        "The request could not be verified. Please try again."));
+    }
+
+    @ExceptionHandler(UnsafeMediaUploadException.class)
+    ResponseEntity<ProblemDetail> handleUnsafeUpload(UnsafeMediaUploadException exception) {
+        return response(
+                problem(
+                        HttpStatus.BAD_REQUEST,
+                        UNSAFE_UPLOAD_TYPE,
+                        "Upload rejected",
+                        "The file is empty, malformed, or uses an unsupported media type."));
+    }
+
+    @ExceptionHandler(ProjectNotFoundException.class)
+    ResponseEntity<ProblemDetail> handleProjectNotFound(ProjectNotFoundException exception) {
+        return response(
+                problem(
+                        HttpStatus.NOT_FOUND,
+                        URI.create("urn:business-os:problem:not-found"),
+                        "Not found",
+                        "The requested project does not exist."));
     }
 
     @ExceptionHandler(Exception.class)

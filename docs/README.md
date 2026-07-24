@@ -8,6 +8,8 @@ Documentation is versioned with the behavior it describes. Files marked as plann
 - [API](API.md) — implemented public endpoints, diagnostic contracts, proxy boundary, and errors.
 - [Database](DATABASE.md) — implemented entities, constraints, migrations, demo seed, and verification.
 - [Authentication](AUTHENTICATION.md) — BCrypt login, CSRF/session policy, RBAC, bootstrap, and admin boundary.
+- [Security hardening](SECURITY_HARDENING.md) — Redis limits, login defense, audit signals, contact and upload boundaries.
+- [Deployment security](DEPLOYMENT_SECURITY.md) — Cloudflare, origin, caching, secrets, and residual-risk contract.
 - [Content guide](CONTENT_GUIDE.md) — editorial voice, evidence rules, demo labels, and Russian copy guidance.
 - [Design system](DESIGN_SYSTEM.md) — implemented tokens, typography, components, states, and accessibility rules.
 - [Media guide](MEDIA_GUIDE.md) — licensing, real-video requirements, optimization, fallbacks, and reduced motion.
@@ -19,5 +21,4 @@ Documentation is versioned with the behavior it describes. Files marked as plann
 - `THREAT_MODEL.md` — assets, trust boundaries, threats, mitigations, and residual risk.
 - `INCIDENT_RESPONSE.md` — triage, containment, recovery, notification, and learning.
 - `DEPLOYMENT.md` — environments, build artifacts, rollout, rollback, and recovery.
-- `DEPLOYMENT_SECURITY.md` — secrets, Cloudflare, origin controls, hardening, and backups.
 - `TESTING.md` — test layers, local/CI commands, fixtures, and release gates.

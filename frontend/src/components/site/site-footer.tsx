@@ -27,6 +27,9 @@ export function SiteFooter() {
               {item.label}
             </Link>
           ))}
+          <Link className="text-sm text-ink-muted hover:text-ink" href="/contact">
+            Связаться
+          </Link>
         </nav>
         <div className="md:col-span-3 md:text-right">
           <p className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-faint">

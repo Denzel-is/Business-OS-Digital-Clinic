@@ -38,9 +38,14 @@ export function FinalDiagnosticCta() {
               <ClipboardList aria-hidden="true" className="size-5 text-accent" />
               Интерактивная анкета доступна и не сохраняет ответы или контакты.
             </div>
-            <ButtonLink href="/diagnostic" icon={<ArrowRight aria-hidden="true" />}>
-              Начать диагностику
-            </ButtonLink>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <ButtonLink href="/contact" variant="secondary">
+                Описать задачу
+              </ButtonLink>
+              <ButtonLink href="/diagnostic" icon={<ArrowRight aria-hidden="true" />}>
+                Начать диагностику
+              </ButtonLink>
+            </div>
           </div>
         </div>
       </Container>

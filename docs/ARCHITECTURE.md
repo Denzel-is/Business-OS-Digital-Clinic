@@ -4,7 +4,7 @@
 
 This document records the monorepo contract plus the backend, frontend, design-system, homepage,
 motion, Business Diagnostic, static project-case, Security Center, and PostgreSQL persistence
-foundation completed through stage 12. Runtime details are promoted from planned to implemented
+foundation completed through stage 13. Runtime details are promoted from planned to implemented
 only after their stage passes verification.
 
 ## System context
@@ -70,6 +70,17 @@ HTTP-session security context. CSRF protects login, logout, and future state cha
 as a same-origin BFF and forwards only allowlisted backend cookies. `ADMIN` and `EDITOR` permissions
 are enforced by both URL rules and method checks. The protected admin routes render database-backed
 overview and list DTOs; frontend redirects and hidden navigation are convenience only.
+
+Security hardening adds an inner abuse-control boundary backed by atomic Redis counters. A filter
+limits expensive public POST routes by a salted client fingerprint; authentication also tracks a
+salted normalized-account fingerprint. Audit and security records deliberately contain event
+metadata rather than credentials, tokens, form bodies, session ids, or raw IP addresses.
+
+The contact slice is consent-aware and transactional: a valid request creates a contact and a
+minimal lead, while the honeypot path stores no submitted personal fields. Turnstile verification
+is a replaceable server-side port and fails closed when enabled. Admin media upload detects file
+signatures, generates storage keys, writes outside public static roots, and registers rollback
+cleanup. Publication and media delivery remain separate workflows.
 
 ## Data and security principles
 

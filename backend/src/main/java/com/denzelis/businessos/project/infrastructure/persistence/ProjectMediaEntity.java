@@ -51,4 +51,28 @@ public class ProjectMediaEntity extends AuditedEntity {
     private PublicationStatus publicationStatus;
 
     protected ProjectMediaEntity() {}
+
+    public static ProjectMediaEntity createDraft(
+            ProjectEntity project,
+            MediaType mediaType,
+            String storageKey,
+            String altText,
+            int sortOrder) {
+        ProjectMediaEntity media = new ProjectMediaEntity();
+        media.project = project;
+        media.mediaType = mediaType;
+        media.storageKey = storageKey;
+        media.altText = altText.strip();
+        media.sortOrder = sortOrder;
+        media.publicationStatus = PublicationStatus.DRAFT;
+        return media;
+    }
+
+    public String getStorageKey() {
+        return storageKey;
+    }
+
+    public MediaType getMediaType() {
+        return mediaType;
+    }
 }

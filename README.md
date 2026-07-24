@@ -2,9 +2,9 @@
 
 Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction and turning it into fast, usable, and secure IT systems.
 
-> Current status: the project is complete through stage 12. It includes BCrypt administrator
-> login, CSRF-protected HTTP sessions, server-enforced ADMIN/EDITOR roles, a safe one-time bootstrap,
-> and a protected database-backed administration overview. Security hardening, production media,
+> Current status: the project is complete through stage 13. It includes Redis-backed abuse limits,
+> failed-login throttling, audit/security signals, a consent-aware Turnstile-ready contact flow,
+> safe draft media uploads, and hardened browser/API boundaries. Production media delivery,
 > Compose services, and deployment workflows follow in later stages.
 
 ## Product direction
@@ -52,7 +52,7 @@ The backend will use package-by-feature boundaries. The frontend will use Server
 10. Security Center — complete.
 11. Database model and migrations — complete.
 12. Authentication and protected administration — complete.
-13. Security hardening.
+13. Security hardening — complete.
 14. Automated testing.
 15. Docker and CI/CD.
 16. Complete project documentation.

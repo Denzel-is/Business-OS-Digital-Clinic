@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -39,6 +40,7 @@ public class SecurityConfiguration {
     @Bean
     SecurityFilterChain apiSecurityFilterChain(
             HttpSecurity http,
+            ApiRateLimitFilter apiRateLimitFilter,
             CorsConfigurationSource corsConfigurationSource,
             CsrfTokenRepository csrfTokenRepository,
             SecurityContextRepository securityContextRepository)
@@ -49,7 +51,8 @@ public class SecurityConfiguration {
                                 csrf.csrfTokenRepository(csrfTokenRepository)
                                         .ignoringRequestMatchers(
                                                 "/api/v1/diagnostics/evaluate",
-                                                "/api/v1/security/input-validation-demo"))
+                                                "/api/v1/security/input-validation-demo",
+                                                "/api/v1/contact-requests"))
                 .securityContext(
                         securityContext ->
                                 securityContext
@@ -79,14 +82,18 @@ public class SecurityConfiguration {
                                                 HttpMethod.POST,
                                                 "/api/v1/diagnostics/evaluate",
                                                 "/api/v1/security/input-validation-demo",
+                                                "/api/v1/contact-requests",
                                                 "/api/v1/auth/login")
                                         .permitAll()
                                         .requestMatchers("/api/v1/admin/system/**")
                                         .hasRole("ADMIN")
                                         .requestMatchers("/api/v1/admin/**")
                                         .hasAnyRole("ADMIN", "EDITOR")
+                                        .requestMatchers("/actuator/**")
+                                        .hasRole("ADMIN")
                                         .anyRequest()
                                         .authenticated())
+                .addFilterBefore(apiRateLimitFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(
                         exceptions ->
                                 exceptions

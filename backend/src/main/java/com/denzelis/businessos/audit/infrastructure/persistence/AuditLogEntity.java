@@ -36,4 +36,16 @@ public class AuditLogEntity extends AuditedEntity {
     private String details;
 
     protected AuditLogEntity() {}
+
+    public static AuditLogEntity authenticationEvent(
+            UUID actorUserId, String action, String outcome) {
+        AuditLogEntity event = new AuditLogEntity();
+        event.actorUserId = actorUserId;
+        event.action = action;
+        event.resourceType = "AUTHENTICATION";
+        event.resourceId = null;
+        event.outcome = outcome;
+        event.details = "Security-sensitive authentication event";
+        return event;
+    }
 }

@@ -16,3 +16,8 @@ management:
 logging:
   level:
     root: WARN
+
+business-os:
+  security:
+    rate-limit:
+      enabled: false

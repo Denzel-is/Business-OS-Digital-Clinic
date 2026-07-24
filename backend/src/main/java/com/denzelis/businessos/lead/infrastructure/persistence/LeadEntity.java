@@ -39,4 +39,13 @@ public class LeadEntity extends AuditedEntity {
     private Status status;
 
     protected LeadEntity() {}
+
+    public static LeadEntity fromContactRequest(UUID contactRequestId) {
+        LeadEntity lead = new LeadEntity();
+        lead.contactRequestId = contactRequestId;
+        lead.source = "CONTACT_FORM";
+        lead.summary = "New consented contact request";
+        lead.status = Status.NEW;
+        return lead;
+    }
 }

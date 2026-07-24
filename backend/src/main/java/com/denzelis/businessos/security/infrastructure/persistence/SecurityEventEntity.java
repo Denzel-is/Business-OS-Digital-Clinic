@@ -46,4 +46,16 @@ public class SecurityEventEntity extends AuditedEntity {
     private Instant resolvedAt;
 
     protected SecurityEventEntity() {}
+
+    public static SecurityEventEntity record(
+            String eventType, Severity severity, String sourceIpHash, String details) {
+        SecurityEventEntity event = new SecurityEventEntity();
+        event.actorUserId = null;
+        event.eventType = eventType;
+        event.severity = severity;
+        event.sourceIpHash = sourceIpHash;
+        event.details = details;
+        event.resolvedAt = null;
+        return event;
+    }
 }
