@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { copyBackendSetCookies } from "@/lib/api/backend-session";
+import { copyBackendSetCookies } from "@/lib/api/cookie-utils";
 import { prepareCsrf } from "@/lib/api/csrf";
 import { getServerEnvironment } from "@/lib/api/server-environment";
 

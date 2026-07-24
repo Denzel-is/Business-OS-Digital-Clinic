@@ -69,6 +69,7 @@ class AuthenticationIntegrationTests {
 
     @Test
     void authenticatesWithBcryptAndPersistsAProtectedSession() throws Exception {
+        long auditEventsBefore = count("audit_log");
         MvcResult login =
                 mockMvc.perform(
                                 post("/api/v1/auth/login")
@@ -106,16 +107,24 @@ class AuthenticationIntegrationTests {
                 .startsWith("$2")
                 .contains("$12$")
                 .doesNotContain("correct-horse-battery-staple");
+        assertThat(count("audit_log")).isEqualTo(auditEventsBefore + 1);
+        assertThat(
+                        jdbcTemplate.queryForObject(
+                                "SELECT action FROM audit_log ORDER BY created_at DESC LIMIT 1",
+                                String.class))
+                .isEqualTo("LOGIN");
     }
 
     @Test
     void returnsTheSameGenericFailureForUnknownAccountAndWrongPassword() throws Exception {
+        long securityEventsBefore = count("security_event");
         String wrongPassword = loginFailure("admin@example.test", "this-password-is-not-correct");
         String unknownAccount =
                 loginFailure("unknown@example.test", "this-password-is-not-correct");
 
         assertThat(wrongPassword).isEqualTo(unknownAccount);
         assertThat(wrongPassword).contains("Email or password is invalid.");
+        assertThat(count("security_event")).isEqualTo(securityEventsBefore + 2);
     }
 
     @Test
@@ -165,5 +174,16 @@ class AuthenticationIntegrationTests {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
+    }
+
+    private long count(String table) {
+        String query =
+                switch (table) {
+                    case "audit_log" -> "SELECT COUNT(*) FROM audit_log";
+                    case "security_event" -> "SELECT COUNT(*) FROM security_event";
+                    default -> throw new IllegalArgumentException("Unknown test table");
+                };
+        Long value = jdbcTemplate.queryForObject(query, Long.class);
+        return value == null ? 0 : value;
     }
 }

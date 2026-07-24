@@ -71,3 +71,6 @@ integration uses a fresh PostgreSQL 17 Testcontainer with Flyway enabled and Hib
 
 Authentication and RBAC integration tests use a separate PostgreSQL 17 Testcontainer. Local
 administrator provisioning and current limitations are documented in `../docs/AUTHENTICATION.md`.
+
+The complete unit, MockMvc, PostgreSQL, Redis, security, and release-gate matrix is documented in
+`../docs/TESTING.md`.

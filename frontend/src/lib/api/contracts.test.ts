@@ -4,6 +4,7 @@ import {
   adminOverviewSchema,
   adminResourcePageSchema,
   authSessionSchema,
+  contactRequestSchema,
   diagnosticEvaluationRequestSchema,
   diagnosticEvaluationResponseSchema,
   inputValidationRequestSchema,
@@ -70,6 +71,25 @@ describe("admin contracts", () => {
     });
 
     expect(page.items).toHaveLength(1);
+  });
+});
+
+describe("contact contract", () => {
+  const validRequest = {
+    consent: true,
+    email: "contact@example.test",
+    message: "Достаточно длинное описание задачи для безопасной отправки.",
+    name: "Контакт",
+    turnstileToken: "",
+    website: "",
+  } as const;
+
+  it("requires explicit consent and rejects undeclared fields", () => {
+    expect(contactRequestSchema.parse(validRequest)).toEqual(validRequest);
+    expect(() => contactRequestSchema.parse({ ...validRequest, consent: false })).toThrow();
+    expect(() =>
+      contactRequestSchema.parse({ ...validRequest, attachment: "private.pdf" }),
+    ).toThrow();
   });
 });
 

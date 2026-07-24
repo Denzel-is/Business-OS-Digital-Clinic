@@ -333,3 +333,47 @@ test("keeps administrator login generic, accessible, and responsive", async ({ p
     browserErrors.every((message) => message.includes("server responded with a status of 401")),
   ).toBe(true);
 });
+
+test("submits the consented contact allowlist without horizontal overflow", async ({ page }) => {
+  const browserErrors = collectBrowserErrors(page);
+  let contactPayload: Record<string, unknown> | undefined;
+  await page.setViewportSize({ height: 844, width: 390 });
+  await page.route("**/api/contact", async (route) => {
+    contactPayload = route.request().postDataJSON() as Record<string, unknown>;
+    await route.fulfill({
+      contentType: "application/json",
+      json: { accepted: true },
+      status: 202,
+    });
+  });
+
+  await page.goto("/contact");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Опишите симптом, а не готовое решение" }),
+  ).toBeVisible();
+  await page.getByRole("textbox", { name: "Имя" }).fill("Тестовый контакт");
+  await page.getByRole("textbox", { name: "Email" }).fill("contact@example.test");
+  await page
+    .getByRole("textbox", { name: "Что нужно разобрать" })
+    .fill("Нужно проверить маршрут обработки входящих заявок.");
+  await page.getByRole("checkbox").check();
+  await page.getByRole("button", { name: "Отправить обращение" }).click();
+
+  await expect(
+    page.getByText("Обращение принято. Я свяжусь с вами после первичного разбора."),
+  ).toBeVisible();
+  expect(contactPayload).toEqual({
+    consent: true,
+    email: "contact@example.test",
+    message: "Нужно проверить маршрут обработки входящих заявок.",
+    name: "Тестовый контакт",
+    turnstileToken: "",
+    website: "",
+  });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+    ),
+  ).toBe(false);
+  expect(browserErrors).toEqual([]);
+});

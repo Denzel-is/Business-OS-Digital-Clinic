@@ -29,16 +29,24 @@ public class CloudflareTurnstileVerifier implements TurnstileVerifier {
     private final RestClient restClient;
 
     public CloudflareTurnstileVerifier(TurnstileProperties properties) {
+        this(properties, createRestClient());
+    }
+
+    CloudflareTurnstileVerifier(TurnstileProperties properties, RestClient restClient) {
         if (properties.secretKey().isBlank()) {
             throw new IllegalStateException(
                     "TURNSTILE_SECRET_KEY is required when Turnstile is enabled");
         }
         this.properties = properties;
+        this.restClient = restClient;
+    }
+
+    private static RestClient createRestClient() {
         HttpClient httpClient =
                 HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(3)).build();
         JdkClientHttpRequestFactory requestFactory = new JdkClientHttpRequestFactory(httpClient);
         requestFactory.setReadTimeout(Duration.ofSeconds(5));
-        this.restClient = RestClient.builder().requestFactory(requestFactory).build();
+        return RestClient.builder().requestFactory(requestFactory).build();
     }
 
     @Override

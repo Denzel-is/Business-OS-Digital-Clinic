@@ -53,6 +53,10 @@ Stage 13 adds `/contact`, a strict same-origin contact BFF, consent UI, a non-vi
 optional Turnstile rendering, route-specific CSP allowances only when a site key exists, and
 `robots.txt` exclusions for admin and API paths.
 
+Stage 14 adds focused tests for the contact form, consent boundary, strict contact contract,
+ADMIN/EDITOR resource policy, and backend cookie allowlist, plus a browser contact journey. See
+`../docs/TESTING.md`.
+
 The Hero uses `public/media/hero-poster.svg` as an explicit placeholder because no approved real video asset exists. Production video requirements and reduced-motion behavior are defined in `../docs/MEDIA_GUIDE.md`. Homepage claims and demo labeling rules are defined in `../docs/CONTENT_GUIDE.md`.
 
 Framer Motion provides lightweight reveals and Hero parallax. Business Vitals dynamically imports GSAP ScrollTrigger, while Security Pulse dynamically imports the only React Three Fiber scene. Reduced-motion mode keeps all content static and avoids loading GSAP or Three.js; narrow viewports also use the static security model. The complete contract is documented in `../docs/MOTION_GUIDE.md`.

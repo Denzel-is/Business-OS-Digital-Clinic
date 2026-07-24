@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { filterBackendCookieHeader } from "@/lib/api/backend-session";
+import { filterBackendCookieHeader } from "@/lib/api/cookie-utils";
 import { getServerEnvironment } from "@/lib/api/server-environment";
 
 export async function GET(request: Request) {

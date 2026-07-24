@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Surface } from "@/components/ui/surface";
+import { canAccessAdminResource } from "@/lib/admin/access";
+import { requireAdminSession } from "@/lib/admin/require-admin";
 import { adminResourceSlugSchema, type AdminResourceSlug } from "@/lib/api/contracts";
 import { getAdminResource } from "@/lib/api/backend-session";
-import { requireAdminSession } from "@/lib/admin/require-admin";
 
 export const metadata: Metadata = {
   title: "Раздел панели",
@@ -28,7 +29,7 @@ export default async function AdminSectionPage({ params, searchParams }: AdminSe
 
   const session = await requireAdminSession();
   const resource: AdminResourceSlug = parsedResource.data;
-  if (["users", "audit-logs", "settings"].includes(resource) && !session.roles.includes("ADMIN")) {
+  if (!canAccessAdminResource(session, resource)) {
     notFound();
   }
 

@@ -4,7 +4,7 @@
 
 This document records the monorepo contract plus the backend, frontend, design-system, homepage,
 motion, Business Diagnostic, static project-case, Security Center, and PostgreSQL persistence
-foundation completed through stage 13. Runtime details are promoted from planned to implemented
+foundation completed through stage 14. Runtime details are promoted from planned to implemented
 only after their stage passes verification.
 
 ## System context
@@ -81,6 +81,12 @@ minimal lead, while the honeypot path stores no submitted personal fields. Turns
 is a replaceable server-side port and fails closed when enabled. Admin media upload detects file
 signatures, generates storage keys, writes outside public static roots, and registers rollback
 cleanup. Publication and media delivery remain separate workflows.
+
+The testing boundary mirrors runtime trust boundaries. Pure rules and allowlists use fast unit
+tests; Spring Security and HTTP contracts use MockMvc; persistence and atomic counters use isolated
+PostgreSQL/Redis Testcontainers; client states use Testing Library; and end-user responsive,
+keyboard, reduced-motion, filtering, diagnostic, login, and contact journeys use Playwright.
+Browser mocks never substitute for backend authorization tests.
 
 ## Data and security principles
 

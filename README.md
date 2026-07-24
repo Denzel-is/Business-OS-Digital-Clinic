@@ -2,10 +2,10 @@
 
 Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction and turning it into fast, usable, and secure IT systems.
 
-> Current status: the project is complete through stage 13. It includes Redis-backed abuse limits,
-> failed-login throttling, audit/security signals, a consent-aware Turnstile-ready contact flow,
-> safe draft media uploads, and hardened browser/API boundaries. Production media delivery,
-> Compose services, and deployment workflows follow in later stages.
+> Current status: the project is complete through stage 14. Security, persistence, Redis counters,
+> consent/contact, upload, contracts, responsive UI, reduced motion, diagnostic, filtering, and
+> protected-route behavior now have layered JUnit, MockMvc, Testcontainers, Vitest, Testing Library,
+> and Playwright coverage. Production media delivery, Compose services, and CI/CD follow next.
 
 ## Product direction
 
@@ -53,7 +53,7 @@ The backend will use package-by-feature boundaries. The frontend will use Server
 11. Database model and migrations — complete.
 12. Authentication and protected administration — complete.
 13. Security hardening — complete.
-14. Automated testing.
+14. Automated testing — complete.
 15. Docker and CI/CD.
 16. Complete project documentation.
 17. Final audit and draft pull request.

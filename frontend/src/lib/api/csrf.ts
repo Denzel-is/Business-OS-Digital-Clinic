@@ -2,7 +2,7 @@ import "server-only";
 
 import { z } from "zod";
 
-import { filterBackendCookieHeader, getSetCookieValues } from "@/lib/api/backend-session";
+import { filterBackendCookieHeader, getSetCookieValues } from "@/lib/api/cookie-utils";
 import { getServerEnvironment } from "@/lib/api/server-environment";
 
 const csrfResponseSchema = z.object({

@@ -10,6 +10,7 @@ Documentation is versioned with the behavior it describes. Files marked as plann
 - [Authentication](AUTHENTICATION.md) — BCrypt login, CSRF/session policy, RBAC, bootstrap, and admin boundary.
 - [Security hardening](SECURITY_HARDENING.md) — Redis limits, login defense, audit signals, contact and upload boundaries.
 - [Deployment security](DEPLOYMENT_SECURITY.md) — Cloudflare, origin, caching, secrets, and residual-risk contract.
+- [Testing](TESTING.md) — test layers, commands, fixtures, security coverage, browser checks, and release gate.
 - [Content guide](CONTENT_GUIDE.md) — editorial voice, evidence rules, demo labels, and Russian copy guidance.
 - [Design system](DESIGN_SYSTEM.md) — implemented tokens, typography, components, states, and accessibility rules.
 - [Media guide](MEDIA_GUIDE.md) — licensing, real-video requirements, optimization, fallbacks, and reduced motion.
@@ -21,4 +22,3 @@ Documentation is versioned with the behavior it describes. Files marked as plann
 - `THREAT_MODEL.md` — assets, trust boundaries, threats, mitigations, and residual risk.
 - `INCIDENT_RESPONSE.md` — triage, containment, recovery, notification, and learning.
 - `DEPLOYMENT.md` — environments, build artifacts, rollout, rollback, and recovery.
-- `TESTING.md` — test layers, local/CI commands, fixtures, and release gates.
