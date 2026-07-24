@@ -9,9 +9,13 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 @ConfigurationProperties(prefix = "business-os.security")
-public record WebSecurityProperties(@NotEmpty List<@Valid @NotBlank String> allowedOrigins) {
+public record WebSecurityProperties(
+        @NotEmpty List<@Valid @NotBlank String> allowedOrigins,
+        boolean cookieSecure,
+        @NotBlank String cookieSameSite) {
 
     public WebSecurityProperties {
         allowedOrigins = allowedOrigins == null ? List.of() : List.copyOf(allowedOrigins);
+        cookieSameSite = cookieSameSite == null ? "Lax" : cookieSameSite;
     }
 }

@@ -2,11 +2,10 @@
 
 Business OS: Digital Clinic is an interactive digital clinic for diagnosing operational friction and turning it into fast, usable, and secure IT systems.
 
-> Current status: the project is complete through stage 11. PostgreSQL now has 14 internal JPA
-> entities, forward-only Flyway migrations, explicit constraints and indexes, and a public demo
-> catalog seed without personal data. Testcontainers verifies migration from an empty PostgreSQL
-> database. Authorization, admin use cases, production media, Compose services, and deployment
-> workflows follow in later stages.
+> Current status: the project is complete through stage 12. It includes BCrypt administrator
+> login, CSRF-protected HTTP sessions, server-enforced ADMIN/EDITOR roles, a safe one-time bootstrap,
+> and a protected database-backed administration overview. Security hardening, production media,
+> Compose services, and deployment workflows follow in later stages.
 
 ## Product direction
 
@@ -52,7 +51,7 @@ The backend will use package-by-feature boundaries. The frontend will use Server
 9. Demo projects and cases — complete.
 10. Security Center — complete.
 11. Database model and migrations — complete.
-12. Authentication and protected administration.
+12. Authentication and protected administration — complete.
 13. Security hardening.
 14. Automated testing.
 15. Docker and CI/CD.
@@ -178,7 +177,7 @@ npm.cmd ci
 npm.cmd run dev
 ```
 
-Open `http://localhost:3000`. The interactive diagnostic is available at `http://localhost:3000/diagnostic`; Security Center is available at `http://localhost:3000/security`. Both interactive simulations require the backend on `http://localhost:8080` unless `BACKEND_PUBLIC_URL` is configured differently.
+Open `http://localhost:3000`. The interactive diagnostic is available at `http://localhost:3000/diagnostic`; Security Center is available at `http://localhost:3000/security`; the protected administration login is at `http://localhost:3000/admin/login`. Configure the one-time local administrator as documented in `docs/AUTHENTICATION.md`. These server-backed features require the backend on `http://localhost:8080` unless `BACKEND_PUBLIC_URL` is configured differently.
 
 ## Testing
 

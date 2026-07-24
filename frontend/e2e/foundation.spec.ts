@@ -297,3 +297,39 @@ test("runs the safe Security Center validation simulation without rendering inpu
   ).toBe(false);
   expect(browserErrors).toEqual([]);
 });
+
+test("keeps administrator login generic, accessible, and responsive", async ({ page }) => {
+  const browserErrors = collectBrowserErrors(page);
+  await page.setViewportSize({ height: 844, width: 390 });
+  await page.route("**/api/auth/login", async (route) => {
+    await route.fulfill({
+      contentType: "application/json",
+      json: { message: "Email или пароль указаны неверно." },
+      status: 401,
+    });
+  });
+
+  const response = await page.goto("/admin/login");
+  await expect(page.getByRole("heading", { level: 1, name: "Панель управления" })).toBeVisible();
+  await expect(page.getByRole("textbox", { name: "Email" })).toHaveAttribute(
+    "autocomplete",
+    "username",
+  );
+  await expect(page.getByLabel("Пароль")).toHaveAttribute("autocomplete", "current-password");
+
+  await page.getByRole("textbox", { name: "Email" }).fill("unknown@example.test");
+  await page.getByLabel("Пароль").fill("not-the-right-password");
+  await page.getByRole("button", { name: "Войти в панель" }).click();
+
+  await expect(page.getByText("Email или пароль указаны неверно.")).toBeVisible();
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  expect(response?.status()).toBe(200);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+    ),
+  ).toBe(false);
+  expect(
+    browserErrors.every((message) => message.includes("server responded with a status of 401")),
+  ).toBe(true);
+});

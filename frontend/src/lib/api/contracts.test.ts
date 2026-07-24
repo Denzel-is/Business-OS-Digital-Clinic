@@ -1,12 +1,77 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  adminOverviewSchema,
+  adminResourcePageSchema,
+  authSessionSchema,
   diagnosticEvaluationRequestSchema,
   diagnosticEvaluationResponseSchema,
   inputValidationRequestSchema,
   inputValidationResponseSchema,
   systemStatusSchema,
 } from "@/lib/api/contracts";
+
+describe("admin contracts", () => {
+  it("accepts an authenticated RBAC session", () => {
+    expect(
+      authSessionSchema.parse({
+        authenticated: true,
+        displayName: "Administrator",
+        roles: ["ADMIN"],
+        mfaRequired: false,
+        mfaReady: true,
+      }).roles,
+    ).toEqual(["ADMIN"]);
+  });
+
+  it("rejects unknown roles and resource slugs", () => {
+    expect(() =>
+      authSessionSchema.parse({
+        authenticated: true,
+        displayName: "Unknown",
+        roles: ["SUPERUSER"],
+        mfaRequired: false,
+        mfaReady: true,
+      }),
+    ).toThrow();
+
+    expect(() =>
+      adminOverviewSchema.parse({
+        modules: [
+          {
+            slug: "secrets",
+            label: "Secrets",
+            scope: "SYSTEM",
+            itemCount: 1,
+            available: true,
+          },
+        ],
+      }),
+    ).toThrow();
+  });
+
+  it("validates paginated admin data without accepting private payload fields", () => {
+    const page = adminResourcePageSchema.parse({
+      resource: "projects",
+      label: "Проекты",
+      page: 0,
+      size: 20,
+      totalItems: 1,
+      totalPages: 1,
+      items: [
+        {
+          id: "50000000-0000-4000-8000-000000000001",
+          title: "Demo",
+          subtitle: "demo",
+          status: "PUBLISHED",
+          createdAt: "2026-01-01T00:00:00Z",
+        },
+      ],
+    });
+
+    expect(page.items).toHaveLength(1);
+  });
+});
 
 describe("system status contract", () => {
   it("accepts the backend foundation response", () => {

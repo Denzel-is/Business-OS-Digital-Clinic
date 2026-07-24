@@ -87,3 +87,62 @@ export const inputValidationResponseSchema = z.object({
 
 export type InputValidationRequest = z.infer<typeof inputValidationRequestSchema>;
 export type InputValidationResponse = z.infer<typeof inputValidationResponseSchema>;
+
+export const authSessionSchema = z.object({
+  authenticated: z.boolean(),
+  displayName: z.string(),
+  roles: z.array(z.enum(["ADMIN", "EDITOR"])),
+  mfaRequired: z.boolean(),
+  mfaReady: z.boolean(),
+});
+
+export type AuthSession = z.infer<typeof authSessionSchema>;
+
+export const adminResourceSlugSchema = z.enum([
+  "projects",
+  "categories",
+  "media",
+  "services",
+  "leads",
+  "diagnostics",
+  "seo",
+  "users",
+  "audit-logs",
+  "settings",
+]);
+
+export type AdminResourceSlug = z.infer<typeof adminResourceSlugSchema>;
+
+export const adminModuleSummarySchema = z.object({
+  slug: adminResourceSlugSchema,
+  label: z.string(),
+  scope: z.enum(["CONTENT", "SYSTEM"]),
+  itemCount: z.number().int().nonnegative(),
+  available: z.boolean(),
+});
+
+export const adminOverviewSchema = z.object({
+  modules: z.array(adminModuleSummarySchema),
+});
+
+export type AdminOverview = z.infer<typeof adminOverviewSchema>;
+
+export const adminResourcePageSchema = z.object({
+  resource: adminResourceSlugSchema,
+  label: z.string(),
+  page: z.number().int().nonnegative(),
+  size: z.number().int().positive(),
+  totalItems: z.number().int().nonnegative(),
+  totalPages: z.number().int().nonnegative(),
+  items: z.array(
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      subtitle: z.string(),
+      status: z.string(),
+      createdAt: z.iso.datetime(),
+    }),
+  ),
+});
+
+export type AdminResourcePage = z.infer<typeof adminResourcePageSchema>;

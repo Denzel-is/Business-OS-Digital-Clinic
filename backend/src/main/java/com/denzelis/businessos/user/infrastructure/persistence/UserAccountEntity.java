@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 @Entity
@@ -49,4 +50,44 @@ public class UserAccountEntity extends AuditedEntity {
     private Set<RoleEntity> roles = new HashSet<>();
 
     protected UserAccountEntity() {}
+
+    public static UserAccountEntity createAdministrator(
+            String email, String passwordHash, String displayName, RoleEntity administratorRole) {
+        UserAccountEntity account = new UserAccountEntity();
+        account.emailNormalized = normalizeEmail(email);
+        account.passwordHash = passwordHash;
+        account.displayName = displayName.strip();
+        account.enabled = true;
+        account.mfaRequired = false;
+        account.roles.add(administratorRole);
+        return account;
+    }
+
+    public static String normalizeEmail(String email) {
+        return email.strip().toLowerCase(Locale.ROOT);
+    }
+
+    public String getEmailNormalized() {
+        return emailNormalized;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public boolean isMfaRequired() {
+        return mfaRequired;
+    }
+
+    public Set<RoleEntity> getRoles() {
+        return Set.copyOf(roles);
+    }
 }

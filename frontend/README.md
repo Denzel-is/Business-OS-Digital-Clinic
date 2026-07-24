@@ -1,6 +1,6 @@
 # Frontend module
 
-The frontend is a Next.js App Router application running on Node.js 24 LTS with React, strict TypeScript, Tailwind CSS, Vitest, and Playwright. Stage 10 adds Security Center and its safe input-validation lab on top of the homepage, motion layer, Business Diagnostic, and six static project breakdowns.
+The frontend is a Next.js App Router application running on Node.js 24 LTS with React, strict TypeScript, Tailwind CSS, Vitest, and Playwright. Stage 12 adds a same-origin authentication BFF and protected administration shell on top of the homepage, motion layer, Business Diagnostic, project breakdowns, and Security Center.
 
 ## Architecture
 
@@ -43,6 +43,11 @@ The `/diagnostic` route contains a 12-step React Hook Form wizard. Eleven enumer
 The `/projects` route filters immutable case records across all eight required categories. Six `/projects/[slug]` routes are generated statically. Every list and detail view retains its Concept, Educational, Personal, or Demo label plus a visible limitation and verification signals; there are no claimed clients, testimonials, or measured outcomes.
 
 The `/security` route presents all 16 required controls with evidence-backed `Implemented`, `Foundation`, or `Planned` states. Its educational lab sends a strict two-field request through `/api/security/input-validation`; the returned preview is rendered as text and the lab neither executes input nor probes another system.
+
+The `/admin/login` route authenticates through same-origin BFF routes. `/admin` and
+`/admin/[section]` are server-rendered protected views backed by the Java API. The frontend hides
+system links from editors and redirects anonymous users for usability, while the backend remains
+the authority for every permission decision.
 
 The Hero uses `public/media/hero-poster.svg` as an explicit placeholder because no approved real video asset exists. Production video requirements and reduced-motion behavior are defined in `../docs/MEDIA_GUIDE.md`. Homepage claims and demo labeling rules are defined in `../docs/CONTENT_GUIDE.md`.
 

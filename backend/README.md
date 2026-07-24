@@ -9,6 +9,10 @@ and seed migrations, UUID/audit/version fields, explicit relationships and const
 PostgreSQL 17 Testcontainers integration test. The seed contains public demo catalog data only.
 Repositories and persistence APIs intentionally remain outside this stage.
 
+Stage 12 adds BCrypt cost-12 administrator login, an explicit session security context,
+CSRF-protected login/logout, `ADMIN` and `EDITOR` authorization, safe conditional administrator
+bootstrap, and minimal paginated admin query DTOs. No credential is present in migrations or source.
+
 ## Responsibilities
 
 - Business rules and server-side validation.
@@ -60,3 +64,6 @@ infrastructure stage.
 Fast context and HTTP security tests use an in-memory database with Flyway disabled. Persistence
 integration uses a fresh PostgreSQL 17 Testcontainer with Flyway enabled and Hibernate
 `ddl-auto=validate`; see `../docs/DATABASE.md`.
+
+Authentication and RBAC integration tests use a separate PostgreSQL 17 Testcontainer. Local
+administrator provisioning and current limitations are documented in `../docs/AUTHENTICATION.md`.

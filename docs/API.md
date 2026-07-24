@@ -58,6 +58,34 @@ Runs a stateless educational field-validation simulation. The request contains o
 
 The endpoint rejects unknown JSON fields. It never executes the value, builds a database query, scans a URL, tests an external target, or persists the request. Its result demonstrates selected input rules and does not prove that an application is secure.
 
+## Authentication endpoints
+
+### `POST /api/v1/auth/login`
+
+Requires a CSRF token and accepts only `email` and `password`. A successful response returns the
+display name, roles, and MFA-readiness flags and creates an `HttpOnly` session cookie. Unknown
+accounts, disabled accounts, and incorrect passwords all return the same generic `401` response.
+
+### `GET /api/v1/auth/session`
+
+Returns either an anonymous session contract or the current authenticated administrator contract.
+The response is always `no-store`.
+
+### `POST /api/v1/auth/logout`
+
+Requires authentication and CSRF, invalidates the server session, and clears the CSRF token.
+
+## Protected administration endpoints
+
+- `GET /api/v1/admin/overview` — `ADMIN` or `EDITOR`;
+- `GET /api/v1/admin/content/{resource}` — `ADMIN` or `EDITOR`, where resource is `projects`,
+  `categories`, `media`, `services`, `leads`, `diagnostics`, or `seo`;
+- `GET /api/v1/admin/system/{resource}` — `ADMIN` only, where resource is `users`, `audit-logs`,
+  or `settings`.
+
+List endpoints accept zero-based `page` and a `size` from 1 to 50. Responses expose minimal summary
+DTOs and do not expose password hashes, setting values, audit details, or JPA entities.
+
 ## Frontend proxy
 
 The browser posts evaluation answers to the same-origin Next.js route `POST /api/diagnostic/evaluate`. The route:
@@ -69,6 +97,10 @@ The browser posts evaluation answers to the same-origin Next.js route `POST /api
 5. returns a generic `502` Problem Details response without internal errors when the backend is unavailable.
 
 The browser uses `POST /api/security/input-validation` for the Security Center lab. That proxy limits the actual UTF-8 body to 4 KiB, rejects unknown fields through a strict Zod allowlist, validates the backend response, disables caching, and returns generic errors.
+
+Authentication uses the same-origin routes `/api/auth/login`, `/api/auth/session`, and
+`/api/auth/logout`. They forward only `BUSINESS_OS_SESSION` and `XSRF-TOKEN`, keep backend
+coordinates server-only, and never expose the session cookie to client JavaScript.
 
 ## Error format
 

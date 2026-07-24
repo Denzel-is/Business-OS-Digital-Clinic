@@ -19,4 +19,8 @@ public class RoleEntity extends AuditedEntity {
     private String description;
 
     protected RoleEntity() {}
+
+    public String getCode() {
+        return code;
+    }
 }
