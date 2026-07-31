@@ -36,7 +36,7 @@
     <java.version>21</java.version>
     <maven.compiler.release>21</maven.compiler.release>
     <postgresql.version>42.7.12</postgresql.version>
-    <spotless.version>3.8.0</spotless.version>
+    <spotless.version>3.9.0</spotless.version>
     <maven-enforcer.version>3.6.3</maven-enforcer.version>
   </properties>
 
