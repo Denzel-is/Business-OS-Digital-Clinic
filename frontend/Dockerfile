@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-FROM node:24.18.0-alpine AS dependencies
+FROM node:26.5.1-alpine AS dependencies
 
 ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /app
@@ -9,7 +9,7 @@ COPY package.json package-lock.json ./
 RUN npm install --global npm@11.16.0 \
     && npm ci
 
-FROM node:24.18.0-alpine AS build
+FROM node:26.5.1-alpine AS build
 
 ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY=
 ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=$NEXT_PUBLIC_TURNSTILE_SITE_KEY
@@ -21,7 +21,7 @@ COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
-FROM node:24.18.0-alpine AS runtime
+FROM node:26.5.1-alpine AS runtime
 
 ENV HOSTNAME=0.0.0.0
 ENV NEXT_TELEMETRY_DISABLED=1
